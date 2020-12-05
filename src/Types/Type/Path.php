@@ -87,6 +87,20 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
         return unlink($this);
     }
 
+    /**
+     * Renames the file or directory (if it exists) and sets the internal path to the new destination. Returns the path
+     * of the destination also for method chaining.
+     *
+     * @param Path $oDestination
+     * @return $this
+     */
+    function move(Path $oDestination):Path
+    {
+        rename($this, $oDestination);
+        $this->setValue($oDestination);
+        return $this;
+    }
+
     function contents() {
         return file_get_contents($this);
     }
