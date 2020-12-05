@@ -7,7 +7,6 @@ use Hurah\Types\Type\Path;
 /**
  * Class FileSystem
  * @package Hurah\Types\Util
- * @internal
  */
 final class FileSystem {
 
