@@ -1,0 +1,30 @@
+{
+    "name": "hurah/data-types",
+    "description": "This is an arbitrary set of objects representing data types. Only here for the sake of code re-use and compatibility",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anton Boutkam",
+            "email": "anton@nui-boutkam.nl"
+        }
+    ],
+    "require": {
+        "php" : "^7.4",
+        "ext-json": "*"
+    },
+    "require-dev" : {
+        "phpunit/phpunit": "^9.3.8"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Hurah\\Types\\" : "src/Types",
+            "Hurah\\Types\\Util\\" : "src/Types/Util"
+
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\Hurah\\Types\\": "tests/Types"
+        }
+    }
+}
