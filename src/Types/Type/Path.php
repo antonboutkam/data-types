@@ -76,10 +76,12 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
     function dirname(int $iLevels = 1): Path {
         return new Path(dirname($this, $iLevels));
     }
-    function isFile()
+
+    function isFile():bool
     {
-        return file_exists($this);
+        return file_exists($this) && is_file($this);
     }
+
     function unlink():bool
     {
         return unlink($this);
