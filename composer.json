@@ -8,6 +8,7 @@
             "email": "anton@nui-boutkam.nl"
         }
     ],
+    "stability" : "dev",
     "require": {
         "php" : "^7.4",
         "ext-json": "*"
