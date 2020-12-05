@@ -1,4 +1,8 @@
 # Data types
 This is an arbitrary set of objects representing some kind of data with the intention of extending and enriching them.
-I am using these datatypes in some projects so another goal is interoperability and the possibility of versioning. This
-initial version does not contain a lot of exciting stuff but you have to start somewhere. 
+Mostly for private projects but i would love to see other people make use of them and improve them.
+
+## Not much
+At the moment there are not that many datatypes and hardly any validations. There are probably hundreds of better 
+solutions but this suits me perfect. The main reason for using these types is to act as a contract between REST api's 
+with other developers. This way it is clear what data is compatible and what not. 

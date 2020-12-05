@@ -1,6 +1,6 @@
 {
     "name": "hurah/data-types",
-    "description": "This is an arbitrary set of objects representing data types. Only here for the sake of code re-use and compatibility",
+    "description": "This is an arbitrary set of objects representing specific types of data.",
     "license": "MIT",
     "authors": [
         {
