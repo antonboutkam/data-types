@@ -2,27 +2,37 @@
 
 namespace Test\Hurah\Types\Type;
 
-use Hurah\Types\Type\File;
+use Hurah\Types\Type\Path;
 use Hurah\Types\Util\DirectoryStructure;
-use Hurah\Types\Util\FileSystem;
 use PHPUnit\Framework\TestCase;
 
 class FileTest extends TestCase {
 
+    private function getTestPath(): Path {
+        return DirectoryStructure::getTmpDir()->extend('tests', 'file-test.txt');
+    }
+
+    protected function setUp(): void {
+        $this->getTestPath()->dirname()->makeDir();
+    }
+
+    protected function tearDown(): void {
+        $this->getTestPath()->unlink();
+        $this->getTestPath()->dirname()->unlink();
+    }
+
     public function testGetContents() {
-        $oTestFile = DirectoryStructure::getTmpDir()->extend('tests', 'file-test.txt');
+        $oTestPath = $this->getTestPath();
 
-        $oTestFile->getFile()->create();
+        $oTestPath->dirname()->makeDir();
+        $oTestPath->getFile()->create();
 
-        $this->assertTrue($oTestFile->isFile(), 'File create did not work');
+        $this->assertTrue($oTestPath->isFile(), 'File create did not work');
 
-        $oTestFile->write('test');
-        $this->assertTrue($oTestFile->contents() === 'test', 'Writing to file failed');
+        $oTestPath->write($sExpected1 = 'test1');
+        $this->assertTrue("{$oTestPath->getFile()->contents()}" === "{$sExpected1}", 'Writing to file failed' . $oTestPath->getFile()->contents() . $sExpected1);
 
-        $oTestFile->write('test');
-        $this->assertTrue($oTestFile->contents() === 'test', 'Writing to file failed');
-
-        $this->assertTrue($oTestFile->unlink(), 'File unlink failed');
-
+        $oTestPath->write($sExpected2 = 'test2');
+        $this->assertTrue("{$oTestPath->getFile()->contents()}" === "{$sExpected2}", 'Writing to file failed');
     }
 }

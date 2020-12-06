@@ -3,7 +3,7 @@
 namespace Hurah\Types\Type;
 
 class File extends AbstractDataType implements IGenericDataType {
-    function getContents() {
+    function contents() {
         return new PlainText(file_get_contents($this));
     }
     function create() {

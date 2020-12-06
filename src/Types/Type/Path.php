@@ -109,7 +109,6 @@ function move(Path $oDestination): Path {
 }
 
 function contents() {
-    echo "File get contents " . ((string)$this) . PHP_EOL;
     return trim(file_get_contents((string)$this));
 }
 

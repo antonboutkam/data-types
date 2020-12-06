@@ -2,8 +2,9 @@
 
 namespace Hurah\Types\Type;
 
-use Hurah\Types\Exception;
-use Hurah\Util\JsonUtils;
+use Exception;
+use Hurah\Types\Exception\InvalidArgumentException;
+use Hurah\Types\Util\JsonUtils;
 
 /**
  * Represents a string, but string is a reserved keyword
@@ -16,8 +17,12 @@ class PlainText extends AbstractDataType implements IGenericDataType {
             $aJsonData = JsonUtils::decode($this->getValue(), true);
             return new Json($aJsonData);
         } catch (Exception $e) {
-            throw new Exception\InvalidArgumentException("PlainText does not contain a valid JSON string");
+            throw new InvalidArgumentException("PlainText does not contain a valid JSON string");
         }
+    }
+
+    function __toString(): string {
+        return trim((string)$this->getValue());
     }
 
 }

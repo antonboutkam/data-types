@@ -73,7 +73,7 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @throws InvalidArgumentException
      */
     static function fromFile(File $oFile): self {
-        return new Composer($oFile->getContents());
+        return new Composer($oFile->contents());
     }
 
     /**
