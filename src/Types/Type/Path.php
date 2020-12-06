@@ -17,9 +17,10 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
      * @param $contents - something "stringable"
      *
      */
-    function write($contents): void {
-        file_put_contents((string)$this->getValue(), '<?php' . PHP_EOL . (string)$contents);
+    function write($contents): self {
+        file_put_contents(trim((string)$this->getValue()), PHP_EOL . (string)$contents);
         chmod((string)$this->getValue(), 0777);
+        return $this;
     }
 
     /**
@@ -28,7 +29,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
      *
      */
     function append(...$aParts) {
-        $this->setValue($this->extend($this, $aParts));
+        $this->setValue($this->extend($aParts));
     }
 
     /**
@@ -50,8 +51,9 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
     /**
      *
      */
-    function makeDir(): void {
+    function makeDir(): self {
         FileSystem::makeDir($this);
+        return $this;
     }
 
     /**
@@ -77,58 +79,65 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
         return new Path(dirname($this, $iLevels));
     }
 
-    function isFile():bool
-    {
+    function isFile(): bool {
         return file_exists($this) && is_file($this);
     }
 
-    function unlink():bool
-    {
-        return unlink($this);
-    }
-
-    /**
-     * Renames the file or directory (if it exists) and sets the internal path to the new destination. Returns the path
-     * of the destination also for method chaining.
-     *
-     * @param Path $oDestination
-     * @return $this
-     */
-    function move(Path $oDestination):Path
-    {
-        rename($this, $oDestination);
-        $this->setValue($oDestination);
-        return $this;
-    }
-
-    function contents() {
-        return file_get_contents($this);
-    }
-    /**
-     *
-     * @param int $iLevels = 1
-     * @return Path
-     */
-    function basename(int $iLevels = 1): Path {
-        return new Path(basename($this, $iLevels));
-    }
-    /**
-     *
-     */
-    function exists(): bool {
-        $sValue = $this->getValue();
-        if (file_exists($sValue)) {
-            return true;
-        } else {
-            if (is_dir($sValue)) {
-                return true;
-            } else {
-                if (is_link($sValue)) {
-                    return true;
-                }
-            }
+    function unlink(): bool {
+        if (is_dir($this)) {
+            return rmdir($this);
+        } else if (file_exists($this) || is_link($this)) {
+            return unlink($this);
         }
         return false;
+
     }
 
+
+
+/**
+ * Renames the file or directory (if it exists) and sets the internal path to the new destination. Returns the path
+ * of the destination also for method chaining.
+ *
+ * @param Path $oDestination
+ * @return $this
+ */
+function move(Path $oDestination): Path {
+    rename($this, $oDestination);
+    $this->setValue($oDestination);
+    return $this;
+}
+
+function contents() {
+    echo "File get contents " . ((string)$this) . PHP_EOL;
+    return trim(file_get_contents((string)$this));
+}
+
+/**
+ *
+ * @param int $iLevels = 1
+ * @return Path
+ */
+function basename(int $iLevels = 1): Path {
+    return new Path(basename($this, $iLevels));
+}
+
+/**
+ *
+ */
+function exists(): bool {
+    $sValue = $this->getValue();
+    if (file_exists($sValue)) {
+        return true;
+    } else {
+        if (is_dir($sValue)) {
+            return true;
+        } else {
+            if (is_link($sValue)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 }
