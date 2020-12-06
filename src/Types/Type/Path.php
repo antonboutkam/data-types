@@ -109,7 +109,7 @@ function move(Path $oDestination): Path {
 }
 
 function contents() {
-    return trim(file_get_contents((string)$this));
+    return new PlainText(file_get_contents($this));
 }
 
 /**

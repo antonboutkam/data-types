@@ -13,7 +13,6 @@ class GitUriTest extends TestCase {
     {
         $aSomeValidUris = [
             'git@gitlab.com:NovumGit/innovation-app-docs-website.git',
-            'c:\my project\.git',
             'https://gitlab.com/NovumGit/innovation-app-docs-website.git',
             'git@github.com:antonboutkam/hurah-installer.git',
             'https://github.com/antonboutkam/hurah-installer.git'
@@ -22,7 +21,7 @@ class GitUriTest extends TestCase {
         foreach($aSomeValidUris as $sUri)
         {
             $oGitUri = new GitUri($sUri);
-            $this->assertInstanceOf($oGitUri, GitUri::class );
+            $this->assertInstanceOf(GitUri::class, $oGitUri, $sUri);
         }
 
     }

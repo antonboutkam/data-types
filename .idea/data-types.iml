@@ -3,7 +3,6 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/Types" isTestSource="false" packagePrefix="Hurah\Types\" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Types/Util" isTestSource="false" packagePrefix="Hurah\Types\Util\" />
       <sourceFolder url="file://$MODULE_DIR$/tests/Types" isTestSource="true" packagePrefix="Test\Hurah\Types\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />

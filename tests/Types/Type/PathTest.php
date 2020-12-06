@@ -48,7 +48,7 @@ class PathTest extends TestCase {
     public function testContents() {
 
         file_put_contents((string)$this->oTestFile, $sExpected = 'this is expected');
-        $this->assertTrue($this->oTestFile->contents() === $sExpected);
+        $this->assertTrue("{$this->oTestFile->contents()}" === "{$sExpected}");
     }
 
     public function testExists() {
@@ -85,7 +85,6 @@ class PathTest extends TestCase {
         $this->assertFalse($oPath->isDir());
         $oPath->makeDir();
         $this->assertTrue($oPath->isDir());
-        echo "Unlinking test-dir1" . PHP_EOL;
         $oPath->unlink();
         $this->assertFalse($oPath->isDir());
     }
