@@ -13,8 +13,8 @@ jobs:
       - checkout
 
       - run: sudo apt update #  sudo apt install zlib1g-dev libsqlite3-dev
-      - run: sudo apt install software-properties-common apt-utils language-pack-en-base curl zip git libxml2 libxml2-dev
-      - run: sudo apt install php7.4-zip php7.4-sockets php7.4-gd php7.4-mbstring php7.4-curl php7.4-simplexml 
+      - run: sudo apt install software-properties-common apt-utils curl zip git libxml2 libxml2-dev
+      - run: sudo apt install php7.4-zip php7.4-sockets php7.4-gd php7.4-mbstring php7.4-curl php7.4-simplexml
       - run: sudo docker-php-ext-install zip
 
       # Download and cache dependencies
@@ -36,4 +36,3 @@ jobs:
             - ./vendor
 
       - run: ./vendor/bin/phpunit
-      
