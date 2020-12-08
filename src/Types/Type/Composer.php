@@ -36,7 +36,7 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return static
      */
     static function fromArray(array $aComposer): self {
-        $self = new self();
+        $self = new self('{}');
         $self->setValue($aComposer);
         return $self;
     }
