@@ -2,16 +2,18 @@
 
 namespace Hurah\Types\Type;
 
-use Hurah\Types\Exception\ClassNotFoundException;
+use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\PathCollection\Iterator;
 
 class PathCollection extends AbstractDataType implements IGenericDataType {
-    private int $position = 0;
+    private int $position;
 
     /***
      * PathCollection constructor.
      *
-     * @param array $mValues - An array of strings[] or Path[], internally will all be converted to Paths.
+     * @param null $mValues - An array of strings[] or DnsName[], internally will all be converted to DnsName.
+     * @throws InvalidArgumentException
+     * @throws \Hurah\Types\Exception\ClassNotFoundException
      */
     function __construct($mValues = null) {
         $this->position = 0;
@@ -25,6 +27,10 @@ class PathCollection extends AbstractDataType implements IGenericDataType {
         }
     }
 
+    /**
+     * @param $mValue
+     * @throws InvalidArgumentException
+     */
     function add($mValue): void {
         if (is_string($mValue)) {
             $objectItem = new Path($mValue);
@@ -32,7 +38,7 @@ class PathCollection extends AbstractDataType implements IGenericDataType {
             if ($mValue instanceof Path) {
                 $objectItem = $mValue;
             } else {
-                throw new ClassNotFoundException("Only Paths and strings may be added.");
+                throw new InvalidArgumentException("Argument must be of type string or " . DnsName::class);
             }
         }
 
@@ -41,6 +47,9 @@ class PathCollection extends AbstractDataType implements IGenericDataType {
         $this->setValue($aValues);
     }
 
+    /**
+     * @return DnsName[]
+     */
     function toArray(): array {
         return $this->getValue();
     }
