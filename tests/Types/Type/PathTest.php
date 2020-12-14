@@ -3,7 +3,6 @@
 namespace Test\Hurah\Types\Type;
 
 use DirectoryIterator;
-use GuzzleHttp\Utils;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Util\DirectoryStructure;
 use Hurah\Types\Util\FileSystem;
@@ -21,12 +20,13 @@ class PathTest extends TestCase {
 
     protected function setUp(): void {
         $this->oTestFile = $this->getTestFile();
-        $sDirName = dirname((string)$this->oTestFile);
-        if (!is_dir($sDirName)) {
-            mkdir($sDirName, 0777, true);
-        }
+        $this->oTestFile->basename()->makeDir();
+        $this->oTestFile->write('x');
     }
 
+    /**
+     * @throws \Hurah\Types\Exception\NullPointerException
+     */
     function tearDown(): void {
         $this->oTestFile = $this->getTestFile();
         $this->oTestFile->unlink();
