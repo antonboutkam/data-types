@@ -2,5 +2,6 @@
 
 namespace Hurah\Types\Type\Composer;
 
-interface IComposerComponent {
+interface IComposerComponent
+{
 }

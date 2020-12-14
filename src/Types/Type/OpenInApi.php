@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
-class OpenInApi extends AbstractDataType implements IGenericDataType {
+class OpenInApi extends AbstractDataType implements IGenericDataType
+{
 
 }

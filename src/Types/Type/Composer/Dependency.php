@@ -7,14 +7,16 @@ use Hurah\Types\Type\AbstractDataType;
 use Hurah\Types\Type\IComplexDataType;
 use Hurah\Types\Type\IGenericDataType;
 
-class Dependency extends AbstractDataType implements IGenericDataType, IComposerComponent, IComplexDataType {
+class Dependency extends AbstractDataType implements IGenericDataType, IComposerComponent, IComplexDataType
+{
 
     /**
      * ComposerStability constructor.
      * @param null $aValue a tuple containing package => version
      * @throws InvalidArgumentException
      */
-    function __construct($aValue = null) {
+    public function __construct($aValue = null)
+    {
         if (count($aValue) !== 2) {
             throw new InvalidArgumentException("A composer dependency consists of 2 parts, a package name and a version.");
         }
@@ -29,17 +31,20 @@ class Dependency extends AbstractDataType implements IGenericDataType, IComposer
         parent::__construct($aValue);
     }
 
-    function getPackageName(): string {
+    public function getPackageName(): string
+    {
         $aValue = $this->getValue();
         return $aValue['package'];
     }
 
-    function getVersionName(): string {
+    public function getVersionName(): string
+    {
         $aValue = $this->getValue();
         return $aValue['version'];
     }
 
-    function toArray(): array {
+    public function toArray(): array
+    {
         return $this->getValue();
     }
 }

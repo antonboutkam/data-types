@@ -2,27 +2,32 @@
 
 namespace Hurah\Types\Type;
 
-abstract class AbstractDataType implements IGenericDataType {
+abstract class AbstractDataType implements IGenericDataType
+{
     private $sValue;
 
-    function __construct($sValue = null) {
+    public function __construct($sValue = null)
+    {
         $this->sValue = $sValue;
     }
 
-    function setValue($sValue) {
+    public function setValue($sValue)
+    {
         $this->sValue = $sValue;
     }
 
-    function __toString(): string {
+    public function __toString(): string
+    {
         return (string)$this->getValue();
     }
 
-    function getValue() {
+    public function getValue()
+    {
         return $this->sValue;
     }
 
-    function isValid(): bool {
+    public function isValid(): bool
+    {
         return true;
     }
-
 }

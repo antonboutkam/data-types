@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
-class Edit extends AbstractDataType implements IGenericDataType {
+class Edit extends AbstractDataType implements IGenericDataType
+{
 
 }

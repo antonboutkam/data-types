@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
-interface IComplexDataType {
-    function toArray(): array;
+interface IComplexDataType
+{
+    public function toArray(): array;
 }

@@ -19,14 +19,16 @@ use Hurah\Types\Type\Composer\Vendor;
 use Hurah\Types\Util\DirectoryStructure;
 use Hurah\Types\Util\JsonUtils;
 
-class Composer extends AbstractDataType implements IGenericDataType {
+class Composer extends AbstractDataType implements IGenericDataType
+{
 
     /**
      * Composer constructor.
      * @param null $sValue
      * @throws InvalidArgumentException
      */
-    function __construct($sValue = null) {
+    public function __construct($sValue = null)
+    {
         parent::__construct($sValue);
         $this->setValue(JsonUtils::decode($sValue));
     }
@@ -35,7 +37,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @param array $aComposer
      * @return static
      */
-    static function fromArray(array $aComposer): self {
+    public static function fromArray(array $aComposer): self
+    {
         $self = new self('{}');
         $self->setValue($aComposer);
         return $self;
@@ -46,7 +49,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return static
      * @throws FileNotFoundException|InvalidArgumentException
      */
-    static function fromPackageName(Name $oPackageName): self {
+    public static function fromPackageName(Name $oPackageName): self
+    {
 
         /** Bug in phpstorm, internal but we are in the same  */
         $oDirectoryStructure = new DirectoryStructure();
@@ -63,7 +67,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return static
      * @throws InvalidArgumentException
      */
-    static function fromPath(Path $oPath): self {
+    public static function fromPath(Path $oPath): self
+    {
         return self::fromFile($oPath->getFile());
     }
 
@@ -72,7 +77,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return static
      * @throws InvalidArgumentException
      */
-    static function fromFile(File $oFile): self {
+    public static function fromFile(File $oFile): self
+    {
         return new Composer($oFile->contents());
     }
 
@@ -81,7 +87,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      *
      * @throws InvalidArgumentException
      */
-    function getAuthor(): ?Author {
+    public function getAuthor(): ?Author
+    {
         $mValue = $this->getValue();
         if (isset($mValue['authors'])) {
             return new Author(current($mValue['authors']));
@@ -96,7 +103,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return AuthorList|null
      * @throws InvalidArgumentException
      */
-    function getAuthorList(): ?AuthorList {
+    public function getAuthorList(): ?AuthorList
+    {
         $mValue = $this->getValue();
         if (isset($mValue['author_list'])) {
             return new AuthorList($mValue['author_list']);
@@ -109,7 +117,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return DependencyList|null
      * @throws InvalidArgumentException
      */
-    function getDependencyList(bool $bIncludeRequireDev = false): ?DependencyList {
+    function getDependencyList(bool $bIncludeRequireDev = false): ?DependencyList
+    {
         $mValue = $this->getValue();
         $aDependencies = [];
 
@@ -135,7 +144,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return Dependency|null
      * @throws InvalidArgumentException
      */
-    function getDependency(): ?Dependency {
+    function getDependency(): ?Dependency
+    {
         $mValue = $this->getValue();
         if (isset($mValue['dependency'])) {
             return new Dependency($mValue['dependency']);
@@ -147,7 +157,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return array|null
      *
      */
-    function getExtra(): ?array {
+    function getExtra(): ?array
+    {
         $mValue = $this->getValue();
 
         if (isset($mValue['extra'])) {
@@ -160,7 +171,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return License|null
      * @throws InvalidArgumentException
      */
-    function getLicense(): ?License {
+    function getLicense(): ?License
+    {
         $mValue = $this->getValue();
         if (isset($mValue['license'])) {
             return new License($mValue['license']);
@@ -172,7 +184,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return Name|null
      * @external
      */
-    function getName(): ?Name {
+    function getName(): ?Name
+    {
         $mValue = $this->getValue();
         if (isset($mValue['name'])) {
             return new Name($mValue['name']);
@@ -184,7 +197,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return RepositoryList|null
      * @throws InvalidArgumentException
      */
-    function getRepositoryList(): ?RepositoryList {
+    function getRepositoryList(): ?RepositoryList
+    {
         $aItems = [];
         $mValue = $this->getValue();
         if (isset($mValue['repositories'])) {
@@ -208,7 +222,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return Repository|null
      * @throws InvalidArgumentException
      */
-    function getRepository(): ?Repository {
+    public function getRepository(): ?Repository
+    {
         $mValue = $this->getValue();
         if (isset($mValue['repository'])) {
             return new Repository($mValue['repository']);
@@ -220,7 +235,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return PluginType|null
      * @throws InvalidArgumentException
      */
-    function getType(): ?PluginType {
+    public function getType(): ?PluginType
+    {
         $mValue = $this->getValue();
         if (isset($mValue['type'])) {
             $sType = preg_replace('/^(novum|huran)-/', '', $mValue['type']);
@@ -233,7 +249,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return RepositoryType|null
      * @throws InvalidArgumentException
      */
-    function getRepositoryType(): ?RepositoryType {
+    public function getRepositoryType(): ?RepositoryType
+    {
         $mValue = $this->getValue();
         if (isset($mValue['repository_type'])) {
             return new RepositoryType($mValue['repository_type']);
@@ -244,7 +261,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
     /**
      * @return ServiceName|null
      */
-    function getServiceName(): ?ServiceName {
+    public function getServiceName(): ?ServiceName
+    {
         $mValue = $this->getValue();
         if (isset($mValue['service_name'])) {
             return new ServiceName($mValue['service_name']);
@@ -256,7 +274,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
      * @return Stability|null
      * @throws InvalidArgumentException
      */
-    function getStability(): ?Stability {
+    public function getStability(): ?Stability
+    {
         $mValue = $this->getValue();
         if (isset($mValue['stability'])) {
             return new Stability($mValue['stability']);
@@ -267,7 +286,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
     /**
      * @return Url|null
      */
-    function getUrl(): ?Url {
+    public function getUrl(): ?Url
+    {
         $mValue = $this->getValue();
         if (isset($mValue['url'])) {
             return new Url($mValue['url']);
@@ -278,7 +298,8 @@ class Composer extends AbstractDataType implements IGenericDataType {
     /**
      * @return Vendor|null
      */
-    function getVendor(): ?Vendor {
+    public function getVendor(): ?Vendor
+    {
         $mValue = $this->getValue();
         if (isset($mValue['vendor'])) {
             return new Vendor($mValue['vendor']);

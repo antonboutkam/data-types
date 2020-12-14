@@ -7,12 +7,14 @@ use Hurah\Types\Type\AbstractDataType;
 use Hurah\Types\Type\IComplexDataType;
 use Hurah\Types\Type\IGenericDataType;
 
-class AuthorList extends AbstractDataType implements IGenericDataType, IComplexDataType, IComposerComponent {
+class AuthorList extends AbstractDataType implements IGenericDataType, IComplexDataType, IComposerComponent
+{
     /**
      * @param null $aValues
      * @throws InvalidArgumentException
      */
-    function __construct($aValues = null) {
+    public function __construct($aValues = null)
+    {
         if (is_iterable($aValues)) {
             foreach ($aValues as $oValue) {
                 if (!$oValue instanceof Author) {
@@ -28,7 +30,8 @@ class AuthorList extends AbstractDataType implements IGenericDataType, IComplexD
      * @return AuthorList
      * @throws InvalidArgumentException
      */
-    static function fromArray(array $aData): self {
+    public static function fromArray(array $aData): self
+    {
         $aAuthors = [];
         foreach ($aData as $aRow) {
             $aAuthors[] = Author::fromArray($aRow);
@@ -36,7 +39,8 @@ class AuthorList extends AbstractDataType implements IGenericDataType, IComplexD
         return new AuthorList($aAuthors);
     }
 
-    function toArray(): array {
+    public function toArray(): array
+    {
         $aAuthors = [];
         $aValues = $this->getValue();
         if (is_iterable($aValues)) {
@@ -49,12 +53,12 @@ class AuthorList extends AbstractDataType implements IGenericDataType, IComplexD
         return $aAuthors;
     }
 
-    function __toString(): string {
+    public function __toString(): string
+    {
         $aOut = [];
         foreach ($this->getValue() as $oAuthor) {
             $aOut[] = (string)$oAuthor;
         }
         return json_encode($aOut, JSON_PRETTY_PRINT);
     }
-
 }

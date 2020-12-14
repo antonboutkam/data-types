@@ -4,13 +4,15 @@ namespace Hurah\Types\Type;
 
 use InvalidArgumentException;
 
-class KeywordList extends AbstractDataType implements IGenericDataType, IComplexDataType {
+class KeywordList extends AbstractDataType implements IGenericDataType, IComplexDataType
+{
 
     /**
      * ComposerStability constructor.
      * @param null $aValues
      */
-    function __construct($aValues = null) {
+    function __construct($aValues = null)
+    {
 
         if (is_iterable($aValues)) {
             foreach ($aValues as $oValue) {
@@ -23,7 +25,8 @@ class KeywordList extends AbstractDataType implements IGenericDataType, IComplex
         parent::__construct($aValues);
     }
 
-    static function fromArray(array $aData) {
+    static function fromArray(array $aData)
+    {
 
         $aKeywords = [];
         foreach ($aData as $sKeyword) {
@@ -35,7 +38,8 @@ class KeywordList extends AbstractDataType implements IGenericDataType, IComplex
     /**
      * @return string[]
      */
-    function toArray(): array {
+    public function toArray(): array
+    {
         $aKeywords = $this->getValue();
         $aOut = [];
         foreach ($aKeywords as $oKeyWord) {
@@ -47,12 +51,13 @@ class KeywordList extends AbstractDataType implements IGenericDataType, IComplex
     /**
      * @return Keyword[]
      */
-    function getValue() {
+    public function getValue()
+    {
         return parent::getValue();
     }
 
-    function __toString(): string {
+    public function __toString(): string
+    {
         return join(',', $this->getValue());
     }
-
 }

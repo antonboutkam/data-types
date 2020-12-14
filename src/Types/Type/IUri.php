@@ -2,5 +2,6 @@
 
 namespace Hurah\Types\Type;
 
-interface IUri {
+interface IUri
+{
 }

@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
-class Url extends AbstractDataType implements IGenericDataType, IUri {
+class Url extends AbstractDataType implements IGenericDataType, IUri
+{
 
 }

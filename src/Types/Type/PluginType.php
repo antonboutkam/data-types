@@ -4,7 +4,8 @@ namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
 
-class PluginType extends AbstractDataType implements IGenericDataType {
+class PluginType extends AbstractDataType implements IGenericDataType
+{
 
     const SITE = 'site';
     const API = 'api';
@@ -16,7 +17,8 @@ class PluginType extends AbstractDataType implements IGenericDataType {
      * @param null $sValue
      * @throws InvalidArgumentException
      */
-    function __construct($sValue = null) {
+    public function __construct($sValue = null)
+    {
 
         if (!in_array($sValue, $this->validOptions())) {
             throw new InvalidArgumentException("Unsupported plugin type, value must be one of " . join(', ', $this->validOptions()));
@@ -24,7 +26,8 @@ class PluginType extends AbstractDataType implements IGenericDataType {
         parent::__construct($sValue);
     }
 
-    private function validOptions(): array {
+    private function validOptions(): array
+    {
         return [
             self::SITE,
             self::API,
@@ -37,7 +40,8 @@ class PluginType extends AbstractDataType implements IGenericDataType {
      * @return PluginType[]
      * @throws InvalidArgumentException
      */
-    static function getAll(): array {
+    public static function getAll(): array
+    {
         $aTypes = [
             self::SITE,
             self::API,
@@ -51,15 +55,16 @@ class PluginType extends AbstractDataType implements IGenericDataType {
         return $aOut;
     }
 
-    static function hasDomainDependency(string $sType): bool {
+    public static function hasDomainDependency(string $sType): bool
+    {
         return in_array($sType, self::pluginsWithDomainDependency());
     }
 
-    private static function pluginsWithDomainDependency(): array {
+    private static function pluginsWithDomainDependency(): array
+    {
         return [
             self::API,
             self::SITE,
         ];
     }
-
 }

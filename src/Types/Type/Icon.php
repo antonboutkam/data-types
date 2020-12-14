@@ -2,10 +2,18 @@
 
 namespace Hurah\Types\Type;
 
-class Icon extends AbstractDataType implements IGenericDataType {
+use Hurah\Types\Type\Html\Element;
+use Hurah\Types\Type\Html\IElementizable;
 
-    function __construct($sValue = null) {
+class Icon extends AbstractDataType implements IGenericDataType, IElementizable
+{
 
+    public function __construct($sValue = null)
+    {
         parent::__construct($sValue);
+    }
+    public function toElement():Element
+    {
+        return Element::create('i')->addAttribute('class', "fa fa-{$this}");
     }
 }

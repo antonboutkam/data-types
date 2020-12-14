@@ -6,13 +6,15 @@ use Hurah\Types\Type\Composer\ServiceName;
 use Hurah\Types\Type\Composer\Vendor;
 use LogicException;
 
-class SystemId extends AbstractDataType implements IGenericDataType {
+class SystemId extends AbstractDataType implements IGenericDataType
+{
 
     /**
      * SystemId constructor.
      * @param null $mValue
      */
-    function __construct($mValue = null) {
+    public function __construct($mValue = null)
+    {
         if (is_string($mValue)) {
             parent::__construct($mValue);
         } else {
@@ -26,16 +28,17 @@ class SystemId extends AbstractDataType implements IGenericDataType {
         }
     }
 
-    static function make(Vendor $vendor, ServiceName $serviceName): self {
+    public static function make(Vendor $vendor, ServiceName $serviceName): self
+    {
         return new SystemId([
             $vendor,
             $serviceName,
         ]);
     }
 
-    function __toString(): string {
+    public function __toString(): string
+    {
         $sValue = $this->getValue();
         return "{$sValue}";
     }
-
 }

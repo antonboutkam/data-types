@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
-class Keyword extends AbstractDataType implements IGenericDataType {
+class Keyword extends AbstractDataType implements IGenericDataType
+{
 
 }

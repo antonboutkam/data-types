@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
-class Delete extends AbstractDataType implements IGenericDataType {
+class Delete extends AbstractDataType implements IGenericDataType
+{
 
 }

@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
-class Date extends AbstractDataType implements IGenericDataType {
+class Date extends AbstractDataType implements IGenericDataType
+{
 
 }

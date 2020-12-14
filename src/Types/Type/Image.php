@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
-class Image extends AbstractDataType implements IGenericDataType {
+class Image extends AbstractDataType implements IGenericDataType
+{
 
 }

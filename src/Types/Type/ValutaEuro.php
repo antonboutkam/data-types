@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
-class ValutaEuro extends AbstractDataType implements IGenericDataType {
+class ValutaEuro extends AbstractDataType implements IGenericDataType
+{
 
 }

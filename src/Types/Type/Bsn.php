@@ -7,6 +7,7 @@ namespace Hurah\Types\Type;
  *
  * @package Hurah\Type
  */
-class Bsn extends AbstractDataType implements IGenericDataType {
+class Bsn extends AbstractDataType implements IGenericDataType
+{
 
 }

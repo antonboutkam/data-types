@@ -11,13 +11,15 @@ use Hurah\Types\Util\JsonUtils;
  * Class SiteJson
  * @package Hurah\Types\Type
  */
-class SiteJson extends AbstractDataType implements IGenericDataType {
+class SiteJson extends AbstractDataType implements IGenericDataType
+{
     /**
      * SiteJson constructor.
      * @param null $sValue
      * @throws InvalidArgumentException
      */
-    function __construct($sValue = null) {
+    public function __construct($sValue = null)
+    {
         $sPath = str_replace(DIRECTORY_SEPARATOR . 'site.json', '', $sValue);
         $sPath = FileSystem::makePath($sPath, 'site.json');
         $sJson = file_get_contents($sPath);
@@ -25,26 +27,31 @@ class SiteJson extends AbstractDataType implements IGenericDataType {
         parent::__construct(JsonUtils::decode($sJson, true));
     }
 
-    function getSystemId(): SystemId {
+    public function getSystemId(): SystemId
+    {
         return new SystemId($this->getValue()['config_dir']);
     }
 
-    function getNamespace(): PhpNamespace {
+    public function getNamespace(): PhpNamespace
+    {
         return new PhpNamespace($this->getValue()['namespace']);
     }
 
-    function getServerAdmin(): Email {
+    public function getServerAdmin(): Email
+    {
         return new Email($this->getValue()['server_admin']);
     }
 
     /**
      * @return string[]
      */
-    function getEnvironments(): array {
+    public function getEnvironments(): array
+    {
         return array_keys($this->getValue()['site']);
     }
 
-    function getDomain(string $sEnv = 'live'): array {
+    public function getDomain(string $sEnv = 'live'): array
+    {
         return $this->getValue()['site'][$sEnv];
     }
 }

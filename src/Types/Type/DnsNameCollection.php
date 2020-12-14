@@ -1,10 +1,12 @@
 <?php
+
 namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\DnsName\Iterator;
 
-class DnsNameCollection extends AbstractDataType implements IComplexDataType {
+class DnsNameCollection extends AbstractDataType implements IComplexDataType
+{
 
     private int $position = 0;
 
@@ -13,7 +15,8 @@ class DnsNameCollection extends AbstractDataType implements IComplexDataType {
      *
      * @param array $mValues - An array of strings[] or Path[], internally will all be converted to Paths.
      */
-    function __construct($mValues = null) {
+    public function __construct($mValues = null)
+    {
         $this->position = 0;
 
         parent::__construct([]);
@@ -29,7 +32,8 @@ class DnsNameCollection extends AbstractDataType implements IComplexDataType {
      * @param $mValue
      * @throws InvalidArgumentException
      */
-    function add($mValue): void {
+    public function add($mValue): void
+    {
         if (is_string($mValue)) {
             $objectItem = DnsName::fromString($mValue);
         } else {
@@ -45,21 +49,22 @@ class DnsNameCollection extends AbstractDataType implements IComplexDataType {
         $this->setValue($aValues);
     }
 
-    function toArray(): array {
+    public function toArray(): array
+    {
         return $this->getValue();
     }
 
-    function getIterator(): Iterator
+    public function getIterator(): Iterator
     {
         return new Iterator($this);
     }
 
-    public function __toString(): string {
+    public function __toString(): string
+    {
         $aOut = [];
         foreach ($this->getValue() as $oPath) {
             $aOut[] = (string)$oPath;
         }
         return join(',', $aOut);
     }
-
 }

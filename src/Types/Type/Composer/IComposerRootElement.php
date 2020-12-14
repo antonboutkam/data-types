@@ -2,8 +2,9 @@
 
 namespace Hurah\Types\Type\Composer;
 
-interface IComposerRootElement {
-    function getKey(): string;
+interface IComposerRootElement
+{
+    public function getKey(): string;
 
-    function getValue();
+    public function getValue();
 }

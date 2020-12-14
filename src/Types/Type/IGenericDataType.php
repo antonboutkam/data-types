@@ -2,12 +2,13 @@
 
 namespace Hurah\Types\Type;
 
-interface IGenericDataType {
-    function __construct($sValue = null);
+interface IGenericDataType
+{
+    public function __construct($sValue = null);
 
-    function __toString(): string;
+    public function __toString(): string;
 
-    function setValue($sValue);
+    public function setValue($sValue);
 
-    function getValue();
+    public function getValue();
 }

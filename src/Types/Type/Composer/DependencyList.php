@@ -7,14 +7,16 @@ use Hurah\Types\Type\AbstractDataType;
 use Hurah\Types\Type\IComplexDataType;
 use Hurah\Types\Type\IGenericDataType;
 
-class DependencyList extends AbstractDataType implements IGenericDataType, IComplexDataType, IComposerComponent {
+class DependencyList extends AbstractDataType implements IGenericDataType, IComplexDataType, IComposerComponent
+{
 
     /**
      * ComposerStability constructor.
      * @param null $aValues
      * @throws InvalidArgumentException
      */
-    function __construct($aValues = null) {
+    public function __construct($aValues = null)
+    {
 
         if (is_iterable($aValues)) {
             foreach ($aValues as $oValue) {
@@ -27,7 +29,8 @@ class DependencyList extends AbstractDataType implements IGenericDataType, IComp
         parent::__construct($aValues);
     }
 
-    function toArray(): array {
+    public function toArray(): array
+    {
         $aOutput = [];
         $aDependencies = $this->getValue();
         if (is_iterable($aDependencies)) {
@@ -41,11 +44,13 @@ class DependencyList extends AbstractDataType implements IGenericDataType, IComp
     /**
      * @return Dependency[]
      */
-    function getValue(): array {
+    public function getValue(): array
+    {
         return parent::getValue();
     }
 
-    function findOne($sPackageName): ?Dependency {
+    public function findOne($sPackageName): ?Dependency
+    {
         foreach ($this->getValue() as $dependency) {
             if ($dependency->getPackageName() === $sPackageName) {
                 return $dependency;
@@ -54,7 +59,8 @@ class DependencyList extends AbstractDataType implements IGenericDataType, IComp
         return null;
     }
 
-    function hasDependency($sPackageName): bool {
+    public function hasDependency($sPackageName): bool
+    {
         foreach ($this->getValue() as $dependency) {
             if ($dependency->getPackageName() === $sPackageName) {
                 return true;
@@ -63,8 +69,8 @@ class DependencyList extends AbstractDataType implements IGenericDataType, IComp
         return false;
     }
 
-    function __toString(): string {
+    public function __toString(): string
+    {
         return json_encode($this->getValue(), JSON_PRETTY_PRINT);
     }
-
 }

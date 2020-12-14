@@ -9,14 +9,16 @@ use Hurah\Types\Type\IComplexDataType;
 use Hurah\Types\Type\IGenericDataType;
 use Hurah\Types\Type\IUri;
 
-class Repository extends AbstractDataType implements IGenericDataType, IComposerComponent, IComplexDataType {
+class Repository extends AbstractDataType implements IGenericDataType, IComposerComponent, IComplexDataType
+{
 
     /**
      * ComposerStability constructor.
      * @param null $aValue an associative array containing type => Type and (path => Path or url => Url)
      * @throws InvalidArgumentException
      */
-    function __construct($aValue = null) {
+    public function __construct($aValue = null)
+    {
         if (!isset($aValue['type'])) {
             throw new InvalidArgumentException("Argument type not set.");
         }
@@ -36,7 +38,8 @@ class Repository extends AbstractDataType implements IGenericDataType, IComposer
         parent::__construct($aValue);
     }
 
-    function getType(): RepositoryType {
+    public function getType(): RepositoryType
+    {
         return $this->getValue()['type'];
     }
 
@@ -44,7 +47,8 @@ class Repository extends AbstractDataType implements IGenericDataType, IComposer
      * @return IUri
      * @throws NullPointerException
      */
-    function getLocation(): IUri {
+    public function getLocation(): IUri
+    {
         $aValue = $this->getValue();
         if (isset($aValue[$this->getSourceType()])) {
             return $aValue[$this->getSourceType()];
@@ -57,7 +61,8 @@ class Repository extends AbstractDataType implements IGenericDataType, IComposer
      * @return string
      * @throws NullPointerException
      */
-    function getSourceType(): string {
+    public function getSourceType(): string
+    {
         $aValue = $this->getValue();
         if (isset($aValue['url'])) {
             return 'url';
@@ -69,7 +74,8 @@ class Repository extends AbstractDataType implements IGenericDataType, IComposer
         throw new NullPointerException("Missing property url or path");
     }
 
-    function toArray(): array {
+    public function toArray(): array
+    {
         return json_decode($this->getValue(), true);
     }
 }

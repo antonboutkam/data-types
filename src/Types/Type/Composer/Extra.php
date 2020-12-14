@@ -6,28 +6,32 @@ use Hurah\Types\Type\AbstractDataType;
 use Hurah\Types\Type\IComplexDataType;
 use Hurah\Types\Type\IGenericDataType;
 
-class Extra extends AbstractDataType implements IGenericDataType, IComplexDataType, IComposerComponent {
+class Extra extends AbstractDataType implements IGenericDataType, IComplexDataType, IComposerComponent
+{
     /**
      * @param null $aValue
      */
-    function __construct($aValue = null) {
+    public function __construct($aValue = null)
+    {
         parent::__construct($aValue);
     }
 
-    function toArray(): array {
+    public function toArray(): array
+    {
         return $this->getValue();
     }
 
     /**
      * @return array
      */
-    function getValue(): array {
+    public function getValue(): array
+    {
         return parent::getValue();
     }
 
-    function __toString(): string {
+    public function __toString(): string
+    {
         $aAuthor = $this->getValue();
         return json_encode($aAuthor);
     }
-
 }
