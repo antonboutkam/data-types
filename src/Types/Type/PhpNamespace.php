@@ -2,9 +2,10 @@
 
 namespace Hurah\Types\Type;
 
-use Core\Reflector;
-use Exception\LogicException;
+use ReflectionClass;
+use LogicException;
 use Hurah\Types\Exception\ClassNotFoundException;
+use ReflectionException;
 
 class PhpNamespace extends AbstractDataType implements IGenericDataType
 {
@@ -32,10 +33,20 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
 
     }
 
+    /**
+     * @param mixed ...$aParts
+     * @return $this
+     * @throws ReflectionException
+     */
     public function extend(...$aParts):self{
         return self::make($this, $aParts);
     }
 
+    /**
+     * @param mixed ...$aParts
+     * @return static
+     * @throws ReflectionException
+     */
     public static function make(...$aParts): self
     {
         $aUseParts = [];
@@ -47,10 +58,10 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
                 $aUseParts[] =  join('\\', $mPart);
             } elseif (is_string($mPart)) {
                 $aUseParts[] =  $mPart;
-            } elseif (is_object($mPart) && $mPart instanceof \Core\DataType\PhpNamespace) {
+            } elseif (is_object($mPart) && $mPart instanceof self) {
                 $aUseParts[] =  (string) $mPart;
             } elseif (is_object($mPart)) {
-                $reflector = new Reflector($mPart);
+                $reflector = new ReflectionClass(get_class($mPart));
                 $aUseParts[] = (string) $reflector->getNamespaceName();
             }
         }
