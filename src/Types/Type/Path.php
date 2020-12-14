@@ -3,7 +3,7 @@
 namespace Hurah\Types\Type;
 
 use DirectoryIterator;
-use Exception\NullPointerException;
+use Hurah\Types\Exception\NullPointerException;
 use Hurah\Types\Util\FileSystem;
 
 /**
