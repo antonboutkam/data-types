@@ -20,7 +20,7 @@ class PathTest extends TestCase {
 
     protected function setUp(): void {
         $this->oTestFile = $this->getTestFile();
-        $this->oTestFile->basename()->makeDir();
+        $this->oTestFile->dirname()->makeDir();
         $this->oTestFile->write('x');
     }
 
@@ -29,9 +29,11 @@ class PathTest extends TestCase {
      */
     function tearDown(): void {
         $this->oTestFile = $this->getTestFile();
-        $this->oTestFile->unlink();
-        $sDirName = dirname((string)$this->oTestFile);
-        rmdir($sDirName);
+        if($this->oTestFile->isFile())
+        {
+            $this->oTestFile->unlink();
+        }
+        $this->oTestFile->dirname()->unlink();
     }
 
     public function testWrite() {
@@ -53,6 +55,10 @@ class PathTest extends TestCase {
 
     public function testExists() {
 
+        if($this->oTestFile->exists())
+        {
+            $this->oTestFile->unlink();
+        }
         $this->assertFalse($this->oTestFile->exists());
         $this->oTestFile->write('x');
         $this->assertTrue($this->oTestFile->exists());
@@ -75,6 +81,10 @@ class PathTest extends TestCase {
     }
 
     public function testIsFile() {
+        if($this->oTestFile->exists())
+        {
+            $this->oTestFile->unlink();
+        }
         $this->assertFalse($this->oTestFile->isFile());
         $this->oTestFile->write('x');
         $this->assertTrue($this->oTestFile->isFile());
