@@ -106,16 +106,17 @@ class Link extends AbstractDataType implements IElementizable {
         {
             $oElement->addAttributes($this->oAttributes);
         }
-        if($this->sHtml)
-        {
-            $oElement->addHtml($this->sHtml);
-        }
+
         if($this->aChildren && is_iterable($this->aChildren))
         {
             foreach($this->aChildren as $oChild)
             {
                 $oElement->addChild($oChild);
             }
+        }
+        if($this->sHtml)
+        {
+            $oElement->addHtml($this->sHtml);
         }
         return $oElement;
     }

@@ -2,7 +2,7 @@
 
 namespace Hurah\Types\Type;
 
-use Tidy;
+use DOMDocument;
 
 /**
  * Represents a string, but string is a reserved keyword
@@ -13,6 +13,9 @@ class Html extends PlainText {
 
     public function __toString(): string {
 
-        return trim((string)$this->getValue());
+        $x = new DOMDocument();
+        $x->loadHTML(trim((string)$this->getValue()));
+        return $x->saveHTML();
+
     }
 }
