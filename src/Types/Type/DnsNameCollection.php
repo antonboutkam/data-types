@@ -28,6 +28,11 @@ class DnsNameCollection extends AbstractDataType implements IComplexDataType
         }
     }
 
+    public function isEmpty():bool
+    {
+        return count($this->getValue()) === 0;
+    }
+
     /**
      * @param $mValue
      * @throws InvalidArgumentException
