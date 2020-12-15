@@ -45,7 +45,8 @@ class Link extends AbstractDataType implements IElementizable {
         ];
         foreach ($aPossibleAttributes as $sKey) {
             if (isset($mValue[$sKey])) {
-                $this->oAttributes->add($sKey, $mValue[$sKey]);
+                echo "Add attribute $sKey - {$mValue[$sKey]} " . PHP_EOL;
+                $this->oAttributes->add($sKey, "{$mValue[$sKey]}");
             }
         }
 
@@ -62,20 +63,20 @@ class Link extends AbstractDataType implements IElementizable {
     }
 
     /**
-     * @param Url $sUrl
+     * @param Url|null $oUrl
      * @param AbstractDataType|null $sHtml
      * @param string|null $sTitle
      * @param string|null $sTarget
      * @return Link
      * @throws InvalidArgumentException
      */
-    public static function create(Url $sUrl = null, AbstractDataType $sHtml = null, string $sTitle = null, string $sTarget = null): Link {
+    public static function create(Url $oUrl = null, AbstractDataType $sHtml = null, string $sTitle = null, string $sTarget = null): Link {
 
         $aConstructorArguments = [];
 
-        if($sUrl)
+        if($oUrl)
         {
-            $aConstructorArguments['url'] = $sUrl;
+            $aConstructorArguments['href'] = $oUrl;
         }
 
         if($sHtml)
@@ -100,6 +101,9 @@ class Link extends AbstractDataType implements IElementizable {
      */
     public function toElement(): Element {
         $oElement = Element::create('a');
+
+        echo __METHOD__ . ' :: ' . __LINE__ . PHP_EOL;
+        print_r($this->oAttributes);
 
         if($this->oAttributes)
         {

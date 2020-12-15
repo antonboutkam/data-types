@@ -7,8 +7,14 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
 
     function __construct($sValue = null)
     {
-        $aParts = parse_url($sValue);
-        parent::__construct($aParts);
+        if($aParts = parse_url($sValue))
+        {
+            parent::__construct($aParts);
+        }
+        else
+        {
+            parent::__construct($sValue);
+        }
     }
 
     /**
@@ -97,7 +103,16 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
 
     function __toString(): string
     {
-        return $this->buildUrl();
+        // If the url is parsable in the constructor we are keeping it internally as an array of all of it's components
+        // when the url is not a valid url, just the # sign for instance, it is not parsable and we will return the
+        // original string, so #.
+
+        $mValue = $this->getValue();
+        if(is_array($mValue))
+        {
+            return $this->buildUrl();
+        }
+        return $mValue;
     }
 
     private function buildUrl():string {

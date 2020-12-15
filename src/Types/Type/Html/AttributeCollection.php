@@ -9,7 +9,6 @@ use Hurah\Types\Type\IComplexDataType;
 class AttributeCollection extends AbstractCollectionDataType implements IComplexDataType
 {
     protected int $position = 0;
-    private array $data;
 
     /***
      * PathCollection constructor.
@@ -22,7 +21,7 @@ class AttributeCollection extends AbstractCollectionDataType implements IComplex
         parent::__construct([]);
 
         $this->position = 0;
-        $this->data = [];
+        $this->array = [];
 
 
         if (is_iterable($mValues)) {
@@ -42,7 +41,7 @@ class AttributeCollection extends AbstractCollectionDataType implements IComplex
 
     public function addAttribute(Attribute $oAttribute) : void
     {
-        array_push($this->data, $oAttribute);
+        array_push($this->array, $oAttribute);
     }
 
     /**
@@ -98,7 +97,7 @@ class AttributeCollection extends AbstractCollectionDataType implements IComplex
     public function __toString(): string
     {
         $aOut = [];
-        foreach ($this->data as $oAttribute)
+        foreach ($this->array as $oAttribute)
         {
             $aOut[] = "$oAttribute";
         }
@@ -111,6 +110,6 @@ class AttributeCollection extends AbstractCollectionDataType implements IComplex
 
     public function current(): Attribute
     {
-        return $this->data[$this->position];
+        return $this->array[$this->position];
     }
 }

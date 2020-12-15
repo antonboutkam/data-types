@@ -3,6 +3,7 @@
 namespace Hurah\Types\Type\Html;
 
 use Hurah\Types\Type\AbstractDataType;
+use Hurah\Types\Type\Html;
 use Hurah\Types\Type\PlainText;
 
 class Element extends AbstractDataType implements IElementizable {
@@ -54,20 +55,20 @@ class Element extends AbstractDataType implements IElementizable {
     }
 
     public function __toString(): string {
-        $oText = new PlainText();
+        $oHtml = new Html();
 
         if (!$this->sType) {
             return join(PHP_EOL, $this->aChildren);
         }
         if (!empty($this->aChildren)) {
-            $oText->addLn("<{$this->sType}{$this->oAttributes}>");
+            $oHtml->addLn("<{$this->sType}{$this->oAttributes}>");
             foreach ($this->aChildren as $oChild) {
-                $oText->addLn("$oChild");
+                $oHtml->addLn("$oChild");
             }
-            $oText->addLn('</' . $this->sType . '>');
+            $oHtml->addLn('</' . $this->sType . '>');
         } else {
-            $oText->addLn("<{$this->sType}{$this->oAttributes}/>");
+            $oHtml->addLn("<{$this->sType}{$this->oAttributes}/>");
         }
-        return $oText;
+        return "{$oHtml}";
     }
 }
