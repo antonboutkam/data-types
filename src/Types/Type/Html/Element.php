@@ -63,11 +63,11 @@ class Element extends AbstractDataType implements IElementizable {
         if (!empty($this->aChildren)) {
             $oHtml->addLn("<{$this->sType}{$this->oAttributes}>");
             foreach ($this->aChildren as $oChild) {
-                $oHtml->addLn("$oChild");
+                $oHtml->addLn("{$oChild}");
             }
             $oHtml->addLn('</' . $this->sType . '>');
         } else {
-            $oHtml->addLn("<{$this->sType}{$this->oAttributes}/>");
+            $oHtml->addLn("<{$this->sType}{$this->oAttributes}></{$this->sType}>");
         }
         return "{$oHtml}";
     }

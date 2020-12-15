@@ -102,9 +102,6 @@ class Link extends AbstractDataType implements IElementizable {
     public function toElement(): Element {
         $oElement = Element::create('a');
 
-        echo __METHOD__ . ' :: ' . __LINE__ . PHP_EOL;
-        print_r($this->oAttributes);
-
         if($this->oAttributes)
         {
             $oElement->addAttributes($this->oAttributes);

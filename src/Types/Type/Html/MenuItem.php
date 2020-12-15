@@ -51,6 +51,7 @@ class MenuItem extends AbstractDataType implements IElementizable {
      */
     public function toElement(): Element {
         $oContainer = Element::create('li');
+
         $oContainer->addChild($this->oIcon);
         $oContainer->addChild(Link::create($this->oUrl, $this->sHtml));
         return $oContainer;

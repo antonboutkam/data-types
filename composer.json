@@ -11,8 +11,7 @@
     "stability" : "dev",
     "require": {
         "php" : "^7.4",
-        "ext-json": "*",
-        "ext-tidy": "*"
+        "ext-json": "*"
     },
     "require-dev" : {
         "phpunit/phpunit": "^9.3.8"
