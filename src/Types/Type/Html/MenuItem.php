@@ -29,7 +29,7 @@ class MenuItem extends AbstractDataType implements IElementizable {
         $oMenuItem->oAttributeCollection = new AttributeCollection();
         foreach ($params as $param) {
             if ($param instanceof Url) {
-                $oMenuItem->oAttributeCollection->add(['href' => $param]);
+                $oMenuItem->oUrl = $param;
             } elseif (is_string($param)) {
                 $oMenuItem->sHtml = new PlainText($param);
             } elseif ($param instanceof Element) {

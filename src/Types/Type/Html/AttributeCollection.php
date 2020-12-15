@@ -4,18 +4,18 @@ namespace Hurah\Types\Type\Html;
 
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\AbstractCollectionDataType;
-use Hurah\Types\Type\Html\Attribute\Iterator;
 use Hurah\Types\Type\IComplexDataType;
 
 class AttributeCollection extends AbstractCollectionDataType implements IComplexDataType
 {
-    private int $position = 0;
+    protected int $position = 0;
     private array $data;
 
     /***
      * PathCollection constructor.
      *
-     * @param array $mValues - An array of strings[] or Path[], internally will all be converted to Paths.
+     * @param null $mValues - An Attribute or an Attributes[]
+     * @throws InvalidArgumentException
      */
     public function __construct($mValues = null)
     {
@@ -34,8 +34,7 @@ class AttributeCollection extends AbstractCollectionDataType implements IComplex
 
     public function addCollection(AttributeCollection $oAttributeCollection) : void
     {
-        $oIterator = $oAttributeCollection->getIterator();
-        foreach ($oIterator as $oAttribute)
+        foreach ($oAttributeCollection as $oAttribute)
         {
             $this->addAttribute($oAttribute);
         }
@@ -45,6 +44,7 @@ class AttributeCollection extends AbstractCollectionDataType implements IComplex
     {
         array_push($this->data, $oAttribute);
     }
+
     /**
      * Possible usages:
      *
@@ -57,6 +57,7 @@ class AttributeCollection extends AbstractCollectionDataType implements IComplex
      * $oCollection->add(['type' => $sType]);
      *
      * @param $mValue
+     * @return AttributeCollection
      * @throws InvalidArgumentException
      */
     public function add(...$mValue): AttributeCollection
@@ -94,16 +95,10 @@ class AttributeCollection extends AbstractCollectionDataType implements IComplex
         return $this->getValue();
     }
 
-    public function getIterator(): Iterator
-    {
-        return new Iterator($this);
-    }
-
     public function __toString(): string
     {
         $aOut = [];
-        $aAttributes = $this->getIterator();
-        foreach ($aAttributes as $oAttribute)
+        foreach ($this->data as $oAttribute)
         {
             $aOut[] = "$oAttribute";
         }

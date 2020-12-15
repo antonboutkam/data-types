@@ -14,6 +14,7 @@ class Icon extends AbstractDataType implements IGenericDataType, IElementizable
     }
     public function toElement():Element
     {
-        return Element::create('i')->addAttribute('class', "fa fa-{$this}");
+        return Element::create('i')->addClass("fa fa-{$this}");
     }
+
 }

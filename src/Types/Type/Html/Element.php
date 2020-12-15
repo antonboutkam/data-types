@@ -9,9 +9,10 @@ class Element extends AbstractDataType implements IElementizable {
 
     use AttributesTrait;
 
-    private string $sType;
+    // When type is null, the child elements are returned and no container element (this object) is surrounding it.
+    private ?string $sType = null;
+
     protected AttributeCollection $oAttributes;
-    private array $aChildren;
 
     public function __construct($mValue = null) {
         $this->oAttributes = new AttributeCollection();
@@ -41,17 +42,11 @@ class Element extends AbstractDataType implements IElementizable {
         return $this;
     }
 
-
-
-
     public static function create(string $sType = null, AttributeCollection $attributes = null): Element {
         $oElement = new Element();
-        if($sType)
-        {
+        if ($sType) {
             $oElement->setType($sType);
         }
-
-
         if ($attributes) {
             $oElement->setAttributes($attributes);
         }
@@ -61,14 +56,12 @@ class Element extends AbstractDataType implements IElementizable {
     public function __toString(): string {
         $oText = new PlainText();
 
-        if(!$this->sType)
-        {
+        if (!$this->sType) {
             return join(PHP_EOL, $this->aChildren);
         }
         if (!empty($this->aChildren)) {
             $oText->addLn("<{$this->sType}{$this->oAttributes}>");
-            foreach ($this->aChildren as $oChild)
-            {
+            foreach ($this->aChildren as $oChild) {
                 $oText->addLn("$oChild");
             }
             $oText->addLn('</' . $this->sType . '>');

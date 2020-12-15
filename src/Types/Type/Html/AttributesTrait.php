@@ -8,7 +8,7 @@ use Hurah\Types\Type\PlainText;
 trait AttributesTrait {
 
     protected AttributeCollection $oAttributes;
-    private array $aChildren;
+    private ?array $aChildren = null;
 
     /**
      * @param string $sAttributeValue

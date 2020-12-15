@@ -11,7 +11,7 @@ class Link extends AbstractDataType implements IElementizable {
 
     use AttributesTrait;
 
-    private PlainText $sHtml;
+    private ?PlainText $sHtml = null;
     public const TARGET_BLANK = '_blank';
     public const TARGET_SELF = '_self';
     public const TARGET_PARENT = '_parent';
@@ -63,17 +63,21 @@ class Link extends AbstractDataType implements IElementizable {
 
     /**
      * @param Url $sUrl
-     * @param AbstractDataType $sHtml
+     * @param AbstractDataType|null $sHtml
      * @param string|null $sTitle
      * @param string|null $sTarget
      * @return Link
      * @throws InvalidArgumentException
      */
-    public static function create(Url $sUrl, AbstractDataType $sHtml = null, string $sTitle = null, string $sTarget = null): Link {
+    public static function create(Url $sUrl = null, AbstractDataType $sHtml = null, string $sTitle = null, string $sTarget = null): Link {
 
-        $aConstructorArguments = [
-            'url'    => $sUrl
-        ];
+        $aConstructorArguments = [];
+
+        if($sUrl)
+        {
+            $aConstructorArguments['url'] = $sUrl;
+        }
+
         if($sHtml)
         {
             $aConstructorArguments['html'] = $sHtml;
@@ -95,10 +99,24 @@ class Link extends AbstractDataType implements IElementizable {
      * @throws InvalidArgumentException
      */
     public function toElement(): Element {
-        return Element::create('a')
-                    ->addAttributes($this->oAttributes)
-                    ->addChild($this->sHtml);
+        $oElement = Element::create('a');
 
+        if($this->oAttributes)
+        {
+            $oElement->addAttributes($this->oAttributes);
+        }
+        if($this->sHtml)
+        {
+            $oElement->addHtml($this->sHtml);
+        }
+        if($this->aChildren && is_iterable($this->aChildren))
+        {
+            foreach($this->aChildren as $oChild)
+            {
+                $oElement->addChild($oChild);
+            }
+        }
+        return $oElement;
     }
 
     /**

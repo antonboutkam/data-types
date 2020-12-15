@@ -31,6 +31,7 @@ class PlainText extends AbstractDataType implements IGenericDataType
     public function addLn(string $data):self
     {
         $this->setValue($this->getValue() . $data . PHP_EOL);
+        return $this;
     }
     public function append(...$data):self
     {
