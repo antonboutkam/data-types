@@ -3,6 +3,7 @@
 namespace Hurah\Types\Type;
 
 use DirectoryIterator;
+use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Exception\NullPointerException;
 use Hurah\Types\Util\FileSystem;
 
@@ -12,11 +13,14 @@ use Hurah\Types\Util\FileSystem;
  * Class Path
  * @package Hurah\Type
  */
-class Path extends AbstractDataType implements IGenericDataType, IUri
-{
+class Path extends AbstractDataType implements IGenericDataType, IUri {
 
-    public static function make(...$aParts): self
-    {
+    /**
+     * @param mixed ...$aParts
+     * @return static
+     * @throws InvalidArgumentException
+     */
+    public static function make(...$aParts): self {
         $aUseParts = [];
         foreach ($aParts as $mPart) {
             if (is_null($mPart) || empty($mPart)) {
@@ -32,11 +36,10 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
     }
 
     /**
-     * @param $contents - something "stringable"
+     * @param $contents - something "string-able"
      * @return self
      */
-    public function write($contents): self
-    {
+    public function write($contents): self {
         file_put_contents(trim((string)$this->getValue()), PHP_EOL . (string)$contents);
         chmod((string)$this->getValue(), 0777);
         return $this;
@@ -47,8 +50,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      * @param mixed ...$aParts
      *
      */
-    public function append(...$aParts)
-    {
+    public function append(...$aParts) {
         $this->setValue($this->extend($aParts));
     }
 
@@ -57,24 +59,21 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      * @param mixed ...$aParts
      * @return Path
      */
-    public function extend(...$aParts): Path
-    {
+    public function extend(...$aParts): Path {
         return FileSystem::makePath($this, $aParts);
     }
 
     /**
      *
      */
-    public function getDirectoryIterator(): DirectoryIterator
-    {
+    public function getDirectoryIterator(): DirectoryIterator {
         return new DirectoryIterator($this);
     }
 
     /**
      *
      */
-    public function makeDir(): self
-    {
+    public function makeDir(): self {
         FileSystem::makeDir($this);
         return $this;
     }
@@ -82,40 +81,61 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
     /**
      *
      */
-    public function isDir(): bool
-    {
+    public function isDir(): bool {
         return is_dir($this);
     }
 
     /**
-     *
+     * @return File
+     * @throws InvalidArgumentException
      */
-    public function getFile(): File
-    {
+    public function getFile(): File {
         return new File($this);
+    }
+
+    /**
+     * @param Path|null $oSubtract
+     * @return PhpNamespace
+     * @throws InvalidArgumentException
+     * @throws \ReflectionException
+     */
+    public function toPsr4(PhpNamespace $prepend = null, Path $oSubtract = null): PhpNamespace {
+
+        $sWorkPath = "{$this}";
+        if ($oSubtract) {
+            $sWorkPath = str_replace("{$oSubtract}", "", $sWorkPath);
+            $sWorkPath = preg_replace('/^\\' . DIRECTORY_SEPARATOR . '/', '', $sWorkPath);
+        }
+        $sWorkPath = preg_replace('/\.php$/', '', $sWorkPath);
+        $sNamespacePath = str_replace(DIRECTORY_SEPARATOR, '\\', $sWorkPath);
+        return PhpNamespace::make($prepend, $sNamespacePath);
     }
 
     /**
      *
      * @param int $iLevels = 1
      * @return Path
+     * @throws InvalidArgumentException
      */
-    public function dirname(int $iLevels = 1): Path
-    {
+    public function dirname(int $iLevels = 1): Path {
         return new Path(dirname($this, $iLevels));
     }
 
-    public function isFile(): bool
-    {
+    public function isFile(): bool {
         return file_exists($this) && is_file($this);
     }
 
-    public function unlink(): bool
-    {
+    /**
+     * @return bool
+     * @throws NullPointerException
+     */
+    public function unlink(): bool {
         if (is_dir($this)) {
             return rmdir($this);
-        } elseif (file_exists($this) || is_link($this)) {
-            return unlink($this);
+        } else {
+            if (file_exists($this) || is_link($this)) {
+                return unlink($this);
+            }
         }
         throw new NullPointerException("Unlinking failed, file does not exist.");
     }
@@ -127,15 +147,17 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      * @param Path $oDestination
      * @return $this
      */
-    public function move(Path $oDestination): Path
-    {
+    public function move(Path $oDestination): Path {
         rename($this, $oDestination);
         $this->setValue($oDestination);
         return $this;
     }
 
-    public function contents()
-    {
+    /**
+     * @return PlainText
+     * @throws InvalidArgumentException
+     */
+    public function contents() {
         return new PlainText(file_get_contents($this));
     }
 
@@ -143,24 +165,27 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      *
      * @param int $iLevels = 1
      * @return Path
+     * @throws InvalidArgumentException
      */
-    public function basename(int $iLevels = 1): Path
-    {
+    public function basename(int $iLevels = 1): Path {
         return new Path(basename($this, $iLevels));
     }
 
     /**
      *
      */
-    public function exists(): bool
-    {
+    public function exists(): bool {
         $sValue = $this->getValue();
         if (file_exists($sValue)) {
             return true;
-        } elseif (is_dir($sValue)) {
-            return true;
-        } elseif (is_link($sValue)) {
-            return true;
+        } else {
+            if (is_dir($sValue)) {
+                return true;
+            } else {
+                if (is_link($sValue)) {
+                    return true;
+                }
+            }
         }
         return false;
     }

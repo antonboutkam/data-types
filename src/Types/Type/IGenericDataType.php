@@ -2,8 +2,15 @@
 
 namespace Hurah\Types\Type;
 
+use Hurah\Types\Exception\InvalidArgumentException;
+
 interface IGenericDataType
 {
+    /**
+     * IGenericDataType constructor.
+     * @param null $sValue
+     * @throws InvalidArgumentException
+     */
     public function __construct($sValue = null);
 
     public function __toString(): string;

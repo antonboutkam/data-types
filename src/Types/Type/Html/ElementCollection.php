@@ -8,8 +8,8 @@ use Hurah\Types\Type\IComplexDataType;
 
 class ElementCollection extends AbstractCollectionDataType implements IComplexDataType
 {
-    private int $position = 0;
-    private array $data;
+    protected int $position = 0;
+    protected array $data;
 
     /***
      * PathCollection constructor.

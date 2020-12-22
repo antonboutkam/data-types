@@ -2,6 +2,8 @@
 
 namespace Hurah\Types\Type;
 
+use InvalidArgumentException;
+
 class Url extends AbstractDataType implements IGenericDataType, IUri
 {
 
@@ -44,7 +46,7 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
             }
             else
             {
-                throw new \InvalidArgumentException("Can only create a Path from AbstractDataType objects, strings or arrays");
+                throw new InvalidArgumentException("Can only create a Path from AbstractDataType objects, strings or arrays");
             }
         }
         return $this;
@@ -52,7 +54,7 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
 
     /**
      * Overwrites the path component of the url.
-     * @param string $sPath
+     * @param string|null $sPath
      */
     function setPath(?string $sPath = null){
         $aComponents = $this->getValue();

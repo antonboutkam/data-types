@@ -3,6 +3,7 @@
 namespace Test\Hurah\Types\Type;
 
 use DirectoryIterator;
+use Hurah\Types\Exception\NullPointerException;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Util\DirectoryStructure;
 use Hurah\Types\Util\FileSystem;
@@ -25,7 +26,7 @@ class PathTest extends TestCase {
     }
 
     /**
-     * @throws \Hurah\Types\Exception\NullPointerException
+     * @throws NullPointerException
      */
     function tearDown(): void {
         $this->oTestFile = $this->getTestFile();

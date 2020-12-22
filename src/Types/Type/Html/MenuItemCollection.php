@@ -8,8 +8,8 @@ use Hurah\Types\Type\IComplexDataType;
 
 class MenuItemCollection extends AbstractCollectionDataType implements IComplexDataType, IElementizable
 {
-    private int $position;
-    private array $data;
+    protected int $position;
+    protected array $data;
 
     /***
      * PathCollection constructor.

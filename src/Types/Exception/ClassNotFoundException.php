@@ -7,7 +7,6 @@ use Exception;
 /**
  * Class ClassNotFoundException
  * @package Hurah\Type\Exception
- * @internal
  */
 final class ClassNotFoundException extends Exception {
 

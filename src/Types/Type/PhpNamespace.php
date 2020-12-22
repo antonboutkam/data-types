@@ -2,6 +2,8 @@
 
 namespace Hurah\Types\Type;
 
+use Exception;
+use Hurah\Types\Exception\InvalidArgumentException;
 use ReflectionClass;
 use LogicException;
 use Hurah\Types\Exception\ClassNotFoundException;
@@ -37,15 +39,32 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
      * @param mixed ...$aParts
      * @return $this
      * @throws ReflectionException
+     * @throws InvalidArgumentException
      */
     public function extend(...$aParts):self{
         return self::make($this, $aParts);
+    }
+
+    public function implementsInterface($mInterfaceName):bool {
+        try {
+            $oReflector = new ReflectionClass("{$this}");
+            if($oReflector->implementsInterface("{$mInterfaceName}"))
+            {
+                return true;
+            }
+            return false;
+        }
+        catch (Exception $e)
+        {
+            return false;
+        }
     }
 
     /**
      * @param mixed ...$aParts
      * @return static
      * @throws ReflectionException
+     * @throws InvalidArgumentException
      */
     public static function make(...$aParts): self
     {
