@@ -38,7 +38,25 @@ class TypeType extends AbstractDataType implements IGenericDataType
 
     }
 
-    function __toString(): string {
+    /**
+     * @param mixed ...$constructorParams
+     * @return IGenericDataType
+     * @throws InvalidArgumentException
+     */
+    public function createInstance($constructorParams):IGenericDataType
+    {
+        $sClassName = $this->getValue();
+        try {
+
+            return new $sClassName($constructorParams);
+        }
+        catch (InvalidArgumentException $e)
+        {
+            throw new InvalidArgumentException($e->getMessage());
+        }
+
+    }
+    public function __toString(): string {
         return "{$this->getValue()}";
     }
 }

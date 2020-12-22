@@ -35,11 +35,11 @@ class TypeTypeFactory {
 
         foreach ($oFinder as $oFile) {
             $oPath = new Path($oFile->getRealPath());
-            $oPotentialType = $oPath->toPsr4(new PhpNamespace('\\Hurah\\Types\\Type'), $oTypesDir);
+            $oPotentialType = $oPath->toPsr4(new PhpNamespace('Hurah\\Types\\Type'), $oTypesDir);
 
             if($oPotentialType->implementsInterface(IGenericDataType::class))
             {
-                $oTypeTypeCollection->add($oPotentialType);
+                $oTypeTypeCollection->add("{$oPotentialType}");
             }
         }
         return $oTypeTypeCollection;
