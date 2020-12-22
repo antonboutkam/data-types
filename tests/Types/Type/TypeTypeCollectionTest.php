@@ -3,8 +3,10 @@
 namespace Test\Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
+use Hurah\Types\Exception\RuntimeException;
 use Hurah\Types\Type\PhpNamespace;
 use Hurah\Types\Type\PlainText;
+use Hurah\Types\Type\TypeType;
 use Hurah\Types\Type\TypeTypeCollection;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
@@ -18,42 +20,46 @@ class TypeTypeCollectionTest extends TestCase {
 
     /**
      * @throws InvalidArgumentException
+     * @throws RuntimeException
      * @depends test__construct
      */
     public function testCurrent() {
         $oTypeTypeCollection = new TypeTypeCollection();
         $oTypeTypeCollection->addObject(new PlainText());
-        $this->assertInstanceOf(PhpNamespace::class, $oTypeTypeCollection->current());
+        $this->assertInstanceOf(TypeType::class, $oTypeTypeCollection->current(), get_class($oTypeTypeCollection->current()));
     }
 
     /**
      * @depends test__construct
      * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
     public function testAddObject() {
         $oTypeTypeCollection = new TypeTypeCollection();
         $oTypeTypeCollection->addObject(new PlainText());
-        $this->assertInstanceOf(PhpNamespace::class, $oTypeTypeCollection->current());
+        $this->assertInstanceOf(TypeType::class, $oTypeTypeCollection->current());
     }
 
     /**
      * @depends test__construct
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     * @throws RuntimeException
      */
     public function testAddString() {
         $oTypeTypeCollection = new TypeTypeCollection();
         $oTypeTypeCollection->addString(PlainText::class);
-        $this->assertInstanceOf(PhpNamespace::class, $oTypeTypeCollection->current());
+        $this->assertInstanceOf(TypeType::class, $oTypeTypeCollection->current());
     }
 
     /**
      * @depends test__construct
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     * @throws RuntimeException
      */
     public function testAddString2() {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(ReflectionException::class);
         $oTypeTypeCollection = new TypeTypeCollection();
         $oTypeTypeCollection->addString(new PlainText());
     }
@@ -61,6 +67,7 @@ class TypeTypeCollectionTest extends TestCase {
     /**
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     * @throws RuntimeException
      * @depends testAddString
      * @depends testAddObject
      */
@@ -68,25 +75,27 @@ class TypeTypeCollectionTest extends TestCase {
         $oTypeTypeCollection = new TypeTypeCollection();
         $oTypeTypeCollection->add(new PlainText());
         $oTypeTypeCollection->add(PlainText::class);
-        $this->assertInstanceOf(PhpNamespace::class, $oTypeTypeCollection->current());
+        $this->assertInstanceOf(TypeType::class, $oTypeTypeCollection->current());
     }
 
     /**
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     * @throws RuntimeException
      * @depends testAddString
      * @depends testAddObject
      */
     public function testAdd2() {
         $oTypeTypeCollection = new TypeTypeCollection();
-        $oTypeTypeCollection->add(self::class);
         $oTypeTypeCollection->add(PlainText::class);
-        $this->assertInstanceOf(PhpNamespace::class, $oTypeTypeCollection->current());
+        $oTypeTypeCollection->add($oTypeTypeCollection);
+        $this->assertInstanceOf(TypeType::class, $oTypeTypeCollection->current());
     }
 
     /**
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     * @throws RuntimeException
      * @depends testAddString
      * @depends testAddObject
      */
@@ -102,14 +111,14 @@ class TypeTypeCollectionTest extends TestCase {
      * @depends testAddObject
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     * @throws RuntimeException
      */
     public function testToArray() {
         $oTypeTypeCollection = new TypeTypeCollection();
         $oTypeTypeCollection->add(new PlainText());
         $oTypeTypeCollection->add(PlainText::class);
-        $aExpected = [
+        $aExpected = ["Hurah\\Types\\Type\\PlainText","Hurah\\Types\\Type\\PlainText"];
 
-        ];
         $this->assertEquals($aExpected, $oTypeTypeCollection->toArray(), json_encode($oTypeTypeCollection->toArray()));
     }
 
@@ -118,14 +127,13 @@ class TypeTypeCollectionTest extends TestCase {
      * @depends testAddObject
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     * @throws RuntimeException
      */
     public function test__toString() {
         $oTypeTypeCollection = new TypeTypeCollection();
         $oTypeTypeCollection->add(new PlainText());
         $oTypeTypeCollection->add(PlainText::class);
-        $aExpected = [
-
-        ];
+        $aExpected = ["Hurah\\Types\\Type\\PlainText","Hurah\\Types\\Type\\PlainText"];
         $this->assertEquals($aExpected, $oTypeTypeCollection->toArray(), json_encode($oTypeTypeCollection->toArray()));
     }
 }

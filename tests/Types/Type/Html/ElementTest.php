@@ -16,11 +16,9 @@ class ElementTest extends TestCase {
     public function test__toString() {
         $oElement = Element::create('span');
         $oElement->addClass('bla');
-        $this->assertEquals('<span class="bla"></span>', "{$oElement}");
+        $this->assertEquals('<span class="bla"></span>', "{$oElement}", "{$oElement}");
 
     }
 
-    public function testToElement() {
 
-    }
 }

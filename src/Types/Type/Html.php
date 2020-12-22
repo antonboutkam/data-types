@@ -18,10 +18,7 @@ class Html extends PlainText {
         $x->formatOutput = true;
 
         $x->loadXML(trim((string)$this->getValue()), LIBXML_NOXMLDECL | LIBXML_HTML_NODEFDTD | LIBXML_NOEMPTYTAG);
-        $sHtml = $x->saveXML($x);
-        // dirty way to remove the first xml line and get formatted html, fix this in the future / when it becomes
-        // problemistic
-        $sHtml = preg_replace('/^.+\n/', '', $sHtml);
+        $sHtml = $x->saveXML($x->documentElement, LIBXML_NOEMPTYTAG | LIBXML_HTML_NODEFDTD | LIBXML_NOEMPTYTAG);
         return $sHtml;
 
     }

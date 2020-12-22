@@ -13,7 +13,6 @@ class HtmlTest extends TestCase {
         $this->assertEquals(
 '<div class="x">
   <a href="/y">ss</a>
-</div>
-', "{$oHtml}");
+</div>', "{$oHtml}");
     }
 }

@@ -20,13 +20,13 @@ class PathCollectionTest extends TestCase {
         $oPathCollection->add(new Path($expected2 = 'www.example.com'));
         $oPathCollection->add($expected3 = 'example.www.com');
 
-        $oIterator = $oPathCollection->getIterator();
 
-        $this->assertEquals(new Path($expected1), $oIterator->current());
-        $oIterator->next();
-        $this->assertEquals(new Path($expected2), $oIterator->current());
-        $oIterator->next();
-        $this->assertEquals(new Path($expected3), $oIterator->current());
+
+        $this->assertEquals(new Path($expected1), $oPathCollection->current());
+        $oPathCollection->next();
+        $this->assertEquals(new Path($expected2), $oPathCollection->current());
+        $oPathCollection->next();
+        $this->assertEquals(new Path($expected3), $oPathCollection->current());
 
     }
 

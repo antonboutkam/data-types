@@ -8,7 +8,7 @@ use Hurah\Types\Type\DnsName\Iterator;
 class DnsNameCollection extends AbstractDataType implements IComplexDataType
 {
 
-    private int $position = 0;
+    private int $position;
 
     /***
      * PathCollection constructor.

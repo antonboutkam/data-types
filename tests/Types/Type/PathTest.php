@@ -102,7 +102,7 @@ class PathTest extends TestCase {
 
     public function testGetFile() {
         $sResult = $this->oTestFile->write($sExpected = '1232142312')->contents();
-        $this->assertTrue("$sResult" === "$sExpected", var_dump("$sResult") . ' === ' . var_dump("$sExpected"));
+        $this->assertTrue("$sResult" === "$sExpected", "$sResult" . ' === ' . "$sExpected");
     }
 
     public function testGetDirectoryIterator() {

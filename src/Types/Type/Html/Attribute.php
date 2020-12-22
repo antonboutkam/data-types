@@ -2,7 +2,7 @@
 
 namespace Hurah\Types\Type\Html;
 
-use Exception\InvalidArgumentException;
+use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\AbstractDataType;
 use Hurah\Types\Type\PlainText;
 

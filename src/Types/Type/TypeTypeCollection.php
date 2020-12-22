@@ -3,18 +3,21 @@
 namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
+use Hurah\Types\Exception\RuntimeException;
 use ReflectionClass;
 use ReflectionException;
 
 class TypeTypeCollection extends AbstractCollectionDataType implements IComplexDataType {
     protected int $position;
-    protected array $data;
+    protected array $array;
 
     /**
      * PathCollection constructor.
      *
-     * @param IGenericDataType[]
-     * @throws InvalidArgumentException|ReflectionException
+     * @param null $mValues
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
+     * @throws RuntimeException
      */
     public function __construct($mValues = null) {
 
@@ -34,7 +37,7 @@ class TypeTypeCollection extends AbstractCollectionDataType implements IComplexD
      * @param TypeType $item
      */
     private function addItem(TypeType $item) {
-        $this->data[] = $item;
+        $this->array[] = $item;
     }
 
     /**
@@ -43,6 +46,7 @@ class TypeTypeCollection extends AbstractCollectionDataType implements IComplexD
      * @return TypeTypeCollection
      * @throws ReflectionException
      * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
     public function addString(string $sFqClassName):self
     {
@@ -64,6 +68,7 @@ class TypeTypeCollection extends AbstractCollectionDataType implements IComplexD
      * @param PhpNamespace $oPhpNamespace
      * @return TypeTypeCollection
      * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
     public function addPhpNamespace(PhpNamespace $oPhpNamespace):self
     {
@@ -83,6 +88,7 @@ class TypeTypeCollection extends AbstractCollectionDataType implements IComplexD
      * @param IGenericDataType $dataType
      * @return TypeTypeCollection
      * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
     public function addObject(IGenericDataType $dataType):self
     {
@@ -95,6 +101,7 @@ class TypeTypeCollection extends AbstractCollectionDataType implements IComplexD
      * @return $this
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     * @throws RuntimeException
      */
     public function addCollection(self $collection):self
     {
@@ -104,11 +111,13 @@ class TypeTypeCollection extends AbstractCollectionDataType implements IComplexD
         }
         return $this;
     }
+
     /**
      * @param mixed ...$mValues
      * @return TypeTypeCollection
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     * @throws RuntimeException
      */
     public function add(...$mValues): self {
         foreach ($mValues as $mValue)
@@ -145,7 +154,7 @@ class TypeTypeCollection extends AbstractCollectionDataType implements IComplexD
         return $aOut;
     }
     public function count() : int {
-        return count($this->data);
+        return count($this->array);
     }
 
     public function __toString(): string {
