@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
+use Error;
 use Exception;
 use Hurah\Types\Exception\InvalidArgumentException;
 use ReflectionClass;
@@ -31,11 +32,19 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
         if (preg_match('@\\\\([\w]+)$@', $this->getValue(), $matches)) {
             return $matches[1];
         }
+
+echo __METHOD__ . ':' . __LINE__ . PHP_EOL;
+$aBacktrace = debug_backtrace();
+foreach($aBacktrace as $aLine)
+{
+    echo $aLine['file'] . '::' . $aLine['line'] . PHP_EOL;
+}
         throw new LogicException("Could not shorten Namespace name");
 
     }
 
     /**
+     * Returns a new PhpNamespace instance with the extended part added. The current object is not touched.
      * @param mixed ...$aParts
      * @return $this
      * @throws ReflectionException
@@ -43,6 +52,27 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
      */
     public function extend(...$aParts):self{
         return self::make($this, $aParts);
+    }
+
+    /**
+     * @param int $iLevels
+     * @return $this
+     */
+    public function reduce(int $iLevels):self
+    {
+        try {
+            $sCurrentNs = $this->getValue();
+            $aCurrentNsComponents = explode('\\', $sCurrentNs);
+            $iNewArrayLength = count($aCurrentNsComponents) - $iLevels;
+            $aNewNsComponents = array_slice($aCurrentNsComponents, 0, $iNewArrayLength);
+            $sNewNs = join('\\', $aNewNsComponents);
+            return new PhpNamespace($sNewNs);
+        }
+        catch (InvalidArgumentException $e)
+        {
+            throw new Error("Could not reduce $sCurrentNs with $iLevels levels");
+        }
+
     }
 
     public function implementsInterface($mInterfaceName):bool {
