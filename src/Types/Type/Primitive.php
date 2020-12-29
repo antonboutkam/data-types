@@ -16,11 +16,11 @@ use Hurah\Types\Type\Primitive\PrimitiveString;
  */
 class Primitive extends AbstractDataType implements IGenericDataType
 {
-    function __construct($sValue = null) {
+    public function __construct($sValue = null) {
         parent::__construct($sValue);
     }
 
-    function create(string $sType) : IPrimitiveType
+    public static function create(string $sType) : IPrimitiveType
     {
         if($sType == 'bool' || $sType == 'boolean' || $sType === PrimitiveBool::class)
         {
