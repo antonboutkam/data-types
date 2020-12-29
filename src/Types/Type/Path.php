@@ -40,7 +40,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
      * @return self
      */
     public function write($contents): self {
-        file_put_contents(trim((string)$this->getValue()), PHP_EOL . (string)$contents);
+        file_put_contents(trim((string)$this->getValue()), (string)$contents);
         chmod((string)$this->getValue(), 0777);
         return $this;
     }

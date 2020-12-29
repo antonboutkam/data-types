@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
+use Error;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Exception\RuntimeException;
 use Hurah\Types\Type\Primitive\IPrimitiveType;
@@ -63,15 +64,21 @@ class TypeType extends AbstractDataType implements IGenericDataType
     }
     /**
      * @return bool
-     * @throws InvalidArgumentException
      */
     public function isPrimitive(): bool {
-        return $this->toPhpNamespace()
-                    ->implementsInterface(IPrimitiveType::class);
+        try
+        {
+            return $this->toPhpNamespace()
+                        ->implementsInterface(IPrimitiveType::class);
+        }
+        catch (InvalidArgumentException $e)
+        {
+            throw new Error($e->getMessage());
+        }
+
     }
     /**
      * @return PhpNamespace
-     * @throws InvalidArgumentException
      */
     public function toPhpNamespace(): PhpNamespace {
         return new PhpNamespace("{$this->getValue()}");

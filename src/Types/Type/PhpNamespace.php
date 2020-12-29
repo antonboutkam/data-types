@@ -33,12 +33,6 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
             return $matches[1];
         }
 
-echo __METHOD__ . ':' . __LINE__ . PHP_EOL;
-$aBacktrace = debug_backtrace();
-foreach($aBacktrace as $aLine)
-{
-    echo $aLine['file'] . '::' . $aLine['line'] . PHP_EOL;
-}
         throw new LogicException("Could not shorten Namespace name");
 
     }
