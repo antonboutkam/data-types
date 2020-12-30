@@ -16,33 +16,32 @@ use Hurah\Types\Type\Primitive\PrimitiveString;
  */
 class Primitive extends AbstractDataType implements IGenericDataType
 {
+    private IPrimitiveType $mPrimitive;
     public function __construct($sValue = null) {
-        parent::__construct($sValue);
+        $this->mPrimitive = self::create($sValue);
+        parent::__construct($this->mPrimitive);
     }
-
-    public static function create(string $sType) : IPrimitiveType
-    {
-        if($sType == 'bool' || $sType == 'boolean' || $sType === PrimitiveBool::class)
+    public static function create(string $sType): IPrimitiveType {
+        if ($sType == 'bool' || $sType == 'boolean' || $sType === PrimitiveBool::class)
         {
             return new PrimitiveBool();
-        }
-        elseif($sType === 'string' || $sType === PrimitiveString::class)
+        } else if ($sType === 'string' || $sType === PrimitiveString::class)
         {
             return new PrimitiveString();
-        }
-        elseif($sType === 'array' || $sType === PrimitiveArray::class)
+        } else if ($sType === 'array' || $sType === PrimitiveArray::class)
         {
             return new PrimitiveArray();
-        }
-        elseif($sType === 'float' || $sType === PrimitiveFloat::class)
+        } else if ($sType === 'float' || $sType === PrimitiveFloat::class)
         {
             return new PrimitiveFloat();
-        }
-        elseif($sType === 'int' || $sType === 'integer' || $sType === PrimitiveInt::class)
+        } else if ($sType === 'int' || $sType === 'integer' || $sType === PrimitiveInt::class)
         {
             return new PrimitiveInt();
         }
         throw new InvalidArgumentException("$sType is not a primitive type.");
+    }
+    public function getImplementationClassName(): string {
+        return get_class($this->mPrimitive);
     }
 
 }
