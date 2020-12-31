@@ -45,3 +45,4 @@ class Primitive extends AbstractDataType implements IGenericDataType
     }
 
 }
+
