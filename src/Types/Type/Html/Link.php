@@ -45,7 +45,6 @@ class Link extends AbstractDataType implements IElementizable {
         ];
         foreach ($aPossibleAttributes as $sKey) {
             if (isset($mValue[$sKey])) {
-                echo "Add attribute $sKey - {$mValue[$sKey]} " . PHP_EOL;
                 $this->oAttributes->add($sKey, "{$mValue[$sKey]}");
             }
         }

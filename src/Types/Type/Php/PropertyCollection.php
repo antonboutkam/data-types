@@ -21,6 +21,11 @@ class PropertyCollection extends AbstractCollectionDataType implements IComplexD
     {
         parent::__construct([]);
 
+        if(!$mValues)
+        {
+            return;
+        }
+
         if (is_array($mValues))
         {
             foreach ($mValues as $mValue)

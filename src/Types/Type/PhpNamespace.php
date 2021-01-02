@@ -33,7 +33,7 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
             return $matches[1];
         }
 
-        throw new LogicException("Could not shorten Namespace name");
+        throw new LogicException("Could not shorten Namespace name {$this->getValue()}.");
 
     }
 
@@ -46,6 +46,58 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
      */
     public function extend(...$aParts):self{
         return self::make($this, $aParts);
+    }
+
+    /**
+     * Removes a portion from the beginning of the namespace
+     * @param mixed ...$aParts
+     * @return $this
+     * @throws ReflectionException
+     * @throws InvalidArgumentException
+     */
+    public function shift(int $iLevels = 1):self {
+
+        $aParts = explode('\\', $this->getValue());
+        array_splice($aParts, 0, $iLevels);
+        $oTmp = self::make($aParts);
+        $this->setValue($oTmp->getValue());
+        return $this;
+    }
+
+
+    /**
+     * Adds something to the beginning of the namespace
+     * @param mixed ...$aParts
+     * @return $this
+     * @throws ReflectionException
+     * @throws InvalidArgumentException
+     */
+    public function prepend(...$aParts):self{
+
+        if("{$this}")
+        {
+            $this->setValue((self::make($aParts, $this))->getValue());
+        }
+        else
+        {
+            $this->setValue((self::make($aParts))->getValue());
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Adds something to the end of the namespace
+     * @param mixed ...$aParts
+     * @return $this
+     * @throws ReflectionException
+     * @throws InvalidArgumentException
+     */
+    public function append(...$aParts):self{
+        $this->setValue((self::make($this, $aParts))->getValue());
+        return $this;
     }
 
     /**
