@@ -13,6 +13,32 @@ class PathCollectionTest extends TestCase {
     /**
      * @throws InvalidArgumentException
      */
+    public function testForeach() {
+
+        $oPathCollection = new PathCollection();
+        $oPathCollection->add($expected1 = 'example.com');
+        $oPathCollection->add(new Path($expected2 = 'www.example.com'));
+        $oPathCollection->add('example.www.com');
+        $oPathCollection->add('examp3le.www.com');
+        $oPathCollection->add('ex3ample.www.com');
+        $oPathCollection->add('exaemple.www.com');
+
+        $i = 0;
+        foreach($oPathCollection as $path)
+        {
+            $i++;
+            $this->assertInstanceOf(Path::class, $path);
+        }
+        $this->assertGreaterThan(1, $i);
+
+    }
+
+
+
+
+    /**
+     * @throws InvalidArgumentException
+     */
     public function testIterator() {
 
         $oPathCollection = new PathCollection();
