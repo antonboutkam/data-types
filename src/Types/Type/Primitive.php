@@ -16,6 +16,7 @@ use Hurah\Types\Type\Primitive\PrimitiveString;
  */
 class Primitive extends AbstractDataType implements IGenericDataType
 {
+    const TYPES = ['float', 'bool', 'int', 'string', 'array'];
     private IPrimitiveType $mPrimitive;
     public function __construct($sValue = null) {
         $this->mPrimitive = self::create($sValue);

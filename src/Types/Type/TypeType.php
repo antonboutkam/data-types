@@ -17,13 +17,20 @@ class TypeType extends AbstractDataType implements IGenericDataType
      * TypeType constructor.
      * @param null $mValue
      * @throws RuntimeException
-     * @throws InvalidArgumentException
      */
     function __construct($mValue = null) {
-        if (is_string($mValue))
+
+
+        if (is_string($mValue) && in_array($mValue, Primitive::TYPES))
+        {
+            $oValue = Primitive::create($mValue);
+            parent::__construct(get_class($oValue));
+        }
+        else if (is_string($mValue))
         {
             parent::__construct($mValue);
-        } else if (is_object($mValue) && $mValue instanceof PhpNamespace)
+        }
+        else if (is_object($mValue) && $mValue instanceof PhpNamespace)
         {
             parent::__construct("{$mValue}");
         } else if (is_object($mValue) && $mValue instanceof IGenericDataType)
@@ -38,7 +45,6 @@ class TypeType extends AbstractDataType implements IGenericDataType
     /**
      * @param mixed ...$constructorParams
      * @return IGenericDataType
-     * @throws InvalidArgumentException
      */
     public function createInstance($constructorParams): IGenericDataType {
         $sClassName = $this->getValue();

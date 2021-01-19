@@ -6,6 +6,7 @@ use Hurah\Types\Exception\InvalidArgumentException;
 
 class PathCollection extends AbstractCollectionDataType implements IGenericDataType {
     protected int $position;
+    protected array $array;
 
     /***
      * PathCollection constructor.
@@ -40,27 +41,25 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
             }
         }
 
-        $aValues = $this->getValue();
-        $aValues[] = $objectItem;
-        $this->setValue($aValues);
+        $this->array[] = $objectItem;
     }
 
     /**
      * @return Path[]
      */
     public function toArray(): array {
-        return $this->getValue();
+        return $this->array;
     }
 
     public function __toString(): string {
         $aOut = [];
-        foreach ($this->getValue() as $oPath) {
+        foreach ($this->array as $oPath) {
             $aOut[] = (string)$oPath;
         }
         return join(',', $aOut);
     }
 
     public function current(): Path {
-        return $this->getValue()[$this->position];
+        return $this->array[$this->position];
     }
 }

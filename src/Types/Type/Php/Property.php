@@ -16,6 +16,12 @@ class Property extends AbstractDataType implements IGenericDataType
     private TypeType $type;
     private bool $nullable;
     private $default;
+    const PROPERTY_PROPERTIES =  [
+        'name',
+        'type',
+        'nullable',
+        'default',
+    ];
 
     public function __construct($mValue = null) {
         $this->default = new IsVoid();
@@ -56,16 +62,11 @@ class Property extends AbstractDataType implements IGenericDataType
         {
             foreach ($params as $key => $param)
             {
-                if (is_string($key) && in_array($key, [
-                        'name',
-                        'type',
-                        'nullable',
-                        'default',
-                    ]) && !is_object($param))
+                if (is_string($key) && in_array($key,self::PROPERTY_PROPERTIES) && !is_object($param))
                 {
-                    echo "{$key} ---------------------------------> {$param}" . PHP_EOL;
                     $oProperty->setByKey($key, $param);
-                } else
+                }
+                else
                 {
                     if (is_array($param))
                     {
@@ -73,7 +74,8 @@ class Property extends AbstractDataType implements IGenericDataType
                         {
                             $oProperty->setByKey($itemKey, $value);
                         }
-                    } else
+                    }
+                    else
                     {
                         $oProperty->setByType($param);
                     }
@@ -92,16 +94,20 @@ class Property extends AbstractDataType implements IGenericDataType
         if ($sKey === 'name')
         {
             $this->name = new VarName($sValue);
-        } else if ($sKey === 'type')
+        }
+        else if ($sKey === 'type')
         {
             $this->type = new TypeType($sValue);
-        } else if ($sKey === 'nullable')
+        }
+        else if ($sKey === 'nullable')
         {
             $this->nullable = $sValue;
-        } else if ($sKey === 'default')
+        }
+        else if ($sKey === 'default')
         {
             $this->default = $sValue;
-        } else if ($sKey === 'label')
+        }
+        else if ($sKey === 'label')
         {
             $this->label = new PropertyLabel($sValue);
         }
@@ -157,6 +163,9 @@ class Property extends AbstractDataType implements IGenericDataType
     }
     public function setNullable(bool $nullable) {
         $this->nullable = $nullable;
+    }
+    public function hasDefault():bool {
+        return !$this->default instanceof IsVoid;
     }
 
     public function getDefault() {
