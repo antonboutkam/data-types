@@ -4,6 +4,11 @@ namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
 
+/**
+ * Represents an IBAN number, use Iban::fromString to enforce validation.
+ * Class Iban
+ * @package Hurah\Types\Type
+ */
 class Iban extends AbstractDataType implements IGenericDataType
 {
     function __construct($sValue = null) {
