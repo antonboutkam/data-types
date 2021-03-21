@@ -10,11 +10,11 @@
     ],
     "stability" : "dev",
     "require": {
+        "symfony/finder": "^5.2",
         "php" : "^7.4 || 8.0.*",
         "ext-json": "*",
         "ext-dom": "*",
         "ext-libxml": "*",
-        "symfony/finder": "^5.2",
         "ext-bcmath": "*"
     },
     "require-dev" : {
