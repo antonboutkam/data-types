@@ -6,7 +6,7 @@ use Iterator;
 
 abstract class AbstractCollectionDataType extends AbstractDataType implements IGenericDataType, Iterator
 {
-    protected int $position;
+    protected int $position = 0;
     protected array $array;
 
     abstract public function current();
