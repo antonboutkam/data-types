@@ -5,6 +5,12 @@ namespace Hurah\Types\Type;
 use ArrayAccess;
 use Iterator;
 
+/**
+ * Provides an easy way to handle collections of object as array's
+ *
+ * Class AbstractCollectionDataType
+ * @package Hurah\Types\Type
+ */
 abstract class AbstractCollectionDataType extends AbstractDataType implements IGenericDataType, Iterator, ArrayAccess
 {
     protected int $position = 0;
