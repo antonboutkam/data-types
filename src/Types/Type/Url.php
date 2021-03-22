@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
+use Exception\LogicException;
 use InvalidArgumentException;
 
 class Url extends AbstractDataType implements IGenericDataType, IUri
@@ -17,6 +18,23 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
         {
             parent::__construct($sValue);
         }
+    }
+
+    /**
+     * @param mixed $mPattern
+     * @return bool
+     */
+    function matches($mPattern):bool
+    {
+        if($mPattern instanceof self)
+        {
+            return "{$this}" === "{$mPattern}";
+        }
+        else if(is_string($mPattern))
+        {
+            return "{$this}" === $mPattern;
+        }
+        throw new InvalidArgumentException("Unexpected type passed to Url::matches");
     }
 
     /**

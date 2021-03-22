@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
+
 abstract class AbstractDataType implements IGenericDataType
 {
     private $sValue;
