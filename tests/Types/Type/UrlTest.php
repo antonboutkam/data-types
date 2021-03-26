@@ -23,6 +23,17 @@ class UrlTest extends TestCase
         $this->assertTrue("{$oUrl}" == "/this/is/a/test");
     }
 
+
+    function testAddQuery()
+    {
+        $oUrl = new Url('/this/is');
+        $oUrl->addQuery(['a' => 'test']);
+        $this->assertTrue("{$oUrl}" == "/this/is?a=test");
+        $oUrl->addQuery(['a' => 'test', 'b' => 'test']);
+        $this->assertTrue("{$oUrl}" == "/this/is?a=test&b=test", "{$oUrl}");
+    }
+
+
     function testAddPathWithQuery()
     {
         $oUrl = new Url('/this/is?works=yes');
