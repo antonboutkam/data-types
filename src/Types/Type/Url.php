@@ -2,7 +2,6 @@
 
 namespace Hurah\Types\Type;
 
-use Exception\LogicException;
 use InvalidArgumentException;
 
 class Url extends AbstractDataType implements IGenericDataType, IUri
@@ -35,6 +34,41 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
             return "{$this}" === $mPattern;
         }
         throw new InvalidArgumentException("Unexpected type passed to Url::matches");
+    }
+    function addQuery(...$aParts):self
+    {
+        $aComponents = $this->getValue();
+        $sQuery = $aComponents['query'] ?? null;
+        foreach ($aParts as $mPart)
+        {
+            if(is_array($mPart))
+            {
+                $sQueryAdd = http_build_query($mPart);
+            }
+            else if(is_string($mPart))
+            {
+                $sQueryAdd = $mPart;
+            }
+            else
+            {
+                throw new InvalidArgumentException("Could not turn variable into valid get string");
+            }
+
+            if($sQuery)
+            {
+                $sQuery = $sQuery . '&' . $sQueryAdd;
+            }
+            else
+            {
+                $sQuery = $sQueryAdd;
+            }
+        }
+
+        parse_str($sQuery, $aResult);
+        $sQuery = http_build_query($aResult);
+
+        $this->setQuery($sQuery);
+        return $this;
     }
 
     /**
@@ -69,12 +103,27 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
         }
         return $this;
     }
+    public function setQuery(string $sQuery = null):self {
+        $aComponents = $this->getValue();
+        if($sQuery === null)
+        {
+            unset($aComponents['query']);
+        }
+        else
+        {
+            $aComponents['query'] = $sQuery;
+        }
+
+        $this->setValue($aComponents);
+        return $this;
+    }
 
     /**
      * Overwrites the path component of the url.
      * @param string|null $sPath
+     * @return Url
      */
-    function setPath(?string $sPath = null){
+    public function setPath(?string $sPath = null):self{
         $aComponents = $this->getValue();
         if($sPath === null)
         {
@@ -86,9 +135,10 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
         }
 
         $this->setValue($aComponents);
+        return $this;
     }
 
-    function getScheme():?string
+    public function getScheme():?string
     {
         return $this->getValue()['scheme'] ?? null;
     }
