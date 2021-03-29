@@ -45,7 +45,21 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
         return $this;
     }
 
+    /**
+     * Checks if the file permissions of the file or directory allow writing
+     * @return bool
+     */
+    public function isWritable():bool {
+        return is_writable("{$this->getValue()}");
+    }
 
+    /**
+     *  Tells whether the filename is executable
+     * @return bool
+     */
+    public function isExecutable():bool {
+        return is_executable("{$this->getValue()}");
+    }
 
     /**
      * Add sub directories to the current path, so make it longer.
