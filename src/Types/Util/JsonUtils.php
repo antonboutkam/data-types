@@ -9,7 +9,6 @@ use function json_encode;
 /**
  * Class JsonUtils
  * @package Hurah\Types\Util
- * @internal
  */
 final class JsonUtils {
 
