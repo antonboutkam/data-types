@@ -142,8 +142,8 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
     }
 
     /**
+     * Tries to unlink a file or directory if it exists, returns false when the file does not exist.
      * @return bool
-     * @throws NullPointerException
      */
     public function unlink(): bool {
         if (is_dir($this)) {
@@ -153,7 +153,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
                 return unlink($this);
             }
         }
-        throw new NullPointerException("Unlinking failed, file does not exist.");
+        return false;
     }
 
     /**
