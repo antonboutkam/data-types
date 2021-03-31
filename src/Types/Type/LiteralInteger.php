@@ -4,7 +4,7 @@ namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
 
-class Integer extends AbstractDataType implements IGenericDataType
+class LiteralInteger extends AbstractDataType implements IGenericDataType
 {
 
 
