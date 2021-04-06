@@ -3,7 +3,7 @@
 namespace Test\Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
-use Hurah\Types\Type\Integer;
+use Hurah\Types\Type\LiteralInteger;
 use PHPUnit\Framework\TestCase;
 
 class IntegerTest extends TestCase
@@ -11,21 +11,21 @@ class IntegerTest extends TestCase
 
     public function testConstructor() {
 
-        $oInteger = new Integer(1);
-        $this->assertInstanceOf(Integer::class, $oInteger);
+        $oInteger = new LiteralInteger(1);
+        $this->assertInstanceOf(LiteralInteger::class, $oInteger);
     }
 
     public function testFromFloatString() {
         $this->expectException(InvalidArgumentException::class);
-        Integer::fromString("1.2");
+        LiteralInteger::fromString("1.2");
     }
     public function testFromIntString() {
-        $oInteger = Integer::fromString("100");
-        $this->assertInstanceOf(Integer::class, $oInteger);
+        $oInteger = LiteralInteger::fromString("100");
+        $this->assertInstanceOf(LiteralInteger::class, $oInteger);
     }
     public function testFromTextString() {
         $this->expectException(InvalidArgumentException::class);
-        Integer::fromString("A1");
+        LiteralInteger::fromString("A1");
     }
 
 
