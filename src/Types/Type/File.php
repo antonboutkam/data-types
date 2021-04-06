@@ -23,6 +23,20 @@ class File extends AbstractDataType implements IGenericDataType
         $oResponse->oFile = $oFile;
         return $oResponse;
     }
+    static function fromPath(Path $oPath):self
+    {
+        return new self($oPath->getValue());
+    }
+
+    function asJson():Json
+    {
+        return new Json($this->getContents());
+    }
+    function getContents():PlainText
+    {
+        return new PlainText(file_get_contents($this->getValue()));
+    }
+
     public function basename():string
     {
         return new Path($this->oFile->getBasename());
