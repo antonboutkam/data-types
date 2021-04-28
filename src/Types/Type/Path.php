@@ -173,10 +173,10 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
      * @return PlainText
      * @throws InvalidArgumentException
      */
-    public function contents() {
+    public function contents():PlainText {
         return new PlainText(file_get_contents($this));
     }
-
+    
     /**
      *
      * @param int $iLevels = 1

@@ -32,7 +32,11 @@ class Regex extends AbstractDataType implements IGenericDataType
      */
     public function isValid():bool
     {
-        return @preg_match("{$this}", null) === false;
+        if(@preg_match("{$this}", '') === false && error_get_last()['line'] === __LINE__)
+        {
+            return false;
+        }
+        return true;
     }
 
     /**
