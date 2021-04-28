@@ -63,6 +63,16 @@ class PlainText extends AbstractDataType implements IGenericDataType
             }
         }
     }
+    /**
+     * Checks if the text contains the text passed as the argument.
+     * @param string $sString
+     * @return bool
+     */
+    public function matches(Regex $sString): bool
+    {
+        return strpos($sString, $this->getValue()) !== false;
+    }
+
 
     /**
      * Checks if the text contains the text passed as the argument.
