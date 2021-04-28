@@ -45,7 +45,21 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
         return $this;
     }
 
+    /**
+     * Checks if the file permissions of the file or directory allow writing
+     * @return bool
+     */
+    public function isWritable():bool {
+        return is_writable("{$this->getValue()}");
+    }
 
+    /**
+     *  Tells whether the filename is executable
+     * @return bool
+     */
+    public function isExecutable():bool {
+        return is_executable("{$this->getValue()}");
+    }
 
     /**
      * Add sub directories to the current path, so make it longer.
@@ -128,8 +142,8 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
     }
 
     /**
+     * Tries to unlink a file or directory if it exists, returns false when the file does not exist.
      * @return bool
-     * @throws NullPointerException
      */
     public function unlink(): bool {
         if (is_dir($this)) {
@@ -139,7 +153,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
                 return unlink($this);
             }
         }
-        throw new NullPointerException("Unlinking failed, file does not exist.");
+        return false;
     }
 
     /**
