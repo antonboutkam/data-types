@@ -179,12 +179,12 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
     
     /**
      *
-     * @param int $iLevels = 1
+     * @param string $sSuffix = ''
      * @return Path
      * @throws InvalidArgumentException
      */
-    public function basename(int $iLevels = 1): Path {
-        return new Path(basename($this, $iLevels));
+    public function basename(string $sSuffix = ''): Path {
+        return new Path(basename($this, $sSuffix));
     }
 
     /**
