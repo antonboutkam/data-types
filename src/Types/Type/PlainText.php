@@ -63,7 +63,7 @@ class PlainText extends AbstractDataType implements IGenericDataType
      */
     public function matches(Regex $oRegex): bool
     {
-        return preg_match("{$oRegex}", $this->getValue()) !== false;
+        return preg_match("{$oRegex}", $this->getValue());
     }
 
     /**
