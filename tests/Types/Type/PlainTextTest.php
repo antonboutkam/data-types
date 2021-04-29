@@ -26,4 +26,22 @@ class PlainTextTest extends TestCase
 
         $this->assertFalse($oPlainText->matches($oRegex));
     }
+
+    public function testRemove()
+    {
+        $oRegex = new Regex('/mg$/');
+        $oPlainText = new PlainText("10mg");
+        $oQuantity = $oPlainText->remove($oRegex);
+
+        $this->assertEquals("10", "{$oQuantity}");
+    }
+
+    public function testReplace()
+    {
+        $oRegex = new Regex('/mg$/');
+        $oPlainText = new PlainText("10mg");
+        $oQuantity = $oPlainText->replace($oRegex, new PlainText("kg"));
+
+        $this->assertEquals("10kg", "{$oQuantity}");
+    }
 }

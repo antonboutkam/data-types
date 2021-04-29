@@ -82,9 +82,9 @@ class PlainText extends AbstractDataType implements IGenericDataType
     {
         if($oSearch instanceof Regex)
         {
-            return new self(preg_replace("{$oSearch}", $this->getValue(), "{$oReplacement}"));
+            return new self(preg_replace("{$oSearch}", "{$oReplacement}", $this->getValue()));
         }
-        return new self(str_replace("{$oSearch}", $this->getValue(), "{$oReplacement}"));
+        return new self(str_replace("{$oSearch}", "{$oReplacement}", $this->getValue()));
     }
 
     /**
@@ -97,9 +97,9 @@ class PlainText extends AbstractDataType implements IGenericDataType
     {
         if($oSearch instanceof Regex)
         {
-            return new self(preg_replace("{$oSearch}", $this->getValue(), ''));
+            return new self(preg_replace("{$oSearch}", '', $this->getValue()));
         }
-        return new self(str_replace("{$oSearch}", $this->getValue(), ''));
+        return new self(str_replace("{$oSearch}", '', $this->getValue()));
     }
 
 
