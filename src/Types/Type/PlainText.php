@@ -33,6 +33,10 @@ class PlainText extends AbstractDataType implements IGenericDataType
         return $this;
     }
 
+    public function asInt():int
+    {
+        return (int) "{$this}";
+    }
     public function prepend(...$data)
     {
         foreach ($data as $part) {
