@@ -49,6 +49,15 @@ class Regex extends AbstractDataType implements IGenericDataType
         return self::fromString("{$oRegex}");
     }
 
+    public function replace(string $sSubject, string $sReplacement)
+    {
+        return preg_replace("{$this}", $sSubject, $sReplacement);
+    }
+
+    public function remove(string $sSubject)
+    {
+        return preg_replace("{$this}", $sSubject, '');
+    }
     public function test(string $sSubject)
     {
         return preg_match("{$this}", $sSubject);

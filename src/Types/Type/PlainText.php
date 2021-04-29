@@ -4,8 +4,6 @@ namespace Hurah\Types\Type;
 
 use Exception;
 use Hurah\Types\Exception\InvalidArgumentException;
-use Hurah\Types\Type\Html\Element;
-use Hurah\Types\Type\Html\IElementizable;
 use Hurah\Types\Util\JsonUtils;
 
 /**
@@ -28,40 +26,34 @@ class PlainText extends AbstractDataType implements IGenericDataType
             throw new InvalidArgumentException("PlainText does not contain a valid JSON string");
         }
     }
-    public function addLn(string $data):self
+
+    public function addLn(string $data): self
     {
         $this->setValue($this->getValue() . $data . PHP_EOL);
-        return $this;
-    }
-    public function append(...$data):self
-    {
-        foreach ($data as $part)
-        {
-            if(is_array($part))
-            {
-                $this->append(...$part);
-            }
-            else
-            {
-                $this->setValue($this->getValue() . $part);
-            }
-        }
         return $this;
     }
 
     public function prepend(...$data)
     {
-        foreach ($data as $part)
-        {
-            if(is_array($part))
-            {
+        foreach ($data as $part) {
+            if (is_array($part)) {
                 $this->append(...$part);
-            }
-            else
-            {
+            } else {
                 $this->setValue($part . $this->getValue());
             }
         }
+    }
+
+    public function append(...$data): self
+    {
+        foreach ($data as $part) {
+            if (is_array($part)) {
+                $this->append(...$part);
+            } else {
+                $this->setValue($this->getValue() . $part);
+            }
+        }
+        return $this;
     }
 
     /**
@@ -72,6 +64,38 @@ class PlainText extends AbstractDataType implements IGenericDataType
     public function matches(Regex $oRegex): bool
     {
         return preg_match("{$oRegex}", $this->getValue()) !== false;
+    }
+
+    /**
+     * Checks if the text contains the text passed as the argument.
+     * @param AbstractDataType $oSearch can be any of the datatype objects, if $oSearch is a Regex type it will be
+     * applied
+     * @param PlainText $oReplacement
+     * @return PlainText
+     * @throws InvalidArgumentException
+     */
+    public function replace(AbstractDataType $oSearch, PlainText $oReplacement): PlainText
+    {
+        if($oSearch instanceof Regex)
+        {
+            return new self(preg_replace("{$oSearch}", $this->getValue(), "{$oReplacement}"));
+        }
+        return new self(str_replace("{$oSearch}", $this->getValue(), "{$oReplacement}"));
+    }
+
+    /**
+     * Checks if the text contains the text passed as the argument.
+     * @param AbstractDataType $oSearch
+     * @return PlainText
+     * @throws InvalidArgumentException
+     */
+    public function remove(AbstractDataType $oSearch): PlainText
+    {
+        if($oSearch instanceof Regex)
+        {
+            return new self(preg_replace("{$oSearch}", $this->getValue(), ''));
+        }
+        return new self(str_replace("{$oSearch}", $this->getValue(), ''));
     }
 
 
