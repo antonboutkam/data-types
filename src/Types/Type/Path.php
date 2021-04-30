@@ -4,7 +4,6 @@ namespace Hurah\Types\Type;
 
 use DirectoryIterator;
 use Hurah\Types\Exception\InvalidArgumentException;
-use Hurah\Types\Exception\NullPointerException;
 use Hurah\Types\Util\FileSystem;
 
 /**
@@ -137,6 +136,9 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
         return new Path(dirname($this, $iLevels));
     }
 
+    /**
+     * @return bool
+     */
     public function isFile(): bool {
         return file_exists($this) && is_file($this);
     }
@@ -176,7 +178,26 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
     public function contents():PlainText {
         return new PlainText(file_get_contents($this));
     }
-    
+
+
+    /**
+     * @param int|null $time
+     * @param int|null $atime
+     * @return $this
+     */
+    public function touch(int $time = null , int $atime = null): Path {
+        if($time === null)
+        {
+            $time = time();
+        }
+        if($atime === null)
+        {
+            $atime = time();
+        }
+        touch("{$this}", $time, $atime);
+
+        return $this;
+    }
     /**
      *
      * @param string $sSuffix = ''
