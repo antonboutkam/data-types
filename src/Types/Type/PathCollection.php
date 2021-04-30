@@ -3,6 +3,7 @@
 namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
+use Symfony\Component\Finder\Finder;
 
 class PathCollection extends AbstractCollectionDataType implements IGenericDataType {
     protected int $position;
@@ -24,6 +25,24 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
                 $this->add($mValue);
             }
         }
+    }
+
+    /**
+     * Returns a Symfony Finder component that as each directory in the collection as a location to look for whatever
+     * you are looking for.
+     * @return Finder
+     */
+    public function getFinder():Finder
+    {
+        $oFinder = new Finder();
+        foreach($this as $path)
+        {
+            if($path->isDir())
+            {
+                $oFinder->in($path);
+            }
+        }
+        return $oFinder;
     }
 
     /**

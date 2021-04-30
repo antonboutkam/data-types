@@ -4,7 +4,9 @@ namespace Hurah\Types\Type;
 
 use DirectoryIterator;
 use Hurah\Types\Exception\InvalidArgumentException;
+use Hurah\Types\Exception\RuntimeException;
 use Hurah\Types\Util\FileSystem;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Points to a file or directory, may be local or remote (http, https, ftp etc)
@@ -91,6 +93,17 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
     public function makeDir(): self {
         FileSystem::makeDir($this);
         return $this;
+    }
+
+    public function getFinder():Finder
+    {
+        if(!$this->isDir())
+        {
+            throw new RuntimeException("Cannot provide Finder object on a path that points to a file");
+        }
+        $oFinder = new Finder();
+        $oFinder->in("{$this}");
+        return $oFinder;
     }
 
     /**
