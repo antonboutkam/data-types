@@ -77,12 +77,25 @@ class File extends AbstractDataType implements IGenericDataType
     }
     public function __toString(): string
     {
-        return (string)$this->oFile->getPathname();
+        return $this->oFile->getPathname();
     }
 
-    public function create()
+    public function exists():bool
     {
-        touch($this);
-        chmod($this, 0777);
+        if(file_exists("{$this}"))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function create():File
+    {
+        if(!$this->exists())
+        {
+            touch($this);
+            chmod($this, 0777);
+        }
+        return $this;
     }
 }
