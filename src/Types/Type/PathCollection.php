@@ -78,6 +78,11 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
     }
 
 
+    public function isFirst():bool
+    {
+        return $this->position === 0;
+    }
+
     public function isLast():bool
     {
         return isset($this->array[$this->position+1]);
