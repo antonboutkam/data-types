@@ -47,6 +47,16 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
         }
     }
 
+    public function isFirst():bool
+    {
+        return $this->position === 0;
+    }
+
+    public function isLast():bool
+    {
+        return isset($this->array[$this->position+1]);
+    }
+
     public function offsetExists($offset): bool
     {
         return isset($this->array[$offset]);
