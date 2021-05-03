@@ -98,13 +98,14 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
         $oPathCollection->add($oCurrent);
         while(true)
         {
-            if("{$oCurrent}" === ".")
+            if(in_array("{$oCurrent}", [".", "/"]))
             {
                 return $oPathCollection;
             }
             $oCurrent = $oCurrent->dirname(1);
             $oPathCollection->add($oCurrent);
         }
+
     }
     /**
      *
