@@ -77,6 +77,11 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
         $this->array[] = $objectItem;
     }
 
+
+    public function isLast():bool
+    {
+        return isset($this->array[$this->position+1]);
+    }
     /**
      * @return Path[]
      */
