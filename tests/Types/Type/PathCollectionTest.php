@@ -2,6 +2,7 @@
 
 namespace Test\Hurah\Types\Type;
 
+use Hurah\Types\Type\AbstractDataType;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Type\PathCollection;
 use PHPUnit\Framework\TestCase;
@@ -10,18 +11,38 @@ use Hurah\Types\Exception\InvalidArgumentException;
 class PathCollectionTest extends TestCase {
 
 
+    private function getTestPaths():array
+    {
+        return [
+            new Path('example/www/com'),
+            'examp3le/www/com',
+            new Path('ex3ample/www/com'),
+            'exaemple/www/com',
+        ];
+    }
+    private function getTestCollection():PathCollection
+    {
+        $oPathCollection = new PathCollection();
+        $aTestPaths = $this->getTestPaths();
+
+        foreach ($aTestPaths as $mPath)
+        {
+            $oPathCollection->add($mPath);
+        }
+        return $oPathCollection;
+    }
     /**
      * @throws InvalidArgumentException
      */
     public function testForeach() {
 
         $oPathCollection = new PathCollection();
-        $oPathCollection->add($expected1 = 'example.com');
-        $oPathCollection->add(new Path($expected2 = 'www.example.com'));
-        $oPathCollection->add('example.www.com');
-        $oPathCollection->add('examp3le.www.com');
-        $oPathCollection->add('ex3ample.www.com');
-        $oPathCollection->add('exaemple.www.com');
+        $oPathCollection->add('example/com');
+        $oPathCollection->add(new Path('www/example/com'));
+        $oPathCollection->add('example/www/com');
+        $oPathCollection->add('examp3le/www/com');
+        $oPathCollection->add('ex3ample/www/com');
+        $oPathCollection->add('exaemple/www/com');
 
         $i = 0;
         foreach($oPathCollection as $path)
@@ -33,6 +54,12 @@ class PathCollectionTest extends TestCase {
 
     }
 
+    public function testReverse() {
+        $oCollection = $this->getTestCollection();
+        $oReverseCollection = $oCollection->reverse();
+        $sFirstExpected = 'exaemple/www/com';
+        $this->assertEquals($oReverseCollection->current(), "{$sFirstExpected}");
+    }
 
 
 
@@ -45,8 +72,6 @@ class PathCollectionTest extends TestCase {
         $oPathCollection->add($expected1 = 'example.com');
         $oPathCollection->add(new Path($expected2 = 'www.example.com'));
         $oPathCollection->add($expected3 = 'example.www.com');
-
-
 
         $this->assertEquals(new Path($expected1), $oPathCollection->current());
         $oPathCollection->next();

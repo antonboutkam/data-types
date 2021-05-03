@@ -46,6 +46,20 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
     }
 
     /**
+     * Creates a new PathCollection with the Paths in reverse order.
+     * @return \Hurah\Types\Type\PathCollection
+     */
+    public function reverse():PathCollection
+    {
+        $oPathCollection = new self();
+        $aReverseItems = array_reverse($this->array);
+        foreach($aReverseItems as $oPath)
+        {
+            $oPathCollection->add($oPath);
+        }
+        return $oPathCollection;
+    }
+    /**
      * @param $mValue
      * @throws InvalidArgumentException
      */

@@ -88,6 +88,25 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
     }
 
     /**
+     * Returns a path collection with each item one level  up in the tree
+     * @return \Hurah\Types\Type\PathCollection
+     */
+    public function treeUp():PathCollection
+    {
+        $oCurrent = clone $this;
+        $oPathCollection = new PathCollection();
+        $oPathCollection->add($oCurrent);
+        while(true)
+        {
+            if("{$oCurrent}" === ".")
+            {
+                return $oPathCollection;
+            }
+            $oCurrent = $oCurrent->dirname(1);
+            $oPathCollection->add($oCurrent);
+        }
+    }
+    /**
      *
      */
     public function makeDir(): self {

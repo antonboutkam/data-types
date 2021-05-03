@@ -18,7 +18,6 @@ class PathTest extends TestCase {
     private function getTestFile(): Path {
         return DirectoryStructure::getTmpDir()->extend('tests', $this->sTestFileBaseName);
     }
-
     protected function setUp(): void {
         $this->oTestFile = $this->getTestFile();
         $this->oTestFile->dirname()->makeDir();
@@ -37,6 +36,17 @@ class PathTest extends TestCase {
         $this->oTestFile->dirname()->unlink();
     }
 
+    public function testTreeUp() {
+        $oTestPath = Path::make('home', 'anton', 'Documents');
+        $oPathCollection = $oTestPath->treeUp();
+
+        $this->assertEquals($oPathCollection->current(), Path::make('home', 'anton', 'Documents'), "{$oPathCollection}");
+        $oPathCollection->next();
+        $this->assertEquals($oPathCollection->current(), Path::make('home', 'anton'), "{$oPathCollection}");
+        $oPathCollection->next();
+        $this->assertEquals($oPathCollection->current(), Path::make('home'), "{$oPathCollection}");
+
+    }
     public function testWrite() {
         $oTestFile = DirectoryStructure::getTmpDir()->extend('tests', $this->sTestFileBaseName);
         $oTestFile->write($sExpected = 'this is a test');
