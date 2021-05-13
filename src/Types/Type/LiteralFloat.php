@@ -1,7 +1,9 @@
 <?php
 namespace Hurah\Types\Type;
 
-class LiteralFloat extends AbstractDataType implements IGenericDataType
+use Hurah\Types\Type\Contracts\IScalarValue;
+
+class LiteralFloat extends AbstractDataType implements IGenericDataType, IScalarValue
 {
 
 }

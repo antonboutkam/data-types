@@ -3,8 +3,9 @@
 namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
+use Hurah\Types\Type\Contracts\IScalarValue;
 
-class LiteralInteger extends AbstractDataType implements IGenericDataType
+class LiteralInteger extends AbstractDataType implements IGenericDataType, IScalarValue
 {
 
 

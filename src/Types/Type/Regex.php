@@ -17,6 +17,16 @@ class Regex extends AbstractDataType implements IGenericDataType
     }
 
     /**
+     * @param PlainText $oRegex
+     * @return static
+     * @throws InvalidArgumentException
+     */
+    public static function fromPlainText(PlainText $oRegex): self
+    {
+        return self::fromString("{$oRegex}");
+    }
+
+    /**
      * @param string $sRegex
      * @return $this
      * @throws InvalidArgumentException
@@ -30,39 +40,42 @@ class Regex extends AbstractDataType implements IGenericDataType
      * Checks of the regular expression is valid / not broken.
      * @return bool
      */
-    public function isValid():bool
+    public function isValid(): bool
     {
-        if(@preg_match("{$this}", '') === false && error_get_last()['line'] === __LINE__)
-        {
+        if (@preg_match("{$this}", '') === false && error_get_last()['line'] === __LINE__) {
             return false;
         }
         return true;
     }
 
     /**
-     * @param PlainText $oRegex
-     * @return static
+     * @param string $sSubject
+     * @param string $sReplacement
+     * @return PlainText
      * @throws InvalidArgumentException
      */
-    public static function fromPlainText(PlainText $oRegex): self
+    public function replace(string $sSubject, string $sReplacement): PlainText
     {
-        return self::fromString("{$oRegex}");
+        $sResult = preg_replace("{$this}", $sReplacement, $sSubject);
+        return new PlainText($sResult);
     }
 
-    public function replace(string $sSubject, string $sReplacement)
+    /**
+     * @param string $sSubject
+     * @return PlainText
+     * @throws InvalidArgumentException
+     */
+    public function remove(string $sSubject): PlainText
     {
-        return preg_replace("{$this}", $sSubject, $sReplacement);
+        return new PlainText(preg_replace("{$this}", $sSubject, ''));
     }
 
-    public function remove(string $sSubject)
-    {
-        return preg_replace("{$this}", $sSubject, '');
-    }
-    public function test(string $sSubject)
+    public function test(string $sSubject): bool
     {
         return preg_match("{$this}", $sSubject);
     }
-    public function getMatches(string $sSubject):array
+
+    public function getMatches(string $sSubject): array
     {
         $aMatches = [];
         preg_match("{$this}", $sSubject, $aMatches);
