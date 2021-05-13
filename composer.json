@@ -1,6 +1,6 @@
 {
     "name": "hurah/data-types",
-    "description": "This is an arbitrary set of objects representing specific types of data.",
+    "description": "A collection of classes that represent specific types of data often encountered when coding.",
     "license": "MIT",
     "authors": [
         {
