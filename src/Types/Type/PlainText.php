@@ -6,6 +6,7 @@ use Exception;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Util\JsonUtils;
 
+
 /**
  * Represents a string, but string is a reserved keyword
  * Class PlainText
@@ -33,10 +34,41 @@ class PlainText extends AbstractDataType implements IGenericDataType
         return $this;
     }
 
-    public function asInt():int
+    /**
+     * Creates a new PlainText object with the strin in uppercase, this object is not changed.
+     * @return PlainText
+     * @throws InvalidArgumentException
+     */
+    public function uppercase(): PlainText
     {
-        return (int) "{$this}";
+        return new PlainText(strtoupper($this->getValue()));
     }
+
+    public function equals(string $string): bool
+    {
+        return $this->getValue() === $string;
+    }
+
+    public function equalsIgnoreCase(string $string): bool
+    {
+        return "{$this->lowercase()}" === strtolower($string);
+    }
+
+    /**
+     * Creates a new PlainText object with the string in lowercase, this object is not changed.
+     * @return PlainText
+     * @throws InvalidArgumentException
+     */
+    public function lowercase(): PlainText
+    {
+        return new PlainText(strtolower($this->getValue()));
+    }
+
+    public function asInt(): int
+    {
+        return (int)"{$this}";
+    }
+
     public function prepend(...$data)
     {
         foreach ($data as $part) {
@@ -80,8 +112,7 @@ class PlainText extends AbstractDataType implements IGenericDataType
      */
     public function replace(AbstractDataType $oSearch, PlainText $oReplacement): PlainText
     {
-        if($oSearch instanceof Regex)
-        {
+        if ($oSearch instanceof Regex) {
             return new self(preg_replace("{$oSearch}", "{$oReplacement}", $this->getValue()));
         }
         return new self(str_replace("{$oSearch}", "{$oReplacement}", $this->getValue()));
@@ -95,8 +126,7 @@ class PlainText extends AbstractDataType implements IGenericDataType
      */
     public function remove(AbstractDataType $oSearch): PlainText
     {
-        if($oSearch instanceof Regex)
-        {
+        if ($oSearch instanceof Regex) {
             return new self(preg_replace("{$oSearch}", '', $this->getValue()));
         }
         return new self(str_replace("{$oSearch}", '', $this->getValue()));

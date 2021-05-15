@@ -9,6 +9,10 @@ class LiteralInteger extends AbstractDataType implements IGenericDataType, IScal
 {
 
 
+    public function asInt():int
+    {
+        return (int) $this->getValue();
+    }
     /**
      * Does a cast but only when the string contains a valid integer value.
      * @param string $sValue
