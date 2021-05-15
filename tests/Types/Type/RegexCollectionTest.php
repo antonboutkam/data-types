@@ -2,8 +2,6 @@
 
 namespace Test\Hurah\Types\Type;
 
-use Hurah\Types\Type\AbstractDataType;
-use Hurah\Types\Type\Email;
 use Hurah\Types\Type\PlainText;
 use Hurah\Types\Type\Regex;
 use Hurah\Types\Type\RegexCollection;
@@ -38,7 +36,7 @@ class RegexCollectionTest extends TestCase {
     }
     public function testRemoveAll(){
         $oResult = $this->oRegexCollection->replaceAll(new PlainText('313111232123'));
-        $this->assertTrue("$oResult" === "1232123", "Actual $oResult");
+        $this->assertTrue("$oResult" === "32123", "Actual $oResult");
         $oResult = $this->oRegexCollection->replaceAll(new PlainText('123333'));
         $this->assertTrue("$oResult" === "3333");
     }
