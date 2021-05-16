@@ -14,7 +14,7 @@ use Iterator;
 abstract class AbstractCollectionDataType extends AbstractDataType implements IGenericDataType, Iterator, ArrayAccess
 {
     protected int $position = 0;
-    protected array $array;
+    protected array $array = [];
 
     abstract public function current();
 
@@ -47,6 +47,10 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
         }
     }
 
+    public function isEmpty():bool
+    {
+        return empty($this->array);
+    }
     public function isFirst():bool
     {
         return $this->position === 0;
