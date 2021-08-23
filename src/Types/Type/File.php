@@ -7,6 +7,7 @@ use function chmod;
 use function file_get_contents;
 use function file_put_contents;
 use function fopen;
+use function var_dump;
 use const FILE_APPEND;
 
 class File extends AbstractDataType implements IGenericDataType
@@ -43,14 +44,14 @@ class File extends AbstractDataType implements IGenericDataType
     }
     public function writeContents(AbstractDataType $oContents):File
     {
-        file_put_contents("{$this->getValue()}", "{$oContents}");
-        chmod((string)$this->getValue(), 0777);
+        file_put_contents("{$this}", "{$oContents}");
+        chmod((string)"{$this}", 0777);
         return $this;
     }
     public function appendContents(AbstractDataType $oContents):File
     {
-        file_put_contents("{$this->getValue()}", "{$oContents}", FILE_APPEND);
-        chmod((string)$this->getValue(), 0777);
+        file_put_contents("{$this}", "{$oContents}", FILE_APPEND);
+        chmod((string)"{$this}", 0777);
         return $this;
     }
 

@@ -7,7 +7,9 @@ use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Exception\RuntimeException;
 use Hurah\Types\Util\FileSystem;
 use Symfony\Component\Finder\Finder;
+use function array_values;
 use function preg_match;
+use function var_dump;
 
 /**
  * Points to a file or directory, may be local or remote (http, https, ftp etc)
@@ -154,7 +156,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
      * @throws InvalidArgumentException
      */
     public function getFile(): File {
-        return new File($this);
+        return new File("{$this}");
     }
 
     /**
