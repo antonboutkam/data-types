@@ -7,6 +7,7 @@ use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Exception\RuntimeException;
 use Hurah\Types\Util\FileSystem;
 use Symfony\Component\Finder\Finder;
+use function preg_match;
 
 /**
  * Points to a file or directory, may be local or remote (http, https, ftp etc)
@@ -36,14 +37,25 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
         return new Path(join(DIRECTORY_SEPARATOR, $aUseParts));
     }
 
+
     /**
      * @param $contents - something "string-able"
+     *
      * @return self
+     * @throws InvalidArgumentException
      */
     public function write($contents): self {
-        file_put_contents("{$this->getValue()}", "{$contents}");
-        chmod((string)$this->getValue(), 0777);
+        $this->getFile()->writeContents(new PlainText($contents));
         return $this;
+    }
+    /**
+     * Checks if the text contains the text passed as the argument.
+     * @param Regex $oRegex
+     * @return bool
+     */
+    public function matches(Regex $oRegex): bool
+    {
+        return $this->toPlainText()->matches($oRegex);
     }
 
     /**
@@ -106,6 +118,10 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
             $oPathCollection->add($oCurrent);
         }
 
+    }
+    public function toPlainText():PlainText
+    {
+        return new PlainText("{$this}");
     }
     /**
      *
