@@ -217,6 +217,10 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
      * @return $this
      */
     public function move(Path $oDestination): Path {
+        if($oDestination->isDir())
+        {
+            $oDestination = $oDestination->extend($this->basename());
+        }
         rename($this, $oDestination);
         $this->setValue($oDestination);
         return $this;
