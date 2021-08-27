@@ -2,35 +2,38 @@
 
 namespace Hurah\Types\Type;
 
-use DirectoryIterator;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Exception\RuntimeException;
 use Hurah\Types\Util\FileSystem;
+use ReflectionException;
 use Symfony\Component\Finder\Finder;
-use function array_values;
-use function preg_match;
-use function var_dump;
 
 /**
  * Points to a file or directory, may be local or remote (http, https, ftp etc)
- *
  * Class Path
+ *
  * @package Hurah\Type
  */
-class Path extends AbstractDataType implements IGenericDataType, IUri {
+class Path extends AbstractDataType implements IGenericDataType, IUri
+{
 
     /**
      * @param mixed ...$aParts
+     *
      * @return static
      * @throws InvalidArgumentException
      */
-    public static function make(...$aParts): self {
+    public static function make(...$aParts): self
+    {
         $aUseParts = [];
-        foreach ($aParts as $mPart) {
-            if (is_null($mPart) || empty($mPart)) {
+        foreach ($aParts as $mPart)
+        {
+            if (is_null($mPart) || empty($mPart))
+            {
                 continue;
             }
-            if (is_array($mPart)) {
+            if (is_array($mPart))
+            {
                 $aUseParts[] = self::make(...$mPart);
                 continue;
             }
@@ -46,13 +49,17 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
      * @return self
      * @throws InvalidArgumentException
      */
-    public function write($contents): self {
+    public function write($contents): self
+    {
         $this->getFile()->writeContents(new PlainText($contents));
         return $this;
     }
+
     /**
      * Checks if the text contains the text passed as the argument.
+     *
      * @param Regex $oRegex
+     *
      * @return bool
      */
     public function matches(Regex $oRegex): bool
@@ -62,57 +69,67 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
 
     /**
      * Checks if the file permissions of the file or directory allow writing
+     *
      * @return bool
      */
-    public function isWritable():bool {
+    public function isWritable(): bool
+    {
         return is_writable("{$this->getValue()}");
     }
 
     /**
      *  Tells whether the filename is executable
+     *
      * @return bool
      */
-    public function isExecutable():bool {
+    public function isExecutable(): bool
+    {
         return is_executable("{$this->getValue()}");
     }
 
     /**
      * Add sub directories to the current path, so make it longer.
-     * @param mixed ...$aParts
      *
+     * @param mixed ...$aParts
      */
-    public function append(...$aParts) {
+    public function append(...$aParts)
+    {
         $this->setValue($this->extend($aParts));
     }
 
     /**
      * Creates a new path based on this path with $aParts stitched to it.
+     *
      * @param mixed ...$aParts
+     *
      * @return Path
      */
-    public function extend(...$aParts): Path {
+    public function extend(...$aParts): Path
+    {
         return FileSystem::makePath($this, $aParts);
     }
 
     /**
      *
      */
-    public function getDirectoryIterator(): DirectoryIterator {
+    public function getDirectoryIterator(): DirectoryIterator
+    {
         return new DirectoryIterator($this);
     }
 
     /**
      * Returns a path collection with each item one level  up in the tree
-     * @return \Hurah\Types\Type\PathCollection
+     *
+     * @return PathCollection
      */
-    public function treeUp():PathCollection
+    public function treeUp(): PathCollection
     {
         $oCurrent = clone $this;
         $oPathCollection = new PathCollection();
         $oPathCollection->add($oCurrent);
-        while(true)
+        while (true)
         {
-            if(in_array("{$oCurrent}", [".", "/"]))
+            if (in_array("{$oCurrent}", [".", "/"]))
             {
                 return $oPathCollection;
             }
@@ -121,21 +138,24 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
         }
 
     }
-    public function toPlainText():PlainText
+
+    public function toPlainText(): PlainText
     {
         return new PlainText("{$this}");
     }
+
     /**
      *
      */
-    public function makeDir(): self {
+    public function makeDir(): self
+    {
         FileSystem::makeDir($this);
         return $this;
     }
 
-    public function getFinder():Finder
+    public function getFinder(): Finder
     {
-        if(!$this->isDir())
+        if (!$this->isDir())
         {
             throw new RuntimeException("Cannot provide Finder object on a path that points to a file");
         }
@@ -147,7 +167,8 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
     /**
      *
      */
-    public function isDir(): bool {
+    public function isDir(): bool
+    {
         return is_dir($this);
     }
 
@@ -155,20 +176,24 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
      * @return File
      * @throws InvalidArgumentException
      */
-    public function getFile(): File {
+    public function getFile(): File
+    {
         return new File("{$this}");
     }
 
     /**
      * @param Path|null $oSubtract
+     *
      * @return PhpNamespace
      * @throws InvalidArgumentException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
-    public function toPsr4(PhpNamespace $prepend = null, Path $oSubtract = null): PhpNamespace {
+    public function toPsr4(PhpNamespace $prepend = null, Path $oSubtract = null): PhpNamespace
+    {
 
         $sWorkPath = "{$this}";
-        if ($oSubtract) {
+        if ($oSubtract)
+        {
             $sWorkPath = str_replace("{$oSubtract}", "", $sWorkPath);
             $sWorkPath = preg_replace('/^\\' . DIRECTORY_SEPARATOR . '/', '', $sWorkPath);
         }
@@ -178,31 +203,39 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
     }
 
     /**
-     *
      * @param int $iLevels = 1
+     *
      * @return Path
      * @throws InvalidArgumentException
      */
-    public function dirname(int $iLevels = 1): Path {
+    public function dirname(int $iLevels = 1): Path
+    {
         return new Path(dirname($this, $iLevels));
     }
 
     /**
      * @return bool
      */
-    public function isFile(): bool {
+    public function isFile(): bool
+    {
         return file_exists($this) && is_file($this);
     }
 
     /**
      * Tries to unlink a file or directory if it exists, returns false when the file does not exist.
+     *
      * @return bool
      */
-    public function unlink(): bool {
-        if (is_dir($this)) {
+    public function unlink(): bool
+    {
+        if (is_dir($this))
+        {
             return rmdir($this);
-        } else {
-            if (file_exists($this) || is_link($this)) {
+        }
+        else
+        {
+            if (file_exists($this) || is_link($this))
+            {
                 return unlink($this);
             }
         }
@@ -214,10 +247,12 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
      * of the destination also for method chaining.
      *
      * @param Path $oDestination
+     *
      * @return $this
      */
-    public function move(Path $oDestination): Path {
-        if($oDestination->isDir())
+    public function move(Path $oDestination): Path
+    {
+        if ($oDestination->isDir())
         {
             $oDestination = $oDestination->extend($this->basename());
         }
@@ -230,7 +265,8 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
      * @return PlainText
      * @throws InvalidArgumentException
      */
-    public function contents():PlainText {
+    public function contents(): PlainText
+    {
         return new PlainText(file_get_contents($this));
     }
 
@@ -238,14 +274,16 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
     /**
      * @param int|null $time
      * @param int|null $atime
+     *
      * @return $this
      */
-    public function touch(int $time = null , int $atime = null): Path {
-        if($time === null)
+    public function touch(int $time = null, int $atime = null): Path
+    {
+        if ($time === null)
         {
             $time = time();
         }
-        if($atime === null)
+        if ($atime === null)
         {
             $atime = time();
         }
@@ -253,28 +291,38 @@ class Path extends AbstractDataType implements IGenericDataType, IUri {
 
         return $this;
     }
+
     /**
-     *
      * @param string $sSuffix = ''
+     *
      * @return Path
      * @throws InvalidArgumentException
      */
-    public function basename(string $sSuffix = ''): Path {
+    public function basename(string $sSuffix = ''): Path
+    {
         return new Path(basename($this, $sSuffix));
     }
 
     /**
      *
      */
-    public function exists(): bool {
+    public function exists(): bool
+    {
         $sValue = $this->getValue();
-        if (file_exists($sValue)) {
+        if (file_exists($sValue))
+        {
             return true;
-        } else {
-            if (is_dir($sValue)) {
+        }
+        else
+        {
+            if (is_dir($sValue))
+            {
                 return true;
-            } else {
-                if (is_link($sValue)) {
+            }
+            else
+            {
+                if (is_link($sValue))
+                {
                     return true;
                 }
             }
