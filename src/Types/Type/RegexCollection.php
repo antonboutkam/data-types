@@ -8,7 +8,7 @@ use Hurah\Types\Exception\InvalidArgumentException;
  * Represents a regular expression
  * @package Hurah\Type
  */
-class RegexCollection extends AbstractCollectionDataType
+class RegexCollection extends AbstractCollectionDataType implements ITestable
 {
     public function current():Regex
     {
@@ -29,6 +29,24 @@ class RegexCollection extends AbstractCollectionDataType
         foreach($this as $oRegex)
         {
             if($oRegex->test($oString))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * If one of the Regular expressions is a match this function returns true.
+     * @param string $sSubject
+     *
+     * @return bool
+     */
+    public function test(string $sSubject):bool
+    {
+        foreach($this as $oRegex)
+        {
+            if($oRegex->test($sSubject))
             {
                 return true;
             }
