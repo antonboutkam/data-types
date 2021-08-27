@@ -27,6 +27,12 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
         }
     }
 
+    public function doForeach(LiteralCallable $oCallback)
+    {
+        $oForeach = ControlForeach::fromCollection($this);
+        $oForeach->loop($oCallback);
+    }
+
     /**
      * Returns a Symfony Finder component that as each directory in the collection as a location to look for whatever
      * you are looking for.
@@ -47,7 +53,9 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
 
     /**
      * Creates a new PathCollection with the Paths in reverse order.
+     *
      * @return \Hurah\Types\Type\PathCollection
+     * @throws InvalidArgumentException
      */
     public function reverse():PathCollection
     {

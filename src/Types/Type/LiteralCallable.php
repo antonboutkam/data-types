@@ -40,9 +40,13 @@ class LiteralCallable extends AbstractDataType implements IGenericDataType, ITes
         return $oSelf;
     }
 
+    public function __invoke(...$args)
+    {
+        return $this->callable->__invoke($args);
+    }
     public function test(string $sSubject): bool
     {
-        return $this->callable->__invoke($sSubject);
+        return $this->__invoke($sSubject);
     }
 
 
