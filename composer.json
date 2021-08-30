@@ -1,6 +1,6 @@
 {
     "name": "hurah/data-types",
-    "description": "A collection of classes that represent specific types of data often encountered when coding.",
+    "description": "Collection of classes representing general purpose data types, corresponding collections, validators, utilities and some control statements represented by objects to allow more strict type checking",
     "license": "MIT",
     "authors": [
         {
