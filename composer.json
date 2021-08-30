@@ -1,6 +1,6 @@
 {
     "name": "hurah/data-types",
-    "description": "Collection of classes representing general purpose data types, corresponding collections, validators, utilities and some control statements represented by objects to allow more strict type checking",
+    "description": "Collection of general purpose data types, corresponding collections, validators, utilities and some control statements represented by objects to allow more strict type checking",
     "license": "MIT",
     "authors": [
         {
