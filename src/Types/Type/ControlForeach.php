@@ -2,8 +2,8 @@
 
 namespace Hurah\Types\Type;
 
-use Closure;
 use Hurah\Types\Exception\InvalidArgumentException;
+use Hurah\Types\Type\Helper\Loop;
 use Hurah\Types\Util\JsonUtils;
 use function is_iterable;
 use function is_null;
@@ -41,9 +41,12 @@ class ControlForeach extends AbstractDataType implements IGenericDataType
      */
     public function loop(LiteralCallable $closure)
     {
-        foreach($this as $id => $that)
+        $oLoop = new Loop($this->mValue);
+
+        // print_r($this->mValue);
+        foreach($this->mValue as $item)
         {
-            $closure($id, $that);
+            $closure($item, $oLoop->next());
         }
     }
     public function __toString(): string

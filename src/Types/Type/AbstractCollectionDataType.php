@@ -75,4 +75,8 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
     {
         return isset($this->array[$offset]) ? $this->array[$offset] : null;
     }
+    public function length():int
+    {
+        return count($this->array);
+    }
 }

@@ -46,7 +46,9 @@ class LiteralCallable extends AbstractDataType implements IGenericDataType, ITes
 
     public function __invoke(...$args)
     {
-        return $this->callable->__invoke($args);
+        // $args[0] An item from the collection that we are looping over.
+        // $args[1] the Loop helper.
+        return $this->callable->__invoke($args[0], $args[1]);
     }
     public function test(string $sSubject): bool
     {
