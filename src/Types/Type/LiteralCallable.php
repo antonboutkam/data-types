@@ -17,11 +17,15 @@ class LiteralCallable extends AbstractDataType implements IGenericDataType, ITes
     private Closure $callable;
 
     function __construct($sValue = null) {
-        if(!is_callable($sValue) && !is_null($sValue))
+
+        if($sValue instanceof Closure)
         {
-            throw new InvalidArgumentException("Constructor must be null or callable");
+            $this->callable = $sValue;
         }
-        $this->callable = $sValue;
+        elseif(!is_null($sValue))
+        {
+            throw new InvalidArgumentException("Constructor of LiteralCallable must be of type Closure or null");
+        }
         parent::__construct($sValue);
     }
 
