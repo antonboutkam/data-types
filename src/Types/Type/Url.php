@@ -7,9 +7,9 @@ use InvalidArgumentException;
 class Url extends AbstractDataType implements IGenericDataType, IUri
 {
 
-    function __construct($sValue = null)
+    public function __construct($sValue = null)
     {
-        if($aParts = parse_url($sValue))
+        if ($aParts = parse_url($sValue))
         {
             parent::__construct($aParts);
         }
@@ -21,40 +21,48 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
 
     /**
      * @param mixed $mPattern
+     *
      * @return bool
      */
-    function matches($mPattern):bool
+    public function matches($mPattern): bool
     {
-        if($mPattern instanceof self)
+        if ($mPattern instanceof self)
         {
             return "{$this}" === "{$mPattern}";
         }
-        else if(is_string($mPattern))
+        else
         {
-            return "{$this}" === $mPattern;
+            if (is_string($mPattern))
+            {
+                return "{$this}" === $mPattern;
+            }
         }
         throw new InvalidArgumentException("Unexpected type passed to Url::matches");
     }
-    function addQuery(...$aParts):self
+
+    public function addQuery(...$aParts): self
     {
         $aComponents = $this->getValue();
         $sQuery = $aComponents['query'] ?? null;
         foreach ($aParts as $mPart)
         {
-            if(is_array($mPart))
+            if (is_array($mPart))
             {
                 $sQueryAdd = http_build_query($mPart);
             }
-            else if(is_string($mPart))
-            {
-                $sQueryAdd = $mPart;
-            }
             else
             {
-                throw new InvalidArgumentException("Could not turn variable into valid get string");
+                if (is_string($mPart))
+                {
+                    $sQueryAdd = $mPart;
+                }
+                else
+                {
+                    throw new InvalidArgumentException("Could not turn variable into valid get string");
+                }
             }
 
-            if($sQuery)
+            if ($sQuery)
             {
                 $sQuery = $sQuery . '&' . $sQueryAdd;
             }
@@ -73,18 +81,20 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
 
     /**
      * Adds levels / directories to the path portion of the url
+     *
      * @param mixed ...$aParts
+     *
      * @return Url
      */
-    function addPath(...$aParts):self
+    public function addPath(...$aParts): self
     {
         foreach ($aParts as $mPart)
         {
-            if(is_array($mPart))
+            if (is_array($mPart))
             {
                 $this->addPath($mPart);
             }
-            elseif(is_string($mPart) || $mPart instanceof AbstractDataType)
+            elseif (is_string($mPart) || $mPart instanceof AbstractDataType)
             {
                 // Implicit cast + remove trailing slash if needed
                 $sCurrentPath = preg_replace('/\/$/', '', "{$this->getPath()}");
@@ -103,9 +113,11 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
         }
         return $this;
     }
-    public function setQuery(string $sQuery = null):self {
+
+    public function setQuery(string $sQuery = null): self
+    {
         $aComponents = $this->getValue();
-        if($sQuery === null)
+        if ($sQuery === null)
         {
             unset($aComponents['query']);
         }
@@ -120,12 +132,15 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
 
     /**
      * Overwrites the path component of the url.
+     *
      * @param string|null $sPath
+     *
      * @return Url
      */
-    public function setPath(?string $sPath = null):self{
+    public function setPath(?string $sPath = null): self
+    {
         $aComponents = $this->getValue();
-        if($sPath === null)
+        if ($sPath === null)
         {
             unset($aComponents['path']);
         }
@@ -138,54 +153,62 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
         return $this;
     }
 
-    public function getScheme():?string
+    public function getScheme(): ?string
     {
         return $this->getValue()['scheme'] ?? null;
     }
-    function getUser():?string
+
+    public function getUser(): ?string
     {
         return $this->getValue()['user'] ?? null;
     }
-    function getPass():?string
+
+    public function getPass(): ?string
     {
         return $this->getValue()['pass'] ?? null;
     }
-    function getHost():?string
+
+    public function getHost(): ?string
     {
         return $this->getValue()['host'] ?? null;
     }
-    function getPort():?string
+
+    public function getPort(): ?string
     {
         return $this->getValue()['port'] ?? null;
     }
-    function getPath():?string
+
+    public function getPath(): ?string
     {
         return $this->getValue()['path'] ?? null;
     }
-    function getQuery():?string
+
+    public function getQuery(): ?string
     {
         return $this->getValue()['query'] ?? null;
     }
-    function getFragment():?string
+
+    public function getFragment(): ?string
     {
         return $this->getValue()['fragment'] ?? null;
     }
 
-    function __toString(): string
+    public function __toString(): string
     {
         // If the url is parsable in the constructor we are keeping it internally as an array of all of it's components
         // when the url is not a valid url, just the # sign for instance, it is not parsable and we will return the
         // original string, so #.
 
         $mValue = $this->getValue();
-        if(is_array($mValue))
+        if (is_array($mValue))
         {
             return $this->buildUrl();
         }
         return $mValue;
     }
 
-    private function buildUrl():string {
+    private function buildUrl(): string
+    {
         $parts = $this->getValue();
         return (isset($parts['scheme']) ? "{$parts['scheme']}:" : '') .
             ((isset($parts['user']) || isset($parts['host'])) ? '//' : '') .

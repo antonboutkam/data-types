@@ -18,7 +18,7 @@ class TypeType extends AbstractDataType implements IGenericDataType
      * @param null $mValue
      * @throws RuntimeException
      */
-    function __construct($mValue = null) {
+    public function __construct($mValue = null) {
 
 
         if (is_string($mValue) && in_array($mValue, Primitive::TYPES))

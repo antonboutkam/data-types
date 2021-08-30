@@ -6,7 +6,7 @@ use DOMDocument;
 
 /**
  * Represents a string, but string is a reserved keyword
- * Class PlainText
+ * Class Html
  * @package Hurah\Type
  */
 class Html extends PlainText {

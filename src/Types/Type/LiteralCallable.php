@@ -8,8 +8,8 @@ use function is_callable;
 use function is_null;
 
 /**
- * Represents an IBAN number, use Iban::fromString to enforce validation.
- * Class Iban
+ * Represents a piece of logic such as an event or a test,
+ * Class LiteralCallable
  * @package Hurah\Types\Type
  */
 class LiteralCallable extends AbstractDataType implements IGenericDataType, ITestable
