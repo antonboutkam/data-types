@@ -27,11 +27,16 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
         }
     }
 
-    public function doForeach(LiteralCallable $oCallback)
+    public function filter(ITestable $oTestable): PathCollection
     {
-        $oForeach = ControlForeach::fromCollection($this);
-        $oForeach->loop($oCallback);
+        $oNewPathCollection = parent::filter($oTestable);
+        if($oNewPathCollection instanceof PathCollection)
+        {
+            return $oNewPathCollection;
+        }
+        throw new InvalidArgumentException("Return type issue");
     }
+
 
     /**
      * Returns a Symfony Finder component that as each directory in the collection as a location to look for whatever

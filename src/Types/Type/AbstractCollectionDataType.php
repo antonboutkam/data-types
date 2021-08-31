@@ -23,6 +23,35 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
         $this->position = 0;
     }
 
+
+    /**
+     * Returns a new collection containing the filtered results
+     *
+     * @param ITestable $oTestable
+     *
+     * @return $this
+     */
+    public function filter(ITestable $oTestable):AbstractCollectionDataType
+    {
+        $oFilteredInstance = new static;
+
+        foreach ($this as $item)
+        {
+            if($oTestable->test($item))
+            {
+                $oFilteredInstance->add($item);
+            }
+        }
+        return $oFilteredInstance;
+    }
+
+
+    public function doForeach(LiteralCallable $oCallback)
+    {
+        $oForeach = ControlForeach::fromCollection($this);
+        $oForeach->loop($oCallback);
+    }
+
     public function key():int
     {
         return $this->position;
