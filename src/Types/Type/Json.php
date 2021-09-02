@@ -25,14 +25,11 @@ class Json extends AbstractDataType implements IGenericDataType
         }
         elseif($mValue instanceof File)
         {
-            $tmp = $mValue->contents();
-            // Would throw an Exception if passed string is not valid json
-            $mJsonValue = JsonUtils::encode(JsonUtils::decode($tmp, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            $mJsonValue = $mValue;
         }
         elseif (is_string($mValue))
         {
-            // Would throw an Exception if passed string is not valid json
-            $mJsonValue = JsonUtils::encode(JsonUtils::decode($mValue, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            $mJsonValue = $mValue;
         }
         elseif (is_array($mValue) || is_object($mValue))
         {
