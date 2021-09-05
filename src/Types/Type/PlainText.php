@@ -94,12 +94,12 @@ class PlainText extends AbstractDataType implements IGenericDataType
 
     /**
      * Checks if the text contains the text passed as the argument.
-     * @param Regex $oRegex
+     * @param Regex|Tag|RegexCollection|TagCollection|ITestable $oRegex
      * @return bool
      */
-    public function matches(Regex $oRegex): bool
+    public function matches(ITestable $oTestable): bool
     {
-        return preg_match("{$oRegex}", $this->getValue());
+        return $oTestable->test($this->getValue());
     }
 
     /**

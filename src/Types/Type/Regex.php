@@ -8,7 +8,7 @@ use Hurah\Types\Exception\InvalidArgumentException;
  * Represents a regular expression
  * @package Hurah\Type
  */
-class Regex extends AbstractDataType implements IGenericDataType
+class Regex extends AbstractDataType implements IGenericDataType, ITestable
 {
 
     function __construct($sValue = null)

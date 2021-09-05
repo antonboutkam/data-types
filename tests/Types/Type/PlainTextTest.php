@@ -5,18 +5,47 @@ namespace Test\Hurah\Types\Type;
 
 use Hurah\Types\Type\PlainText;
 use Hurah\Types\Type\Regex;
+use Hurah\Types\Type\Tag;
+use Hurah\Types\Type\TagCollection;
 use PHPUnit\Framework\TestCase;
 
 class PlainTextTest extends TestCase
 {
 
-    public function testMatches()
+    public function testMatchesRegex()
     {
         $oRegex = new Regex('/^[0-9]+mg$/');
         $oPlainText = new PlainText("10mg");
 
         $this->assertTrue($oPlainText->matches($oRegex));
+
+        $oTag = new Tag('wtf');
+        $oPlainText = new PlainText("En toen dacht ik #wtf");
+        $oPlainText->matches($oTag);
     }
+    public function testMatchesTag()
+    {
+        $oTag = new Tag('wtf');
+        $oPlainText = new PlainText("En toen dacht ik #wtf");
+        $this->assertTrue($oPlainText->matches($oTag));
+
+        $oTag = new Tag('wtf');
+        $oPlainText2 = new PlainText("En toen dacht ik ohnee");
+        $this->assertFalse($oPlainText2->matches($oTag));
+    }
+
+    public function testMatchesTagCollection()
+    {
+        $oTagCollection = TagCollection::fromTags();
+        $oTag = new Tag('wtf');
+        $oPlainText = new PlainText("En toen dacht ik #wtf");
+        $this->assertTrue($oPlainText->matches($oTag));
+
+        $oTag = new Tag('wtf');
+        $oPlainText2 = new PlainText("En toen dacht ik ohnee");
+        $this->assertFalse($oPlainText2->matches($oTag));
+    }
+
     public function testLower()
     {
         $hello = (new PlainText("Hello"))->lowercase();

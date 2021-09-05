@@ -2,16 +2,57 @@
 
 namespace Hurah\Types\Type;
 
-class TagCollection extends AbstractCollectionDataType
+class TagCollection extends AbstractCollectionDataType implements ITestable
 {
+    public static function fromArray(array $aTags):self
+    {
+        $o = new self();
+        foreach($aTags as $oTag)
+        {
+            $o->addString($oTag);
+        }
+        return $o;
+    }
+    public static function fromTags(Tag ...$tags):self
+    {
+        $o = new self();
+        foreach($tags as $tag)
+        {
+            $o->add($tag);
+        }
+        return $o;
+    }
+
     public function current():Tag
     {
         return $this->array[$this->position];
     }
 
+    public function addString(string $sTag)
+    {
+        $this->add(new Tag($sTag));
+    }
     public function add(Tag $oTag)
     {
         $this->array[] = $oTag;
+    }
+
+    /**
+     * Returns true when one or more of the tags in the collection occur in $sSubject.
+     * @param string $sSubject
+     *
+     * @return bool
+     */
+    public function test(string $sSubject):bool
+    {
+        foreach($this as $oTag)
+        {
+            if($oTag->test($sSubject))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

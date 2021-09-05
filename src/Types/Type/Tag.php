@@ -7,6 +7,7 @@ use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Util\JsonUtils;
 use function is_string;
 use function preg_replace;
+use function strpos;
 
 
 /**
@@ -14,7 +15,7 @@ use function preg_replace;
  * Class Tag
  * @package Hurah\Type
  */
-class Tag extends PlainText implements IGenericDataType
+class Tag extends PlainText implements IGenericDataType, ITestable
 {
 
     public function __construct($sValue = null)
@@ -25,6 +26,22 @@ class Tag extends PlainText implements IGenericDataType
         }
         parent::__construct($sValue);
     }
+
+    /**
+     * Returns true when $sSubject contains this tag.
+     * @param string $sSubject
+     *
+     * @return bool
+     */
+    public function test(string $sSubject): bool
+    {
+        if(strpos($sSubject, "$this"))
+        {
+            return true;
+        }
+        return false;
+    }
+
 
     public function __toString():string
     {
