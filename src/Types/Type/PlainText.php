@@ -5,6 +5,7 @@ namespace Hurah\Types\Type;
 use Exception;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Util\JsonUtils;
+use function str_replace;
 
 
 /**
@@ -67,6 +68,17 @@ class PlainText extends AbstractDataType implements IGenericDataType
     public function asInt(): int
     {
         return (int)"{$this}";
+    }
+
+    public function toCameCase($sString):self
+    {
+        $string = "{$this}";
+        $string = str_replace('-', ' ', $string);
+        $string = str_replace('_', ' ', $string);
+        $string = ucwords($string);
+        $string = str_replace(' ', '', $string);
+
+        return new PlainText($string);
     }
 
     public function prepend(...$data)
