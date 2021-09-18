@@ -70,7 +70,7 @@ class PlainText extends AbstractDataType implements IGenericDataType
         return (int)"{$this}";
     }
 
-    public function toCameCase($sString):self
+    public function toCameCase():self
     {
         $string = "{$this}";
         $string = str_replace('-', ' ', $string);
