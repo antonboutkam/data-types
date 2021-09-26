@@ -68,6 +68,16 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
         return $this;
     }
 
+    public static function fromPaths(Path ...$paths):self
+    {
+        $oNewPathCollection = new self();
+        foreach($paths as $path)
+        {
+            $oNewPathCollection->add($path);
+        }
+        return $oNewPathCollection;
+    }
+
     /**
      * Creates a new combined collection based on the collections provided as arguments
      * @param PathCollection ...$pathCollections
