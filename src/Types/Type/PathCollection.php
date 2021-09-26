@@ -27,6 +27,79 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
         }
     }
 
+    /**
+     * Checks if this path is already in the collection
+     * @param Path $path
+     *
+     * @return bool
+     */
+    public function containsPath(Path $path):bool
+    {
+        foreach($this as $pathComp)
+        {
+            if("{$pathComp}" === "{$path}")
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Append the items to the current collection
+     * @param PathCollection ...$pathCollection
+     */
+    public function appendCollections(PathCollection ...$pathCollections):self
+    {
+        foreach($pathCollections as $pathCollection)
+        {
+            $this->appendCollection($pathCollection);
+
+        }
+        return $this;
+    }
+
+    public function appendCollection(PathCollection $pathCollection):self
+    {
+        foreach($pathCollection as $path)
+        {
+            $this->add($path);
+        }
+        return $this;
+    }
+
+    /**
+     * Creates a new combined collection based on the collections provided as arguments
+     * @param PathCollection ...$pathCollections
+     *
+     * @return PathCollection
+     * @throws InvalidArgumentException
+     */
+    public static function fromPathCollections(PathCollection ...$pathCollections):self
+    {
+        $oNewPathCollection = new self();
+        foreach($pathCollections as $pathCollection)
+        {
+            foreach($pathCollection as $path)
+            {
+                $oNewPathCollection->add($path);
+            }
+        }
+        return $oNewPathCollection;
+    }
+
+    /**
+     * Creates a new PathCollection based on the current PathCollection and the collections provided as arguments.
+     * @param PathCollection ...$pathCollections
+     *
+     * @return PathCollection
+     * @throws InvalidArgumentException
+     */
+    public function merge(PathCollection ...$pathCollections):PathCollection
+    {
+        return (clone $this)->appendCollections(...$pathCollections);
+    }
+
     public function filter(ITestable $oTestable): PathCollection
     {
         $oNewPathCollection = parent::filter($oTestable);
