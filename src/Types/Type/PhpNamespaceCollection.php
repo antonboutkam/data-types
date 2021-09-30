@@ -28,7 +28,7 @@ class PhpNamespaceCollection extends AbstractCollectionDataType
 
     public function add(PhpNamespace $oPhpNamespace):void
     {
-        $this->array[$this->position] = $oPhpNamespace;
+        $this->array[] = $oPhpNamespace;
     }
     public function addString(string $sPhpNamespace):void
     {
