@@ -5,6 +5,7 @@ namespace Hurah\Types\Type;
 use Error;
 use Exception;
 use Hurah\Types\Exception\InvalidArgumentException;
+use Hurah\Types\Util\JsonUtils;
 use ReflectionClass;
 use LogicException;
 use Hurah\Types\Exception\ClassNotFoundException;
@@ -12,16 +13,22 @@ use ReflectionException;
 
 class PhpNamespaceCollection extends AbstractCollectionDataType
 {
+    public function asJson()
+    {
+        return JsonUtils::encode($this->array);
+    }
+    public function toArray():array
+    {
+        return $this->array;
+    }
     public function add(PhpNamespace $oPhpNamespace):void
     {
         $this->array[$this->position] = $oPhpNamespace;
     }
-
     public function addString(string $sPhpNamespace):void
     {
         $this->add(new PhpNamespace($sPhpNamespace));
     }
-
     public function current():PhpNamespace
     {
         return $this->array[$this->position];

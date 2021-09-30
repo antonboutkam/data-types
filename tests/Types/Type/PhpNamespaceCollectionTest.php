@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 class PhpNamespaceCollectionTest extends TestCase
 {
 
+
     public function testFindFirstExisting()
     {
         $oPhpNamespaceCollection = new PhpNamespaceCollection();
