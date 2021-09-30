@@ -9,6 +9,7 @@ use ReflectionClass;
 use LogicException;
 use Hurah\Types\Exception\ClassNotFoundException;
 use ReflectionException;
+use function class_exists;
 
 class PhpNamespace extends AbstractDataType implements IGenericDataType
 {
@@ -34,7 +35,14 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
         }
 
         throw new LogicException("Could not shorten Namespace name {$this->getValue()}.");
-
+    }
+    public function exists():bool
+    {
+        if(class_exists($this))
+        {
+            return true;
+        }
+        return false;
     }
 
     /**
