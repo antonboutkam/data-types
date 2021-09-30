@@ -5,12 +5,9 @@ namespace Test\Hurah\Types\Type;
 use Hurah\Types\Type\PhpNamespace;
 use Hurah\Types\Type\PhpNamespaceCollection;
 use PHPUnit\Framework\TestCase;
-use function var_dump;
 
 class PhpNamespaceCollectionTest extends TestCase
 {
-
-
     public function testAdd()
     {
         $oPhpNamespaceCollection = new PhpNamespaceCollection();
@@ -30,7 +27,6 @@ class PhpNamespaceCollectionTest extends TestCase
         $oPhpNamespaceCollection->addString('\\AnotherNoneExisting\\Class');
         $oPhpNamespaceCollection->addString('\\AndAnotherNoneExisting\\Class');
         $oPhpNamespaceCollection->add(new PhpNamespace(self::class));
-
         $this->assertEquals(self::class, $oPhpNamespaceCollection->getFirstExisting());
     }
 }
