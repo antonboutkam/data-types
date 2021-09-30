@@ -21,6 +21,11 @@ class PhpNamespaceCollection extends AbstractCollectionDataType
     {
         return $this->array;
     }
+    public function __toString():string
+    {
+        return JsonUtils::encode($this->array);
+    }
+
     public function add(PhpNamespace $oPhpNamespace):void
     {
         $this->array[$this->position] = $oPhpNamespace;
