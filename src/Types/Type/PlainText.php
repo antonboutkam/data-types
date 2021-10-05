@@ -111,7 +111,7 @@ class PlainText extends AbstractDataType implements IGenericDataType
      */
     public function matches(ITestable $oTestable): bool
     {
-        return $oTestable->test($this->getValue());
+            return $oTestable->test("{$this}");
     }
 
     /**
