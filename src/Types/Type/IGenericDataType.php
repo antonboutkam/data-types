@@ -9,7 +9,6 @@ interface IGenericDataType
     /**
      * IGenericDataType constructor.
      * @param null $sValue
-     * @throws InvalidArgumentException
      */
     public function __construct($sValue = null);
 
