@@ -17,29 +17,29 @@ class TypeInfo extends AbstractDataType implements IGenericDataType
         $mValue = $this->getValue();
         if(is_object($mValue))
         {
-            return json_encode($mValue);
+            return '(object:' . get_class($mValue). ' )' . json_encode($mValue);
         }
         elseif(is_string($mValue))
         {
-            return $mValue;
+            return '(string)' . $mValue;
         }
         elseif(is_array($mValue))
         {
-            return json_encode($mValue);
+            return '(array)' . json_encode($mValue);
         }
         elseif(is_int($mValue))
         {
-            return (string)$mValue;
+            return '(int)' . ((string)$mValue);
         }
         elseif(is_null($mValue))
         {
-            return 'null';
+            return '(null)' . 'null';
         }
         elseif(empty($mValue))
         {
-            return 'empty';
+            return '(empty)' . 'empty';
         }
-        return 'unknown type';
+        return '(unknown)' . 'unknown type';
     }
 
 }
