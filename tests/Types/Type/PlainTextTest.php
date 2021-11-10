@@ -80,7 +80,7 @@ class PlainTextTest extends TestCase
     public function testMatchesNot()
     {
         $oRegex = new Regex('/^[0-9]+mg$/');
-        $oPlainText = new PlainText(" 10mg ");
+        $oPlainText = new PlainText(" x10mg ");
 
         $this->assertFalse($oPlainText->matches($oRegex));
     }
