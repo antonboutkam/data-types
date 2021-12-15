@@ -43,6 +43,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
     }
 
 
+
     /**
      * @param $contents - something "string-able"
      *

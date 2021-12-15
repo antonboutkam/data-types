@@ -1,6 +1,6 @@
 <?php
 
-namespace Type;
+namespace Test\Hurah\Types\Type;
 
 use Hurah\Types\Type\Language;
 use PHPUnit\Framework\TestCase;

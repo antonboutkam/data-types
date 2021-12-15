@@ -40,7 +40,7 @@ class File extends AbstractDataType implements IGenericDataType
     }
     public function getContents():PlainText
     {
-        return new PlainText(file_get_contents($this->getValue()));
+        return new PlainText(file_get_contents($this->oFile));
     }
     public function writeContents(AbstractDataType $oContents):File
     {
