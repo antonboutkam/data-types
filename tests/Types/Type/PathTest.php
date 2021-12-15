@@ -9,6 +9,7 @@ use Hurah\Types\Util\DirectoryStructure;
 use Hurah\Types\Util\FileSystem;
 use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;
+use function var_dump;
 
 class PathTest extends TestCase {
 
@@ -27,13 +28,41 @@ class PathTest extends TestCase {
     /**
      * @throws NullPointerException
      */
-    function tearDown(): void {
+    public function tearDown(): void {
         $this->oTestFile = $this->getTestFile();
         if($this->oTestFile->isFile())
         {
             $this->oTestFile->unlink();
         }
         $this->oTestFile->dirname()->unlink();
+    }
+    public function testUnlinkRecursive()
+    {
+        $oSomePath = Path::make(__DIR__)->dirname(2)->extend('data');
+        $oSomePath->makeDir();
+        for($x = 0; $x < 10; $x++)
+        {
+            $oTestDirectoryX = $oSomePath->extend("test-directory-{$x}")->makeDir();
+            $this->assertTrue($oSomePath->extend("test-directory-$x")->isDir());
+            for($y = 0; $y < 10; $y++)
+            {
+                $oTestDirectoryX->extend("test-file-{$y}")->write("test-$y");
+                $this->assertTrue($oSomePath->extend("test-directory-$x", "test-file-$y")->exists());
+                $this->assertTrue($oSomePath->extend("test-directory-$x", "test-file-$y")->isFile());
+
+            }
+        }
+
+        $oTestDir1 = $oSomePath->extend("test-directory-1");
+        $oTestDir1->unlinkRecursive();
+        $this->assertFalse($oTestDir1->isDir());
+        $this->assertFalse($oTestDir1->exists());
+
+        $oTestRoot = $oTestDir1->dirname();
+        $this->assertTrue($oTestRoot->exists());
+        $oTestRoot->unlinkRecursive();
+        $this->assertFalse($oTestRoot->exists());
+
     }
 
     public function testTreeUp() {

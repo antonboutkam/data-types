@@ -7,6 +7,15 @@ use Hurah\Types\Exception\RuntimeException;
 use Hurah\Types\Util\FileSystem;
 use ReflectionException;
 use Symfony\Component\Finder\Finder;
+use function file_exists;
+use function in_array;
+use function is_dir;
+use function is_file;
+use function is_link;
+use function rmdir;
+use function scandir;
+use function unlink;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Points to a file or directory, may be local or remote (http, https, ftp etc)
@@ -41,7 +50,6 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
         }
         return new Path(join(DIRECTORY_SEPARATOR, $aUseParts));
     }
-
 
 
     /**
@@ -130,7 +138,10 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
         $oPathCollection->add($oCurrent);
         while (true)
         {
-            if (in_array("{$oCurrent}", [".", "/"]))
+            if (in_array("{$oCurrent}", [
+                ".",
+                "/"
+            ]))
             {
                 return $oPathCollection;
             }
@@ -223,7 +234,46 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
     }
 
     /**
-     * Tries to unlink a file or directory if it exists, returns false when the file does not exist.
+     * @return bool
+     */
+    public function isLink(): bool
+    {
+        return is_link($this);
+    }
+
+    /**
+     * Recursively unlink a tree structure
+     *
+     * @return bool
+     */
+    public function unlinkRecursive(): bool
+    {
+        if ($this->isDir())
+        {
+            foreach ($this->getDirectoryIterator() as $oDirectoryIterator)
+            {
+                if($oDirectoryIterator->isDot())
+                {
+                    continue;
+                }
+
+                $oPath = Path::make($oDirectoryIterator->getPathname());
+
+                if ($oPath->isDir() && !$oPath->isLink())
+                {
+                    $oPath->unlinkRecursive();
+                }
+                else
+                {
+                    $oPath->unlink();
+                }
+            }
+        }
+        return $this->unlink();
+    }
+
+    /**
+     * Unlink a file or directory if it exists
      *
      * @return bool
      */
@@ -233,12 +283,9 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
         {
             return rmdir($this);
         }
-        else
+        elseif (file_exists($this) || is_link($this))
         {
-            if (file_exists($this) || is_link($this))
-            {
-                return unlink($this);
-            }
+            return unlink($this);
         }
         return false;
     }
