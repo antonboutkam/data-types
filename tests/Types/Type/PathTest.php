@@ -9,6 +9,7 @@ use Hurah\Types\Util\DirectoryStructure;
 use Hurah\Types\Util\FileSystem;
 use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;
+use function json_encode;
 use function var_dump;
 
 class PathTest extends TestCase {
@@ -36,6 +37,17 @@ class PathTest extends TestCase {
         }
         $this->oTestFile->dirname()->unlink();
     }
+    public function testExplode()
+    {
+        $aExpectedInBothCases = ['this', 'is', 'a', 'test'];
+        $oPath1 = Path::make('this/is/a/test');
+        $this->assertEquals($aExpectedInBothCases, $oPath1->explode());
+
+        $oPath2 = Path::make('/this/is/a/test');
+        $this->assertEquals($aExpectedInBothCases, $oPath2->explode());
+    }
+
+
     public function testUnlinkRecursive()
     {
         $oSomePath = Path::make(__DIR__)->dirname(2)->extend('data');
@@ -65,6 +77,68 @@ class PathTest extends TestCase {
 
     }
 
+    public function testIsEmpty()
+    {
+        $oTestPath = Path::make('');
+        $this->assertTrue($oTestPath->isEmpty());
+
+        $oTestPath = Path::make(null);
+        $this->assertTrue($oTestPath->isEmpty());
+
+        $oTestPath = Path::make(null, null);
+        $this->assertTrue($oTestPath->isEmpty());
+
+        $oTestPath = Path::make();
+        $this->assertTrue($oTestPath->isEmpty());
+
+        $oTestPath = Path::make('root');
+        $this->assertFalse($oTestPath->isEmpty());
+
+        $oTestPath = Path::make('.');
+        $this->assertFalse($oTestPath->isEmpty());
+
+    }
+    public function testIsRelative()
+    {
+        $oTestPath = Path::make('home', 'anton', 'Documents');
+        $this->assertTrue($oTestPath->isRelative());
+
+        $oTestPath = Path::make('/home/anton/Documents');
+        $this->assertFalse($oTestPath->isRelative());
+    }
+
+    public function testHasFileExtension()
+    {
+        $aTestPaths = [
+            ['ext' => 'twig', 'path' => ['home', 'anton', 'Documents', 'file.twig'], 'expected' => true],
+            ['ext' => 'twig', 'path' => ['/home/anton/Documents/file.twig'], 'expected' => true],
+            ['ext' => 'twig', 'path' => ['file.twig'], 'expected' => true],
+            ['ext' => 'twig', 'path' => ['/home/anton/Documents/file/twig'], 'expected' => false],
+            ['ext' => 'twig', 'path' => ['/home/anton/Documents/file', 'twig'], 'expected' => false],
+            ['ext' => 'twig', 'path' => ['/home/anton/Documents/file', '.twig'], 'expected' => false],
+        ];
+        foreach($aTestPaths as $aTestPath)
+        {
+            $oTest = Path::make($aTestPath['path']);
+            if($aTestPath['expected'] === true)
+            {
+                $this->assertTrue($oTest->hasExtension($aTestPath['ext']), json_encode($aTestPath['path']));
+            }
+            else
+            {
+                $this->assertFalse($oTest->hasExtension($aTestPath['ext']), json_encode($aTestPath['path']));
+            }
+
+        }
+    }
+    public function testIsAbsolute()
+    {
+        $oTestPath = Path::make('home', 'anton', 'Documents');
+        $this->assertFalse($oTestPath->isAbsolute());
+
+        $oTestPath = Path::make('/home/anton/Documents');
+        $this->assertTrue($oTestPath->isAbsolute());
+    }
     public function testTreeUp() {
         $oTestPath = Path::make('home', 'anton', 'Documents');
         $oPathCollection = $oTestPath->treeUp();

@@ -3,18 +3,23 @@
 namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
+use Hurah\Types\Exception\NullPointerException;
 use Hurah\Types\Exception\RuntimeException;
 use Hurah\Types\Util\FileSystem;
 use ReflectionException;
 use Symfony\Component\Finder\Finder;
+use function array_filter;
+use function array_values;
 use function file_exists;
 use function in_array;
 use function is_dir;
 use function is_file;
 use function is_link;
+use function preg_match;
 use function rmdir;
 use function scandir;
 use function unlink;
+use function var_dump;
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -48,9 +53,63 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
             }
             $aUseParts[] = $mPart;
         }
+        if(count($aUseParts) === 0)
+        {
+            return new Path();
+        }
         return new Path(join(DIRECTORY_SEPARATOR, $aUseParts));
     }
 
+    /**
+     * Returns the path as an array / explodes the path on the DIRECTORY_SEPARATOR. If the path is empty, an empty
+     * array is returned.
+     * @return array
+     */
+    public function explode():array
+    {
+        return array_values(array_filter(explode(DIRECTORY_SEPARATOR, "{$this}")));
+    }
+    public function isEmpty():bool
+    {
+        $sPath = $this->getValue();
+        if(!$sPath)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function hasExtension(string $sExt):bool
+    {
+        $sPath = $this->getValue();
+        if(!$sPath)
+        {
+            return false;
+        }
+        if(!preg_match("/[a-zA-Z0-9_-]\.{$sExt}$/", $sPath))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @return bool
+     * @throws NullPointerException
+     */
+    public function isRelative():bool
+    {
+        return !$this->isAbsolute();
+    }
+    public function isAbsolute():bool
+    {
+        $sPath = $this->getValue();
+        if(!$sPath)
+        {
+            throw new NullPointerException("Path is empty");
+        }
+        return preg_match('/^\//', $sPath);
+    }
 
     /**
      * @param $contents - something "string-able"
