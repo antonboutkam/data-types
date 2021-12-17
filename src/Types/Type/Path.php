@@ -17,10 +17,9 @@ use function is_file;
 use function is_link;
 use function preg_match;
 use function rmdir;
-use function scandir;
 use function unlink;
-use function var_dump;
 use const DIRECTORY_SEPARATOR;
+use const PHP_EOL;
 
 /**
  * Points to a file or directory, may be local or remote (http, https, ftp etc)
@@ -53,7 +52,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
             }
             $aUseParts[] = $mPart;
         }
-        if(count($aUseParts) === 0)
+        if (count($aUseParts) === 0)
         {
             return new Path();
         }
@@ -63,30 +62,78 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
     /**
      * Returns the path as an array / explodes the path on the DIRECTORY_SEPARATOR. If the path is empty, an empty
      * array is returned.
+     *
      * @return array
      */
-    public function explode():array
+    public function explode(): array
     {
         return array_values(array_filter(explode(DIRECTORY_SEPARATOR, "{$this}")));
     }
-    public function isEmpty():bool
+
+    public function isEmpty(): bool
     {
         $sPath = $this->getValue();
-        if(!$sPath)
+        if (!$sPath)
         {
             return true;
         }
         return false;
     }
 
-    public function hasExtension(string $sExt):bool
+    /**
+     * Returns the number of levels this path has.
+     *
+     * @return int
+     */
+    public function depth(): int
+    {
+        return count($this->explode());
+    }
+
+    /**
+     * Returns the sequence of elements from the path as specified by the offset and length parameters.
+     *
+     * @param int $iOffset  If offset is non-negative, the sequence will start at that offset in the array.
+     *                      If offset is negative, the sequence will start that far from the end of the array.
+     * @param int|null $iLength
+     *
+     * @return Path
+     * @throws InvalidArgumentException
+     */
+    public function slice(int $iOffset, int $iLength = null): Path
+    {
+        $aParts = $this->explode();
+        if($iOffset < 0)
+        {
+            $iOffset = count($aParts) + $iOffset;
+        }
+
+        $aSelectedParts = [];
+
+        $iCurrentOffset = 0;
+        $iCurrentLength = 0;
+
+        foreach ($aParts as $sPart)
+        {
+            if ($iCurrentOffset >= $iOffset && ($iLength == null || $iCurrentLength < $iLength))
+            {
+                $aSelectedParts[] = $sPart;
+                ++$iCurrentLength;
+            }
+            ++$iCurrentOffset;
+        }
+        return Path::make($aSelectedParts);
+
+    }
+
+    public function hasExtension(string $sExt): bool
     {
         $sPath = $this->getValue();
-        if(!$sPath)
+        if (!$sPath)
         {
             return false;
         }
-        if(!preg_match("/[a-zA-Z0-9_-]\.{$sExt}$/", $sPath))
+        if (!preg_match("/[a-zA-Z0-9_-]\.{$sExt}$/", $sPath))
         {
             return false;
         }
@@ -97,14 +144,15 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      * @return bool
      * @throws NullPointerException
      */
-    public function isRelative():bool
+    public function isRelative(): bool
     {
         return !$this->isAbsolute();
     }
-    public function isAbsolute():bool
+
+    public function isAbsolute(): bool
     {
         $sPath = $this->getValue();
-        if(!$sPath)
+        if (!$sPath)
         {
             throw new NullPointerException("Path is empty");
         }
@@ -311,7 +359,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
         {
             foreach ($this->getDirectoryIterator() as $oDirectoryIterator)
             {
-                if($oDirectoryIterator->isDot())
+                if ($oDirectoryIterator->isDot())
                 {
                     continue;
                 }
