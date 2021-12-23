@@ -18,16 +18,8 @@ class FileSystemTest extends TestCase {
     }
 
     public function testMakePath() {
-
         $oPath = FileSystem::makePath('This', 'is', 'a', new Path('test'), ['to', 'see'], ['if', new Path('it'), new Path('works')]);
         $sResult = join(' ', explode(DIRECTORY_SEPARATOR, (string) $oPath));
         $this->assertTrue((string) $sResult === 'This is a test to see if it works');
-
-
-
-
-
-
-
     }
 }

@@ -147,6 +147,11 @@ class PathTest extends TestCase
             ],
             [
                 'ext' => 'twig',
+                'path' => ['valid/template/path.twig'],
+                'expected' => true
+            ],
+            [
+                'ext' => 'twig',
                 'path' => ['/home/anton/Documents/file/twig'],
                 'expected' => false
             ],

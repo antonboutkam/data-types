@@ -2,7 +2,10 @@
 
 namespace Hurah\Types\Util;
 
+use Hurah\Types\Exception\RuntimeException;
 use Hurah\Types\Type\Path;
+use function dirname;
+use function is_writable;
 
 /**
  * Class FileSystem
@@ -31,10 +34,17 @@ final class FileSystem {
     }
 
     /**
-     * Recursively creates a directory if it did not exist. If it does just doen't do anything.
      * @param string $sPath
+     *
+     * @return void
+     * @throws RuntimeException
      */
     static function makeDir(string $sPath): void {
+        $sParentDir = dirname($sPath);
+        if(!is_writable(dirname($sParentDir)))
+        {
+            throw new RuntimeException("Cannot create {$sPath}, parent dir {$sParentDir} not writable.");
+        }
         if (!file_exists($sPath)) {
             mkdir($sPath, 0777, true);
         }
