@@ -16,8 +16,11 @@ use function is_dir;
 use function is_file;
 use function is_link;
 use function preg_match;
+use function preg_replace;
 use function rmdir;
+use function str_replace;
 use function unlink;
+use function var_dump;
 use const DIRECTORY_SEPARATOR;
 use const PHP_EOL;
 
@@ -256,6 +259,33 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
             $oPathCollection->add($oCurrent);
         }
 
+    }
+
+    /**
+     * @param AbstractDataType $oPortionToReplace
+     *
+     * @return self
+     */
+    public function remove(AbstractDataType $oPortionToReplace):self
+    {
+        return Path::make(str_replace("/{$oPortionToReplace}", '', $this->getValue()));
+    }
+
+    /**
+     * @param AbstractDataType $oPortionToReplace
+     *
+     * @return self
+     */
+    public function replace(AbstractDataType $oSearch, AbstractDataType $oReplace):self
+    {
+        if($oSearch instanceof Regex)
+        {
+            return Path::make(preg_replace($this->getValue(), "{$oSearch}", "{$oReplace}"));
+        }
+        $sResult = str_replace("{$oSearch}", "{$oReplace}", $this->getValue());
+         echo "1: {$this->getValue()}\n2: {$oSearch}\n3: {$oReplace}\n4: {$sResult}" . PHP_EOL;
+
+        return Path::make($sResult);
     }
 
     public function toPlainText(): PlainText
