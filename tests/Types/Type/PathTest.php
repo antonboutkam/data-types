@@ -6,11 +6,14 @@ use DirectoryIterator;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Exception\NullPointerException;
 use Hurah\Types\Type\Path;
+use Hurah\Types\Type\PlainText;
 use Hurah\Types\Util\DirectoryStructure;
 use Hurah\Types\Util\FileSystem;
 use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;
 use function json_encode;
+use function var_dump;
+use const PHP_EOL;
 
 class PathTest extends TestCase
 {
@@ -113,6 +116,39 @@ class PathTest extends TestCase
         $this->assertEquals(Path::make('home'), $oSomePath->slice(0, 1));
     }
 
+    public function testReplace()
+    {
+        $oBasePath1 = Path::make('/this/is/a/path');
+        $oBasePath2 = Path::make('/some/other/root');
+        $oSomeSubPath1 = Path::make('with/one/components/added');
+        $oSomeSubPath2 = Path::make('with/two/components/added');
+
+        $oFullPath1 = $oBasePath1->extend($oSomeSubPath1);
+        $oFullPath2 = $oBasePath1->extend($oSomeSubPath2);
+        $oFullPath3 = $oFullPath1->replace($oSomeSubPath1, $oSomeSubPath2);
+        $oFullPath4 = $oFullPath1->replace($oBasePath1, $oBasePath2);
+        $oFullPath5 = $oBasePath2->extend($oSomeSubPath1);
+
+        $this->assertEquals($oFullPath2, $oFullPath3);
+        $this->assertEquals($oFullPath5, $oFullPath4);
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function testRemove()
+    {
+        $oExpected = Path::make('/this/is/a/path');
+        $oSomeSubPath = Path::make('with/components/added');
+
+        $oExpectedExtended = $oExpected->extend($oSomeSubPath);
+        $this->assertEquals(Path::make('/this', 'is', 'a', 'path', 'with', 'components', 'added'), $oExpectedExtended);
+
+        $oBackToExpected = $oExpectedExtended->remove($oSomeSubPath);
+
+
+        $this->assertEquals($oExpected, $oBackToExpected, json_encode($oSomeSubPath));
+    }
     public function testIsRelative()
     {
         $oTestPath = Path::make('home', 'anton', 'Documents');
