@@ -20,14 +20,22 @@ final class FileSystem {
      */
     static function makePath(...$aParts): Path {
         $aUseParts = [];
+        $i = 0;
         foreach ($aParts as $mPart) {
+            ++$i;
             if (is_null($mPart) || empty($mPart)) {
                 continue;
             }
-            if (is_array($mPart)) {
+            elseif (is_array($mPart)) {
                 $aUseParts[] = self::makePath(...$mPart);
                 continue;
             }
+            elseif($mPart === '/')
+            {
+                $aUseParts[] = '';
+                continue;
+            }
+
             $aUseParts[] = $mPart;
         }
         return new Path(join(DIRECTORY_SEPARATOR, $aUseParts));

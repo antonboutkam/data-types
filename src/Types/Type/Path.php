@@ -273,9 +273,11 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
     }
 
     /**
-     * @param AbstractDataType $oPortionToReplace
+     * @param AbstractDataType $oSearch
+     * @param AbstractDataType $oReplace
      *
      * @return self
+     * @throws InvalidArgumentException
      */
     public function replace(AbstractDataType $oSearch, AbstractDataType $oReplace):self
     {
