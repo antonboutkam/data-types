@@ -265,10 +265,11 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      * @param AbstractDataType $oPortionToReplace
      *
      * @return self
+     * @throws NullPointerException
      */
     public function remove(AbstractDataType $oPortionToReplace):self
     {
-        return Path::make(str_replace("/{$oPortionToReplace}", '', $this->getValue()));
+        return Path::make(str_replace("{$oPortionToReplace}", '', $this->getValue()));
     }
 
     /**

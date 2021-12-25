@@ -144,7 +144,7 @@ class PathTest extends TestCase
         $oExpectedExtended = $oExpected->extend($oSomeSubPath);
         $this->assertEquals(Path::make('/this', 'is', 'a', 'path', 'with', 'components', 'added'), $oExpectedExtended);
 
-        $oBackToExpected = $oExpectedExtended->remove($oSomeSubPath);
+        $oBackToExpected = $oExpectedExtended->remove(new PlainText("/{$oSomeSubPath}"));
 
 
         $this->assertEquals($oExpected, $oBackToExpected, json_encode($oSomeSubPath));
