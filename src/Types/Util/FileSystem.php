@@ -4,7 +4,9 @@ namespace Hurah\Types\Util;
 
 use Hurah\Types\Exception\RuntimeException;
 use Hurah\Types\Type\Path;
+use function basename;
 use function dirname;
+use function file_exists;
 use function is_writable;
 
 /**
@@ -41,15 +43,28 @@ final class FileSystem {
         return new Path(join(DIRECTORY_SEPARATOR, $aUseParts));
     }
 
+    public static function treeIsWritable(string $sPath):bool
+    {
+        if(is_writable($sPath))
+        {
+            return true;
+        }
+        if(!file_exists($sPath) && $parent = dirname($sPath))
+        {
+            return self::treeIsWritable($parent);
+        }
+        return false;
+    }
+
     /**
      * @param string $sPath
      *
      * @return void
      * @throws RuntimeException
      */
-    static function makeDir(string $sPath): void {
+    public static function makeDir(string $sPath): void {
         $sParentDir = dirname($sPath);
-        if(!is_writable(dirname($sParentDir)))
+        if(!self::treeIsWritable($sParentDir))
         {
             throw new RuntimeException("Cannot create {$sPath}, parent dir {$sParentDir} not writable.");
         }

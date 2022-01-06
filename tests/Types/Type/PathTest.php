@@ -114,6 +114,11 @@ class PathTest extends TestCase
         $oExpected = Path::make('anton', 'Documents', 'sites', 'hurah', 'whatever', 'bla', 'template.twig');
         $this->assertEquals($oExpected, $oSomePath->slice(1));
         $this->assertEquals(Path::make('home'), $oSomePath->slice(0, 1));
+
+        $oSomePath = Path::make('Login/login.twig');
+        $oSomeDir = $oSomePath->slice(0, 1);
+        $this->assertEquals(Path::make('Login'), $oSomeDir);
+
     }
 
     public function testReplace()

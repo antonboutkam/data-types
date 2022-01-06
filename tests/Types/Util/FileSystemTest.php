@@ -6,6 +6,9 @@ use Hurah\Types\Type\Path;
 use Hurah\Types\Util\DirectoryStructure;
 use Hurah\Types\Util\FileSystem;
 use PHPUnit\Framework\TestCase;
+use function dirname;
+use function getcwd;
+use function var_dump;
 
 class FileSystemTest extends TestCase {
 
@@ -15,6 +18,20 @@ class FileSystemTest extends TestCase {
         $oTempDir->makeDir();
         $this->assertTrue($oTempDir->isDir(), "Create directory {$oTempDir} failed.");
         $this->assertTrue(rmdir($oTempDir), "Could not remove just created directory {$oTempDir}.");
+    }
+    public function testTreeIsWritable()
+    {
+        $sDataDir = dirname(__DIR__, 3);
+
+        $this->assertFalse(FileSystem::treeIsWritable('/'));
+        $this->assertFalse(FileSystem::treeIsWritable('/test.xml'));
+        $this->assertFalse(FileSystem::treeIsWritable('/bla/test.xml'));
+
+
+        $this->assertTrue(FileSystem::treeIsWritable($sDataDir));
+        $this->assertTrue(FileSystem::treeIsWritable($sDataDir . '/test.xml'));
+        $this->assertTrue(FileSystem::treeIsWritable($sDataDir . '/data/test.xml'));
+
     }
 
     public function testMakePath() {
