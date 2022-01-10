@@ -9,6 +9,7 @@ use Hurah\Types\Type\LiteralCallable;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Type\PlainText;
 use Hurah\Types\Type\Regex;
+use Hurah\Types\Type\RegexCollection;
 use Hurah\Types\Util\DirectoryStructure;
 use Hurah\Types\Util\FileSystem;
 use PHPUnit\Framework\TestCase;
@@ -152,6 +153,17 @@ class PathTest extends TestCase
         $this->assertEquals(Path::make('/this', 'is', 'a', 'path', 'with', 'components', 'added'), $oExpectedExtended);
 
         $oBackToExpected = $oExpectedExtended->remove(new PlainText("/{$oSomeSubPath}"));
+
+
+        $oRegexResult = $oExpectedExtended->remove(new Regex("/(\/this\/|is|\/a\/)/"));
+        $this->assertEquals(Path::make('path/with/components/added'), $oRegexResult);
+
+        $oRegexCollection = new RegexCollection();
+        $oRegexCollection->add(new Regex('/\/this/'));
+        $oRegexCollection->add(new Regex('/\/added/'));
+        $oRegexCollectionResult = $oExpectedExtended->remove($oRegexCollection);
+        $this->assertEquals(Path::make('/is/a/path/with/components'), $oRegexCollectionResult, $oRegexCollectionResult);
+
 
 
         $this->assertEquals($oExpected, $oBackToExpected, json_encode($oSomeSubPath));

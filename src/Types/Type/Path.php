@@ -267,6 +267,15 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      */
     public function remove(AbstractDataType $oPortionToReplace):self
     {
+
+        if($oPortionToReplace instanceof Regex)
+        {
+            return Path::make($oPortionToReplace->remove($this->getValue()));
+        }
+        elseif($oPortionToReplace instanceof RegexCollection)
+        {
+            return Path::make($oPortionToReplace->removeAll($this->getValue()));
+        }
         return Path::make(str_replace("{$oPortionToReplace}", '', $this->getValue()));
     }
 

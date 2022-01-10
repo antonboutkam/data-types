@@ -67,7 +67,7 @@ class Regex extends AbstractDataType implements IGenericDataType, ITestable
      */
     public function remove(string $sSubject): PlainText
     {
-        return new PlainText(preg_replace("{$this}", $sSubject, ''));
+        return new PlainText(preg_replace("{$this}", '', $sSubject));
     }
 
     public function test($sSubject): bool

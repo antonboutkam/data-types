@@ -67,13 +67,13 @@ class RegexCollection extends AbstractCollectionDataType implements ITestable
         return $oSubject;
     }
 
-    public function removeAll(PlainText $oSubject):PlainText
+    public function removeAll($mSubect):PlainText
     {
         foreach($this as $oRegex)
         {
-            $oSubject = $oRegex->remove($oSubject);
+            $mSubect = $oRegex->remove($mSubect);
         }
-        return $oSubject;
+        return $mSubect;
     }
 
     public function getAllMatches(string $sSubject):array
