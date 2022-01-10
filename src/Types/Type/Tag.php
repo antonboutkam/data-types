@@ -33,7 +33,7 @@ class Tag extends PlainText implements IGenericDataType, ITestable
      *
      * @return bool
      */
-    public function test(string $sSubject): bool
+    public function test($sSubject): bool
     {
         if(strpos($sSubject, "$this"))
         {

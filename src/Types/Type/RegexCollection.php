@@ -42,7 +42,7 @@ class RegexCollection extends AbstractCollectionDataType implements ITestable
      *
      * @return bool
      */
-    public function test(string $sSubject):bool
+    public function test($sSubject):bool
     {
         foreach($this as $oRegex)
         {

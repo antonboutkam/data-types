@@ -174,18 +174,16 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
         return $this;
     }
 
+
     /**
      * Checks if the text contains the text passed as the argument.
-     *
-     * @param Regex $oRegex
-     *
+     * @param ITestable $oRegex
      * @return bool
      */
-    public function matches(Regex $oRegex): bool
+    public function matches(ITestable $oTestable): bool
     {
-        return $this->toPlainText()->matches($oRegex);
+        return $oTestable->test($this);
     }
-
     /**
      * Checks if the file permissions of the file or directory allow writing
      *

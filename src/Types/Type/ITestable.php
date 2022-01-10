@@ -10,5 +10,5 @@ use function preg_match;
  */
 interface ITestable
 {
-    public function test(string $sSubject): bool;
+    public function test($sSubject): bool;
 }

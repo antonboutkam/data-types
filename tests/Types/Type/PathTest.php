@@ -5,8 +5,10 @@ namespace Test\Hurah\Types\Type;
 use DirectoryIterator;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Exception\NullPointerException;
+use Hurah\Types\Type\LiteralCallable;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Type\PlainText;
+use Hurah\Types\Type\Regex;
 use Hurah\Types\Util\DirectoryStructure;
 use Hurah\Types\Util\FileSystem;
 use PHPUnit\Framework\TestCase;
@@ -255,6 +257,15 @@ class PathTest extends TestCase
         $oTestFile = DirectoryStructure::getTmpDir()->extend('tests', $this->sTestFileBaseName);
         $oTestFile->write($sExpected = 'this is a test');
         $this->assertTrue(trim(file_get_contents($oTestFile->getValue())) == $sExpected);
+    }
+    public function testMatches()
+    {
+        $oPath = Path::make('/home/anton/hurah/Crud/SomeModule/Whatever/Field');
+        $this->assertTrue($oPath->matches(new Regex('/\/Crud\//')));
+        $this->assertTrue($oPath->matches(new LiteralCallable(function (Path $path){
+            return $path->isAbsolute();
+        })));
+
     }
 
     public function testAppend()

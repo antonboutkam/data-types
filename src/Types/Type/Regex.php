@@ -70,7 +70,7 @@ class Regex extends AbstractDataType implements IGenericDataType, ITestable
         return new PlainText(preg_replace("{$this}", $sSubject, ''));
     }
 
-    public function test(string $sSubject): bool
+    public function test($sSubject): bool
     {
         return preg_match("{$this}", $sSubject);
     }
