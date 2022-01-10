@@ -4,6 +4,7 @@ namespace Hurah\Types\Type;
 
 use SplFileInfo;
 use function chmod;
+use function clearstatcache;
 use function file_get_contents;
 use function file_put_contents;
 use function fopen;
@@ -45,12 +46,14 @@ class File extends AbstractDataType implements IGenericDataType
     public function writeContents(AbstractDataType $oContents):File
     {
         file_put_contents("{$this}", "{$oContents}");
+        clearstatcache();
         chmod((string)"{$this}", 0777);
         return $this;
     }
     public function appendContents(AbstractDataType $oContents):File
     {
         file_put_contents("{$this}", "{$oContents}", FILE_APPEND);
+        clearstatcache();
         chmod((string)"{$this}", 0777);
         return $this;
     }
