@@ -431,7 +431,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
         }
         elseif (file_exists($this) || is_link($this))
         {
-            return unlink($this);
+            return @unlink($this);
         }
         return false;
     }

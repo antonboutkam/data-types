@@ -47,14 +47,14 @@ class File extends AbstractDataType implements IGenericDataType
     {
         file_put_contents("{$this}", "{$oContents}");
         clearstatcache();
-        chmod((string)"{$this}", 0777);
+        @chmod((string)"{$this}", 0777);
         return $this;
     }
     public function appendContents(AbstractDataType $oContents):File
     {
         file_put_contents("{$this}", "{$oContents}", FILE_APPEND);
         clearstatcache();
-        chmod((string)"{$this}", 0777);
+        @chmod((string)"{$this}", 0777);
         return $this;
     }
 
