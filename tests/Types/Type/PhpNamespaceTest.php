@@ -24,7 +24,28 @@ class PhpNamespaceTest extends TestCase {
             'Namespace extend not working'
         );
     }
-
+    /**
+     * @return void
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
+     */
+    public function testGetFqn()
+    {
+        $oNamespace = PhpNamespace::make('This', 'Is', 'A', 'Test');
+        $this->assertEquals('\\This\\Is\A\\Test', "{$oNamespace->getFqn()}");
+    }
+    /**
+     * @return void
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
+     */
+    public function testGetNameSpaceName()
+    {
+        $oNamespace = PhpNamespace::make('This', 'Is', 'A', 'Test');
+        $oClassName = $oNamespace->extend('SomeClass');
+        $this->assertEquals($oNamespace, $oClassName->getNamespaceName());
+        $this->assertEquals('This\\Is\A', "{$oNamespace->getNamespaceName()}");
+    }
     /**
      * @throws InvalidArgumentException
      * @throws ReflectionException

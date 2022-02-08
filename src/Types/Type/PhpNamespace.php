@@ -5,6 +5,7 @@ namespace Hurah\Types\Type;
 use Error;
 use Exception;
 use Hurah\Types\Exception\InvalidArgumentException;
+use phpDocumentor\Reflection\Types\Self_;
 use ReflectionClass;
 use LogicException;
 use Hurah\Types\Exception\ClassNotFoundException;
@@ -26,6 +27,28 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
             throw new ClassNotFoundException("Class not found $sClassName.");
         }
         return new $sClassName(...$allArguments);
+    }
+
+    /**
+     * Return the namespace part of the given class name, so like basename() in Path it will strip one level off.
+     * @return $this
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
+     */
+    public function getNamespaceName():self
+    {
+        $aComponents = explode('\\', $this->getValue());
+        array_pop($aComponents);
+        return self::make($aComponents);
+    }
+
+    /**
+     * Returns the namespace with leading slash
+     * @return string
+     */
+    public function getFqn():string
+    {
+        return '\\' . $this->getValue();
     }
 
     public function getShortName(): string
