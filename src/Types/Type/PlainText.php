@@ -21,10 +21,13 @@ class PlainText extends AbstractDataType implements IGenericDataType
      */
     public function toJson(): Json
     {
-        try {
+        try
+        {
             $aJsonData = JsonUtils::decode($this->getValue(), true);
             return new Json($aJsonData);
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             throw new InvalidArgumentException("PlainText does not contain a valid JSON string");
         }
     }
@@ -37,6 +40,7 @@ class PlainText extends AbstractDataType implements IGenericDataType
 
     /**
      * Creates a new PlainText object with the strin in uppercase, this object is not changed.
+     *
      * @return PlainText
      * @throws InvalidArgumentException
      */
@@ -57,6 +61,7 @@ class PlainText extends AbstractDataType implements IGenericDataType
 
     /**
      * Creates a new PlainText object with the string in lowercase, this object is not changed.
+     *
      * @return PlainText
      * @throws InvalidArgumentException
      */
@@ -70,7 +75,7 @@ class PlainText extends AbstractDataType implements IGenericDataType
         return (int)"{$this}";
     }
 
-    public function toCameCase():self
+    public function toCameCase(): self
     {
         $string = "{$this}";
         $string = str_replace('-', ' ', $string);
@@ -83,13 +88,22 @@ class PlainText extends AbstractDataType implements IGenericDataType
 
     public function prepend(...$data)
     {
-        foreach ($data as $part) {
-            if (is_array($part)) {
+        foreach ($data as $part)
+        {
+            if (is_array($part))
+            {
                 $this->append(...$part);
-            } else {
+            }
+            else
+            {
                 $this->setValue($part . $this->getValue());
             }
         }
+    }
+
+    public function trim(string $characters = " \t\n\r\0\x0B"): self
+    {
+        return new self(trim($this, $characters));
     }
 
     public function append(...$data): self

@@ -62,9 +62,13 @@ class File extends AbstractDataType implements IGenericDataType
     {
         return new Path($this->oFile->getBasename());
     }
+    public function removeExtension():string
+    {
+        return $this->oFile->getBasename('.' . $this->oFile->getExtension());
+    }
     public function getExtension():string
     {
-        return new Path($this->oFile->getExtension());
+        return $this->oFile->getExtension();
     }
     public function getType():string
     {

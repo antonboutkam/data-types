@@ -58,7 +58,6 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
         }
         return $this;
     }
-
     public function appendCollection(PathCollection $pathCollection):self
     {
         foreach($pathCollection as $path)
@@ -67,7 +66,6 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
         }
         return $this;
     }
-
     public static function fromPaths(Path ...$paths):self
     {
         $oNewPathCollection = new self();

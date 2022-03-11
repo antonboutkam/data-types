@@ -15,38 +15,41 @@ class TypeType extends AbstractDataType implements IGenericDataType
 
     /**
      * TypeType constructor.
+     *
      * @param null $mValue
+     *
      * @throws RuntimeException
      */
-    public function __construct($mValue = null) {
-
-
+    public function __construct($mValue = null)
+    {
         if (is_string($mValue) && in_array($mValue, Primitive::TYPES))
         {
             $oValue = Primitive::create($mValue);
             parent::__construct(get_class($oValue));
         }
-        else if (is_string($mValue))
+        elseif (is_string($mValue))
         {
             parent::__construct($mValue);
         }
-        else if (is_object($mValue) && $mValue instanceof PhpNamespace)
+        elseif (is_object($mValue) && $mValue instanceof PhpNamespace)
         {
             parent::__construct("{$mValue}");
-        } else if (is_object($mValue) && $mValue instanceof IGenericDataType)
+        }
+        elseif (is_object($mValue) && $mValue instanceof IGenericDataType)
         {
             parent::__construct(get_class($mValue));
-        } else
-        {
-            $sMsg = "Constructor argument of " . __CLASS__ . " must implement IGenericDataType";
-            throw new RuntimeException($sMsg);
         }
+        $sMsg = "Constructor argument of " . __CLASS__ . " must implement IGenericDataType";
+        throw new RuntimeException($sMsg);
     }
+
     /**
      * @param mixed ...$constructorParams
+     *
      * @return IGenericDataType
      */
-    public function createInstance($constructorParams): IGenericDataType {
+    public function createInstance($constructorParams): IGenericDataType
+    {
         $sClassName = $this->getValue();
         try
         {
@@ -60,7 +63,9 @@ class TypeType extends AbstractDataType implements IGenericDataType
             throw new InvalidArgumentException($e->getMessage());
         }
     }
-    public function __toString(): string {
+
+    public function __toString(): string
+    {
         if ($this->isPrimitive())
         {
             $oPhpNamespace = new PhpNamespace("{$this->getValue()}");
@@ -68,14 +73,15 @@ class TypeType extends AbstractDataType implements IGenericDataType
         }
         return "{$this->getValue()}";
     }
+
     /**
      * @return bool
      */
-    public function isPrimitive(): bool {
+    public function isPrimitive(): bool
+    {
         try
         {
-            return $this->toPhpNamespace()
-                        ->implementsInterface(IPrimitiveType::class);
+            return $this->toPhpNamespace()->implementsInterface(IPrimitiveType::class);
         }
         catch (InvalidArgumentException $e)
         {
@@ -83,10 +89,12 @@ class TypeType extends AbstractDataType implements IGenericDataType
         }
 
     }
+
     /**
      * @return PhpNamespace
      */
-    public function toPhpNamespace(): PhpNamespace {
+    public function toPhpNamespace(): PhpNamespace
+    {
         return new PhpNamespace("{$this->getValue()}");
     }
 }

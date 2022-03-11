@@ -151,6 +151,15 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
     {
         return !$this->isAbsolute();
     }
+    public function removeExtension():Path
+    {
+        $sPattern = new Regex('/.' . $this->getExtension() . '$/');
+        return $this->remove($sPattern);
+    }
+    public function getExtension():string
+    {
+        return $this->getFile()->getExtension();
+    }
 
     public function isAbsolute(): bool
     {

@@ -69,6 +69,14 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
     }
 
     /**
+     * @return PhpClassName
+     * @throws InvalidArgumentException
+     */
+    public function toClassName():PhpClassName
+    {
+        return new PhpClassName($this->getShortName());
+    }
+    /**
      * Returns a new PhpNamespace instance with the extended part added. The current object is not touched.
      * @param mixed ...$aParts
      * @return $this
