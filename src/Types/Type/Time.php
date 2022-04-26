@@ -11,7 +11,7 @@ class Time extends AbstractDataType implements IGenericDataType
 {
     private int $iHour;
     private int $iMinute;
-    private int $iSeconds;
+    private ?int $iSeconds = null;
 
     /**
      * @param string|null $sValue time in human-readable notation, example '06:00' or '06:00:10'
@@ -20,11 +20,24 @@ class Time extends AbstractDataType implements IGenericDataType
      */
     public function __construct($sValue = null)
     {
-        list($iHours, $iMinutes, $iSeconds) = explode(':', $sValue);
+        $aParts = explode(':', $sValue);
+        if(count($aParts) == 2)
+        {
+            list($iHours, $iMinutes) = $aParts;
+        }
+        elseif(count($aParts) === 3)
+        {
+            list($iHours, $iMinutes, $iSeconds) = $aParts;
+        }
+
 
         $this->iHour = (int)$iHours;
         $this->iMinute = (int)$iMinutes;
-        $this->iSeconds = (int) $iSeconds;
+        if(isset($iSeconds))
+        {
+            $this->iSeconds = (int) $iSeconds;
+        }
+
 
         $this->timeValidCheck();
         parent::__construct($sValue);
@@ -64,7 +77,14 @@ class Time extends AbstractDataType implements IGenericDataType
     {
         $sZeroFilledHour = str_pad($this->iHour, 2, "0", STR_PAD_LEFT);
         $sZeroFilledMinute = str_pad($this->iMinute, 2, "0", STR_PAD_LEFT);
-        return "$sZeroFilledHour:$sZeroFilledMinute";
+
+        if($this->iSeconds === null)
+        {
+            return "$sZeroFilledHour:$sZeroFilledMinute";
+        }
+        $sZeroFilledSeconds = str_pad($this->iSeconds, 2, "0", STR_PAD_LEFT);
+        return "$sZeroFilledHour:$sZeroFilledMinute:$sZeroFilledSeconds";
+
     }
 
     private function addMinute(): void
