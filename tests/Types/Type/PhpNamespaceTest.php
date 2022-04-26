@@ -32,7 +32,8 @@ class PhpNamespaceTest extends TestCase {
     public function testGetFqn()
     {
         $oNamespace = PhpNamespace::make('This', 'Is', 'A', 'Test');
-        $this->assertEquals('\\This\\Is\A\\Test', "{$oNamespace->getFqn()}");
+        $this->assertEquals('This\\Is\A\\Test', "{$oNamespace->getFqn()}");
+        $this->assertEquals('\\This\\Is\A\\Test', "{$oNamespace->getFqn(true)}");
     }
     /**
      * @return void

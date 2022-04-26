@@ -43,16 +43,22 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
     }
 
     /**
-     * Returns the namespace with leading slash
+     * @param bool $bAddLeadingSlash adds a leading slash if not already there
+     *
      * @return string
      */
-    public function getFqn():string
+    public function getFqn(bool $bAddLeadingSlash = false):string
     {
-        if(preg_match('@^\\\\@', $this->getValue()))
+        if($bAddLeadingSlash)
         {
-            return $this->getValue();
+            if(preg_match('@^\\\\@', $this->getValue()))
+            {
+                return $this->getValue();
+            }
+            return '\\' . $this->getValue();
         }
-        return '\\' . $this->getValue();
+        return $this->getValue();
+
     }
 
     public function getShortName(): string

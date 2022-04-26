@@ -39,15 +39,16 @@ class TypeTypeFactoryTest extends TestCase {
         $bFileTypeFound = false;
         foreach ($aAllTypes as $oType)
         {
-            if("{$oType}" === DnsName::class)
+            if("{$oType->toPhpNamespace()->getFqn()}" === DnsName::class)
             {
                 $bDnsTypeFound = true;
             }
-            if("{$oType}" === File::class)
+            if("{$oType->toPhpNamespace()->getFqn()}" === File::class)
             {
                 $bFileTypeFound = true;
             }
         }
+
         $this->assertTrue($bDnsTypeFound, 'Dns type type is missing');
         $this->assertTrue($bFileTypeFound, 'File type is missing');
     }

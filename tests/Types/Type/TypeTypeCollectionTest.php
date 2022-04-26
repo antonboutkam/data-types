@@ -119,7 +119,7 @@ class TypeTypeCollectionTest extends TestCase {
         $oTypeTypeCollection = new TypeTypeCollection();
         $oTypeTypeCollection->add(new PlainText());
         $oTypeTypeCollection->add(PlainText::class);
-        $aExpected = ["\\Hurah\\Types\\Type\\PlainText","\\Hurah\\Types\\Type\\PlainText"];
+        $aExpected = ["Hurah\\Types\\Type\\PlainText","Hurah\\Types\\Type\\PlainText"];
 
         $this->assertEquals($aExpected, $oTypeTypeCollection->toArray(), json_encode($oTypeTypeCollection->toArray()));
     }
@@ -135,7 +135,7 @@ class TypeTypeCollectionTest extends TestCase {
         $oTypeTypeCollection = new TypeTypeCollection();
         $oTypeTypeCollection->add(new PlainText());
         $oTypeTypeCollection->add(PlainText::class);
-        $aExpected = ["\\Hurah\\Types\\Type\\PlainText","\\Hurah\\Types\\Type\\PlainText"];
+        $aExpected = ["Hurah\\Types\\Type\\PlainText","Hurah\\Types\\Type\\PlainText"];
         $this->assertEquals($aExpected, $oTypeTypeCollection->toArray(), json_encode($oTypeTypeCollection->toArray()));
     }
 }
