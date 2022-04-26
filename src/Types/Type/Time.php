@@ -11,18 +11,20 @@ class Time extends AbstractDataType implements IGenericDataType
 {
     private int $iHour;
     private int $iMinute;
+    private int $iSeconds;
 
     /**
-     * @param string|null $sValue time in human-readable notation, example '06:00'
+     * @param string|null $sValue time in human-readable notation, example '06:00' or '06:00:10'
      *
      * @throws InvalidArgumentException
      */
     public function __construct($sValue = null)
     {
-        list($iHours, $iMinutes) = explode(':', $sValue);
+        list($iHours, $iMinutes, $iSeconds) = explode(':', $sValue);
 
         $this->iHour = (int)$iHours;
         $this->iMinute = (int)$iMinutes;
+        $this->iSeconds = (int) $iSeconds;
 
         $this->timeValidCheck();
         parent::__construct($sValue);

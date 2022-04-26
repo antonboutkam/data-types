@@ -8,6 +8,7 @@ class KeyValueCollection extends AbstractCollectionDataType
 {
     private array $unique;
 
+
     public static function fromArray(array $items): self
     {
         $oCollection = new self();

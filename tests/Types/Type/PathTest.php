@@ -168,6 +168,9 @@ class PathTest extends TestCase
 
         $this->assertEquals($oExpected, $oBackToExpected, json_encode($oSomeSubPath));
     }
+
+
+
     public function testIsRelative()
     {
         $oTestPath = Path::make('home', 'anton', 'Documents');

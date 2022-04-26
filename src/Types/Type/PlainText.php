@@ -101,6 +101,7 @@ class PlainText extends AbstractDataType implements IGenericDataType
         }
     }
 
+
     public function trim(string $characters = " \t\n\r\0\x0B"): self
     {
         return new self(trim($this, $characters));

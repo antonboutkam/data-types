@@ -13,14 +13,34 @@ class DateTimeTest extends TestCase {
         $this->expectException(InvalidArgumentException::class);
         new DateTime("12312");
     }
+
+    /**
+     * @throws InvalidArgumentException
+     */
     public function testConstructDateTime()
     {
         $oDateTime = new DateTime(new \DateTime());
         $this->assertInstanceOf(DateTime::class, $oDateTime);
     }
+
+    /**
+     * @throws InvalidArgumentException
+     */
     public function testConstructInt()
     {
         $oDateTime = new DateTime(time());
         $this->assertInstanceOf(DateTime::class, $oDateTime);
+    }
+    public function testGetMinute()
+    {
+        $oDateTime = new DateTime();
+        $oDateTime->setTimestamp(1650961608);
+        $this->assertEquals(26, $oDateTime->getMinute(), "Asserting " . time() . " is minute 26");
+    }
+    public function testGetHour24()
+    {
+        $oDateTime = new DateTime();
+        $oDateTime->setTimestamp(1650961608);
+        $this->assertEquals(8, $oDateTime->getHour24(), "Asserting " . time() . " is hour 10");
     }
 }

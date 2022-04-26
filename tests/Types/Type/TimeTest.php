@@ -11,6 +11,9 @@ class TimeTest extends TestCase
     private Time $oNoon;
     private Time $oEvening;
     private Time $oNight;
+    private Time $oMorningWithSeconds;
+    private Time $oEveningWithSeconds;
+    private Time $oNightWithSeconds;
 
     public function setUp():void
     {
@@ -18,12 +21,18 @@ class TimeTest extends TestCase
         $this->oNoon = new Time('12:00');
         $this->oEvening = new Time('19:46');
         $this->oNight = new Time('23:10');
+        $this->oMorningWithSeconds = new Time('23:10:10');
+        $this->oEveningWithSeconds = new Time('23:10:04');
+        $this->oNightWithSeconds = new Time('23:10:40');
         parent::setUp();
     }
 
+    public function testToString()
+    {
+        $this->assertEquals('23:10:10', (string) $this->oMorningWithSeconds);
+    }
     public function testAddHours()
     {
-
         $this->assertEquals($this->oMorning, $this->oMorning->addHours(48));
         $this->assertEquals($this->oNoon, $this->oNoon->addHours(72));
         $this->assertEquals('00:46', $this->oEvening->addHours(5));
