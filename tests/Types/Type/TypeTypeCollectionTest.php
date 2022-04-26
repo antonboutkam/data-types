@@ -4,6 +4,7 @@ namespace Test\Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Exception\RuntimeException;
+use Hurah\Types\Type\IGenericDataType;
 use Hurah\Types\Type\PhpNamespace;
 use Hurah\Types\Type\PlainText;
 use Hurah\Types\Type\TypeType;
@@ -75,7 +76,8 @@ class TypeTypeCollectionTest extends TestCase {
         $oTypeTypeCollection = new TypeTypeCollection();
         $oTypeTypeCollection->add(new PlainText());
         $oTypeTypeCollection->add(PlainText::class);
-        $this->assertInstanceOf(TypeType::class, $oTypeTypeCollection->current());
+        $sFqn = $oTypeTypeCollection->current()->toPhpNamespace();
+        $this->assertTrue($sFqn->implementsInterface(IGenericDataType::class));
     }
 
     /**
@@ -117,7 +119,7 @@ class TypeTypeCollectionTest extends TestCase {
         $oTypeTypeCollection = new TypeTypeCollection();
         $oTypeTypeCollection->add(new PlainText());
         $oTypeTypeCollection->add(PlainText::class);
-        $aExpected = ["Hurah\\Types\\Type\\PlainText","Hurah\\Types\\Type\\PlainText"];
+        $aExpected = ["\\Hurah\\Types\\Type\\PlainText","\\Hurah\\Types\\Type\\PlainText"];
 
         $this->assertEquals($aExpected, $oTypeTypeCollection->toArray(), json_encode($oTypeTypeCollection->toArray()));
     }
@@ -133,7 +135,7 @@ class TypeTypeCollectionTest extends TestCase {
         $oTypeTypeCollection = new TypeTypeCollection();
         $oTypeTypeCollection->add(new PlainText());
         $oTypeTypeCollection->add(PlainText::class);
-        $aExpected = ["Hurah\\Types\\Type\\PlainText","Hurah\\Types\\Type\\PlainText"];
+        $aExpected = ["\\Hurah\\Types\\Type\\PlainText","\\Hurah\\Types\\Type\\PlainText"];
         $this->assertEquals($aExpected, $oTypeTypeCollection->toArray(), json_encode($oTypeTypeCollection->toArray()));
     }
 }

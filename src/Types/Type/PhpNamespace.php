@@ -48,6 +48,10 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
      */
     public function getFqn():string
     {
+        if(preg_match('@^\\\\@', $this->getValue()))
+        {
+            return $this->getValue();
+        }
         return '\\' . $this->getValue();
     }
 

@@ -27,20 +27,23 @@ class TypeType extends AbstractDataType implements IGenericDataType
             $oValue = Primitive::create($mValue);
             parent::__construct(get_class($oValue));
         }
-        elseif (is_string($mValue))
+        elseif (is_string($mValue) && class_exists($mValue))
         {
             parent::__construct($mValue);
         }
-        elseif (is_object($mValue) && $mValue instanceof PhpNamespace)
+        elseif ($mValue instanceof PhpNamespace && $mValue->implementsInterface(IGenericDataType::class))
         {
-            parent::__construct("{$mValue}");
+            parent::__construct("{$mValue->getFqn()}");
         }
-        elseif (is_object($mValue) && $mValue instanceof IGenericDataType)
+        elseif ($mValue instanceof IGenericDataType)
         {
             parent::__construct(get_class($mValue));
         }
-        $sMsg = "Constructor argument of " . __CLASS__ . " must implement IGenericDataType";
-        throw new RuntimeException($sMsg);
+        else
+        {
+            $sMsg = "Could not detect type of " . print_r($mValue->getFqn(), true);
+            throw new RuntimeException($sMsg);
+        }
     }
 
     /**
