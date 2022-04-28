@@ -18,7 +18,15 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
             parent::__construct($sValue);
         }
     }
-
+    /**
+     * @param mixed $mPattern
+     *
+     * @return bool
+     */
+    public function toPlainText(): PlainText
+    {
+        return new PlainText($this);
+    }
     /**
      * @param mixed $mPattern
      *
