@@ -12,8 +12,7 @@ class TimeTest extends TestCase
     private Time $oEvening;
     private Time $oNight;
     private Time $oMorningWithSeconds;
-    private Time $oEveningWithSeconds;
-    private Time $oNightWithSeconds;
+
 
     public function setUp():void
     {
@@ -22,8 +21,6 @@ class TimeTest extends TestCase
         $this->oEvening = new Time('19:46');
         $this->oNight = new Time('23:10');
         $this->oMorningWithSeconds = new Time('23:10:10');
-        $this->oEveningWithSeconds = new Time('23:10:04');
-        $this->oNightWithSeconds = new Time('23:10:40');
         parent::setUp();
     }
 
