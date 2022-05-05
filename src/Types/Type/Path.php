@@ -324,7 +324,15 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
     {
         if (!$this->isDir())
         {
-            throw new RuntimeException("Cannot provide Finder object on a path that points to a file");
+            if($this->isFile())
+            {
+                throw new RuntimeException("Cannot provide Finder object on a file ($this)");
+            }
+            else
+            {
+                throw new RuntimeException("Cannot provide Finder object on a non existing dir ($this)");
+            }
+
         }
         $oFinder = new Finder();
         $oFinder->in("{$this}");
