@@ -8,6 +8,6 @@ use Exception;
  * Class InvalidArgumentException
  * @package Hurah\Type\Exception
  */
-final class InvalidArgumentException extends Exception {
+final class InvalidArgumentException extends HurahException {
 
 }

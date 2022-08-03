@@ -8,6 +8,6 @@ use Exception;
  * Class NullPointerException
  * @package Hurah\Type\Exception
  */
-final class NullPointerException extends Exception {
+final class NullPointerException extends HurahException {
 
 }

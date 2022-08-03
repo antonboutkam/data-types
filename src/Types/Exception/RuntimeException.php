@@ -8,6 +8,6 @@ use Exception;
  * Class FileNotFoundException
  * @package Hurah\Type\Exception
  */
-final class RuntimeException extends Exception {
+final class RuntimeException extends HurahException {
 
 }
