@@ -61,6 +61,20 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
     {
         ++$this->position;
     }
+    public function toArray():array
+    {
+        return $this->array;
+    }
+
+    public function toLiteralArray():LiteralArray
+    {
+        return LiteralArray::create($this->array);
+    }
+
+    public function toSequentialCollection():SequentialCollection
+    {
+        return new SequentialCollection($this);
+    }
 
     public function valid():bool
     {
