@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
+
 use SplFileInfo;
 use function chmod;
 use function clearstatcache;
@@ -15,6 +16,7 @@ class File extends AbstractDataType implements IGenericDataType
 {
 
     private SplFileInfo $oFile;
+    private $fopenHandle = null;
 
     public function __construct($sFileName = null)
     {
@@ -58,6 +60,31 @@ class File extends AbstractDataType implements IGenericDataType
         return $this;
     }
 
+    public function fclose():void
+    {
+        if($this->fopenHandle)
+        {
+            fclose($this->fopenHandle);
+        }
+    }
+    /**
+     * Return the contents line by line
+     * @return string|null
+     */
+    public function fgets():?string
+    {
+        if(!$this->fopenHandle)
+        {
+            $this->fopenHandle = fopen($this->oFile, 'r');
+        }
+        $sBuffer = fgets($this->fopenHandle, 4096);
+
+        if($sBuffer === false)
+        {
+            fclose($this->fopenHandle);
+        }
+        return $sBuffer;
+    }
     public function basename():string
     {
         return new Path($this->oFile->getBasename());
