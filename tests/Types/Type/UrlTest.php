@@ -2,6 +2,7 @@
 
 namespace Test\Hurah\Types\Type;
 
+use Hurah\Types\Type\Http\Response;
 use Hurah\Types\Type\Url;
 use PHPUnit\Framework\TestCase;
 
@@ -12,6 +13,16 @@ class UrlTest extends TestCase
     {
         $oUrl = new Url();
         $this->assertTrue($oUrl instanceof Url);
+    }
+
+    function testGet()
+    {
+        $oUrl = new Url('https://antonboutkam.nl');
+        $oResponse = $oUrl->get();
+        $this->assertInstanceOf(Response::class, $oResponse);
+
+        $this->assertTrue(strpos("{$oResponse->getBody()}", '<!DOCTYPE html>') === 0, "{$oResponse->getBody()}");
+
     }
 
     function testAddPath()
