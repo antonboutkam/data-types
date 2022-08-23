@@ -33,7 +33,89 @@ class KeyValueCollection extends AbstractCollectionDataType
     {
         return $this->array[$this->position];
     }
+    public function getOrCreate(string $sKey, string $sValue = null):?KeyValue
+    {
+        if(!$oKeyValue = $this->getByKey($sKey))
+        {
+            $oKeyValue = new KeyValue();
+            $oKeyValue->setKey($sKey);
+            $oKeyValue->setValue($sValue);
+            $this->add($oKeyValue);
+        }
+        return $oKeyValue;
+    }
+    public function hasKey(string $sKey):bool
+    {
+        return $this->unique[$sKey];
+    }
+    public function hasKeyInsensitive(string $sKey):bool
+    {
+        return $this->getByKeyInsensitive($sKey) instanceof KeyValue;
+    }
 
+    public function getByKeyInsensitive(string $sKey):?KeyValue
+    {
+        $sKeyLc = strtolower($sKey);
+
+        foreach($this->unique as $sItemKey => $sValue)
+        {
+            if(strtolower($sItemKey) == $sKeyLc)
+            {
+                return $sValue;
+            }
+        }
+
+        return  null;
+    }
+    public function removeByKey(string $sKey):void
+    {
+        foreach ($this->unique as $itemKey => $value)
+        {
+            if($itemKey === $sKey)
+            {
+                unset($this->unique[$itemKey]);
+            }
+        }
+
+        foreach ($this as $index => $keyValue)
+        {
+            if($sKey == $keyValue->getKey())
+            {
+                unset($this->array[$index]);
+            }
+        }
+
+    }
+    public function removeByKeyCaseInsensitive(string $sKey):void
+    {
+        $sKeyLc = strtolower($sKey);
+        foreach ($this->unique as $sItemKey => $value)
+        {
+            if(strtolower($sItemKey) === $sKeyLc)
+            {
+                unset($this->unique);
+            }
+        }
+        foreach ($this->array as $iIndex => $oItem)
+        {
+            if(!$oItem instanceof KeyValue)
+            {
+                continue;
+            }
+            if(strtolower($sKeyLc) === $oItem->getKey())
+            {
+                unset($this->array[$iIndex]);
+            }
+        }
+    }
+    public function getByKey(string $sKey, array $aOptions = []):?KeyValue
+    {
+        if($aOptions['case_insensitive'])
+        {
+            return $this->getByKeyInsensitive($sKey);
+        }
+        return $this->unique[$sKey] ?? null;
+    }
     public function add(KeyValue $oKeyValue)
     {
         $this->unique[$oKeyValue->getKey()] = $oKeyValue->getValue();

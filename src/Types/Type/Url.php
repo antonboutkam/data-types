@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
+use Hurah\Types\Type\Http\Response;
 use InvalidArgumentException;
 
 class Url extends AbstractDataType implements IGenericDataType, IUri
@@ -17,6 +18,67 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
         {
             parent::__construct($sValue);
         }
+    }
+    public function get($aOptions = ['USER_AGENT' => 'Hurah', 'CONNECT_TIMEOUT' => 2]):Response
+    {
+        $curl_handle = curl_init();
+        curl_setopt($curl_handle, CURLOPT_URL, "{$this}");
+        curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, $aOptions['CONNECT_TIMEOUT']);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl_handle, CURLOPT_HEADER, 1);
+        curl_setopt($curl_handle, CURLOPT_USERAGENT, $aOptions['USER_AGENT']);
+
+
+        $headers = [];
+        // this function is called by curl for each header received
+        curl_setopt($curl_handle, CURLOPT_HEADERFUNCTION,
+            function($curl, $header) use (&$headers)
+            {
+                $len = strlen($header);
+                $header = explode(':', $header, 2);
+                if (count($header) < 2) // ignore invalid headers
+                    return $len;
+
+                $headers[trim($header[0])][] = trim($header[1]);
+
+                return $len;
+            }
+        );
+
+        $sData = curl_exec($curl_handle);
+
+
+        $aData = explode(PHP_EOL, $sData);
+        $bHeadersDone = false;
+        $aBody = [];
+        foreach ($aData as $i => $sRow)
+        {
+            if(empty(trim($sRow)))
+            {
+                $bHeadersDone = true;
+            }
+            if($bHeadersDone)
+            {
+                $aBody[] = $sRow;
+            }
+        }
+
+        $iStatusCode = null;
+        // Check HTTP status code
+        if (!curl_errno($curl_handle)) {
+            $iStatusCode = curl_getinfo($curl_handle, CURLINFO_HTTP_CODE);
+        }
+
+
+        return new Response([
+            'body' => join(PHP_EOL, $aBody),
+            'statusCode' => $iStatusCode,
+            'headers' => $headers
+
+
+        ]);
+
+
     }
     /**
      * @param mixed $mPattern
