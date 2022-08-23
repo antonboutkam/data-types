@@ -110,7 +110,7 @@ class KeyValueCollection extends AbstractCollectionDataType
     }
     public function getByKey(string $sKey, array $aOptions = []):?KeyValue
     {
-        if($aOptions['case_insensitive'])
+        if(isset($aOptions['case_insensitive']))
         {
             return $this->getByKeyInsensitive($sKey);
         }
@@ -118,7 +118,7 @@ class KeyValueCollection extends AbstractCollectionDataType
     }
     public function add(KeyValue $oKeyValue)
     {
-        $this->unique[$oKeyValue->getKey()] = $oKeyValue->getValue();
+        $this->unique[$oKeyValue->getKey()] = $oKeyValue;
         $this->array[] = $oKeyValue;
     }
 
