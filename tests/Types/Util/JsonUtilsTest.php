@@ -31,4 +31,12 @@ class JsonUtilsTest extends TestCase {
         $this->assertTrue( $sAsJsonString === '{"valid":true}', $sAsJsonString);
     }
 
+    public function testIsValidJson()
+    {
+        $bShouldBeTrue = JsonUtils::isValidJson('{"valid" : "json"}');
+        $this->assertTrue($bShouldBeTrue);
+
+        $bShouldBeFalse = JsonUtils::isValidJson('asdfasfdas');
+        $this->assertFalse($bShouldBeFalse);
+    }
 }
