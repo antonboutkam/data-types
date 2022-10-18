@@ -67,7 +67,7 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
             return $matches[1];
         }
 
-        throw new LogicException("Could not shorten Namespace name {$this->getValue()}.");
+        throw new \Hurah\Types\Exception\LogicException("Could not shorten Namespace name {$this->getValue()}.");
     }
     public function exists():bool
     {

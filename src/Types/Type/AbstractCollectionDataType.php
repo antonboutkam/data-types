@@ -122,4 +122,5 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
     {
         return count($this->array);
     }
+
 }

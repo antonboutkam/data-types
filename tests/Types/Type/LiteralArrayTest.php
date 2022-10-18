@@ -16,7 +16,40 @@ class LiteralArrayTest extends TestCase
         $oLiteralArray = new LiteralArray(['een', 'b' => 'twee', 'drie']);
         $this->assertEquals($aInput, $oLiteralArray->toArray());
     }
+    private function getTestSplatArray():array
+    {
+        return [
+            [
+                'categories' => [
+                    1, 2, 6, 8
+                ],
+                'name' => 'Nuts'
+            ],
+            [
+                'categories' => [
+                    1, 5, 16
+                ],
+                'name' => 'Bolts'
+            ],
+            [
+                'categories' => [
+                    1, 5, 16
+                ],
+                'name' => 'Screws'
+            ]
+        ];
+    }
+    public function testSplat()
+    {
 
+        $aTestSplatArray = $this->getTestSplatArray();
+
+        $oLiteralArray = new LiteralArray($aTestSplatArray);
+        $oCategoryArray = $oLiteralArray->splat('categories');
+
+        $this->assertEquals([1, 2, 5, 6, 8, 16], $oCategoryArray->toArray());
+
+    }
     public function testToArray()
     {
 
