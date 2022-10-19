@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace Hurah\Types\Type;
 
@@ -16,7 +16,9 @@ class File extends AbstractDataType implements IGenericDataType
 {
 
     private SplFileInfo $oFile;
-    private $fopenHandle = null;
+    private $fReadHandle = null;
+    private $fAppendHandle = null;
+    private $fWriteHandle = null;
 
     public function __construct($sFileName = null)
     {
@@ -62,26 +64,61 @@ class File extends AbstractDataType implements IGenericDataType
 
     public function fclose():void
     {
-        if($this->fopenHandle)
+        if($this->fReadHandle)
         {
-            fclose($this->fopenHandle);
+            fclose($this->fReadHandle);
+        }
+        if($this->fWriteHandle)
+        {
+            fclose($this->fWriteHandle);
+        }
+        if($this->fAppendHandle)
+        {
+            fclose($this->fAppendHandle);
         }
     }
+
+    /**
+     * Opens a file handle if not open yet and writes the contents of $sData to the file
+     * @param string $sData
+     */
+    public function append(string $sData):void
+    {
+        if(!$this->fAppendHandle)
+        {
+            $this->fAppendHandle = fopen("{$this}", 'a');
+        }
+        fwrite($this->fAppendHandle, $sData);
+    }
+
+    /**
+     * Opens a file handle if not open yet and writes the contents of $sData to the file
+     * @param string $sData
+     */
+    public function add(string $sData):void
+    {
+        if(!$this->fWriteHandle)
+        {
+            $this->fWriteHandle = fopen("{$this}", 'w');
+        }
+        fwrite($this->fWriteHandle, $sData);
+    }
+
     /**
      * Return the contents line by line
      * @return string|null
      */
     public function fgets():?string
     {
-        if(!$this->fopenHandle)
+        if(!$this->fReadHandle)
         {
-            $this->fopenHandle = fopen($this->oFile, 'r');
+            $this->fReadHandle = fopen($this->oFile, 'r');
         }
-        $sBuffer = fgets($this->fopenHandle, 4096);
+        $sBuffer = fgets($this->fReadHandle, 4096);
 
         if($sBuffer === false)
         {
-            fclose($this->fopenHandle);
+            fclose($this->fReadHandle);
         }
         return $sBuffer;
     }
