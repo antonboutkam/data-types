@@ -11,6 +11,14 @@ use DOMDocument;
  */
 class Html extends PlainText {
 
+    public function asPlainText():PlainText
+    {
+        return new PlainText($this->stripTags());
+    }
+    public function stripTags():self
+    {
+        return new self(strip_tags($this));
+    }
     public function __toString(): string {
 
         $x = new DOMDocument();
