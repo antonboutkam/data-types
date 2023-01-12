@@ -13,7 +13,7 @@ class Html extends PlainText {
 
     public function asPlainText():PlainText
     {
-        return new PlainText($this->stripTags());
+        return new PlainText($this->stripTags()->getValue());
     }
     public function stripTags():self
     {
