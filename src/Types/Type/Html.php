@@ -17,7 +17,7 @@ class Html extends PlainText {
     }
     public function stripTags():self
     {
-        return new self(strip_tags($this));
+        return new self(strip_tags($this->getValue()));
     }
     public function __toString(): string {
 
