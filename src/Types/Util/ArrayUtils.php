@@ -4,6 +4,8 @@ namespace Hurah\Types\Util;
 
 class ArrayUtils
 {
+
+
     public static function isAssociative(array $arrayToTest):bool
     {
         $iFirstIndex = key($arrayToTest);

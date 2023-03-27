@@ -8,7 +8,7 @@ use Hurah\Types\Exception\InvalidArgumentException;
 class DateTime extends AbstractDataType implements IGenericDataType
 {
 
-    function __construct($sValue = null)
+    public function __construct($sValue = null)
     {
         if($sValue instanceof \DateTime)
         {
@@ -82,11 +82,20 @@ class DateTime extends AbstractDataType implements IGenericDataType
 
     public function __toString():string
     {
-        $oDateTime = $this->getValue();
-        if(!$oDateTime instanceof PhpNativeDateTime)
+        $oCurrentValue = $this->getValue();
+
+        if(is_int($oCurrentValue) && $oCurrentValue > 0)
         {
-            return $oDateTime->format('Y-m-d H:i:s');
+            $oNativeDateTime = new PhpNativeDateTime();
+            $oNativeDateTime->setTimestamp($oCurrentValue);
+            $oCurrentValue = $oNativeDateTime;
         }
+
+        if($oCurrentValue instanceof PhpNativeDateTime)
+        {
+            return $oCurrentValue->format('Y-m-d H:i:s');
+        }
+
         return '';
     }
 
