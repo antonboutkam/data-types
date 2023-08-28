@@ -42,9 +42,9 @@ class Json extends AbstractDataType implements IGenericDataType
      * @return array
      * @throws InvalidArgumentException
      */
-    public function toArray(): array
+    public function toArray(bool $assoc = true, $depth = 512, $options = 0): array
     {
-        return JsonUtils::decode($this->getValue());
+        return JsonUtils::decode($this->getValue(), $assoc, $depth, $options);
     }
 
     public function getValue()
