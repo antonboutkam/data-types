@@ -4,6 +4,7 @@ namespace Hurah\Types\Type;
 
 use ArrayAccess;
 use Iterator;
+use ReturnTypeWillChange;
 
 /**
  * Provides an easy way to handle collections of object as array's
@@ -16,7 +17,7 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
     protected int $position = 0;
     protected array $array = [];
 
-    abstract public function current();
+    #[ReturnTypeWillChange] abstract public function current();
 
     public function rewind()
     {
