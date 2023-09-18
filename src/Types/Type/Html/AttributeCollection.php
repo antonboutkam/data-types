@@ -5,6 +5,7 @@ namespace Hurah\Types\Type\Html;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\AbstractCollectionDataType;
 use Hurah\Types\Type\IComplexDataType;
+use ReturnTypeWillChange;
 
 class AttributeCollection extends AbstractCollectionDataType implements IComplexDataType
 {
@@ -108,7 +109,7 @@ class AttributeCollection extends AbstractCollectionDataType implements IComplex
         return ' ' . join(' ', $aOut);
     }
 
-    public function current(): Attribute
+    #[ReturnTypeWillChange] public function current(): Attribute
     {
         return $this->array[$this->position];
     }

@@ -5,6 +5,7 @@ namespace Hurah\Types\Type\Html;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\AbstractCollectionDataType;
 use Hurah\Types\Type\IComplexDataType;
+use ReturnTypeWillChange;
 
 class MenuItemCollection extends AbstractCollectionDataType implements IComplexDataType, IElementizable
 {
@@ -90,7 +91,7 @@ class MenuItemCollection extends AbstractCollectionDataType implements IComplexD
         return ' ' . join(' ', $aOut);
     }
 
-    public function current():MenuItem {
+    #[ReturnTypeWillChange] public function current():MenuItem {
         return $this->data[$this->position];
     }
 

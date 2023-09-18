@@ -19,7 +19,7 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
 
     #[ReturnTypeWillChange] abstract public function current();
 
-    public function rewind()
+    public function rewind():void
     {
         $this->position = 0;
     }
@@ -47,7 +47,7 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
     }
 
 
-    public function doForeach(LiteralCallable $oCallback)
+    public function doForeach(LiteralCallable $oCallback): void
     {
         $oForeach = ControlForeach::fromCollection($this);
         $oForeach->loop($oCallback);
@@ -58,7 +58,7 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
         return $this->position;
     }
 
-    public function next()
+    public function next():void
     {
         ++$this->position;
     }

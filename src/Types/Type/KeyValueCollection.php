@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
+use ReturnTypeWillChange;
 use function is_iterable;
 
 class KeyValueCollection extends AbstractCollectionDataType
@@ -29,7 +30,7 @@ class KeyValueCollection extends AbstractCollectionDataType
         return $oCollection;
     }
 
-    public function current(): KeyValue
+    #[ReturnTypeWillChange] public function current(): KeyValue
     {
         return $this->array[$this->position];
     }

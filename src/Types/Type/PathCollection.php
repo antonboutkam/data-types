@@ -3,6 +3,7 @@
 namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
+use ReturnTypeWillChange;
 use Symfony\Component\Finder\Finder;
 
 class PathCollection extends AbstractCollectionDataType implements IGenericDataType {
@@ -187,7 +188,7 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
         return join(',', $aOut);
     }
 
-    public function current(): Path {
+    #[ReturnTypeWillChange] public function current(): Path {
         return $this->array[$this->position];
     }
 }
