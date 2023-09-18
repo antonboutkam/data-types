@@ -61,16 +61,11 @@ class SequentialCollection extends AbstractCollectionDataType
 
 
         $sKey = array_shift($fieldOrMethod);
-        echo $sKey;
         $out = [];
         foreach ($this as $item)
         {
-            var_dump($item);
-            echo "Aaaaaaaaaa $sKey a";
-            print_r($item);
             if(isset($item[$sKey]))
             {
-                echo "yay $sKey";
                 $mValue = $item[$sKey];
             }
             elseif(is_object($item) && method_exists($item, $sKey))
