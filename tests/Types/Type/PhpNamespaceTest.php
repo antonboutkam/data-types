@@ -35,6 +35,15 @@ class PhpNamespaceTest extends TestCase {
         $this->assertEquals('This\\Is\A\\Test', "{$oNamespace->getFqn()}");
         $this->assertEquals('\\This\\Is\A\\Test', "{$oNamespace->getFqn(true)}");
     }
+    public function testRemoveLeadingSlash()
+    {
+        $oTest = PhpNamespace::make('\\This\\Is\A\\Test');
+        $oResult = PhpNamespace::make('This\\Is\A\\Test');
+        $this->assertNotEquals($oResult, $oTest);
+        $this->assertEquals($oResult, $oTest->removeLeadingSlash());
+
+
+    }
     /**
      * @return void
      * @throws InvalidArgumentException

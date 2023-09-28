@@ -69,6 +69,18 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
 
         throw new \Hurah\Types\Exception\LogicException("Could not shorten Namespace name {$this->getValue()}.");
     }
+
+    /**
+     * Creates a new PhpNamespace that does not have a leading slash.
+     * @return $this
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
+     */
+    public function removeLeadingSlash():self
+    {
+        $sNewValue = preg_replace('/^\\\/', '', $this->getValue());
+        return self::make($sNewValue);
+    }
     public function exists():bool
     {
         if(class_exists($this))
