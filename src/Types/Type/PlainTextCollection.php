@@ -2,6 +2,8 @@
 
 namespace Hurah\Types\Type;
 
+use ReturnTypeWillChange;
+
 class PlainTextCollection extends AbstractCollectionDataType
 {
     public function add(PlainText $oPlainText)
@@ -9,7 +11,7 @@ class PlainTextCollection extends AbstractCollectionDataType
         $this->array[] = $oPlainText;
     }
 
-    public function current():PlainText
+    #[ReturnTypeWillChange] public function current():PlainText
     {
         return $this->array[$this->position];
     }

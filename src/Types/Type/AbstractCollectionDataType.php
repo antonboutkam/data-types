@@ -4,6 +4,7 @@ namespace Hurah\Types\Type;
 
 use ArrayAccess;
 use Iterator;
+use ReturnTypeWillChange;
 
 /**
  * Provides an easy way to handle collections of object as array's
@@ -16,9 +17,9 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
     protected int $position = 0;
     protected array $array = [];
 
-    abstract public function current();
+    #[ReturnTypeWillChange] abstract public function current();
 
-    public function rewind()
+    public function rewind():void
     {
         $this->position = 0;
     }
@@ -46,7 +47,7 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
     }
 
 
-    public function doForeach(LiteralCallable $oCallback)
+    public function doForeach(LiteralCallable $oCallback): void
     {
         $oForeach = ControlForeach::fromCollection($this);
         $oForeach->loop($oCallback);
@@ -57,7 +58,7 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
         return $this->position;
     }
 
-    public function next()
+    public function next():void
     {
         ++$this->position;
     }
@@ -81,7 +82,7 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
         return isset($this->array[$this->position]);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value):void
     {
         if (is_null($offset)) {
             $this->array[] = $value;
@@ -109,14 +110,14 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
         return isset($this->array[$offset]);
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset):void
     {
         unset($this->array[$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->array[$offset]) ? $this->array[$offset] : null;
+        return $this->array[$offset] ?? null;
     }
     public function length():int
     {

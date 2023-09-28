@@ -3,6 +3,7 @@
 namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
+use ReturnTypeWillChange;
 use Symfony\Component\Finder\Finder;
 use function is_array;
 use function is_string;
@@ -76,7 +77,7 @@ class LanguageCollection extends AbstractCollectionDataType implements IGenericD
         $this->array[] = $oLanguage;
         return $this;
     }
-    public function current():Language
+    #[ReturnTypeWillChange] public function current():Language
     {
         return $this->array[$this->position];
     }

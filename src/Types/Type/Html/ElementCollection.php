@@ -5,6 +5,7 @@ namespace Hurah\Types\Type\Html;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\AbstractCollectionDataType;
 use Hurah\Types\Type\IComplexDataType;
+use ReturnTypeWillChange;
 
 class ElementCollection extends AbstractCollectionDataType implements IComplexDataType
 {
@@ -30,7 +31,7 @@ class ElementCollection extends AbstractCollectionDataType implements IComplexDa
             }
         }
     }
-    public function current(): Element
+    #[ReturnTypeWillChange] public function current(): Element
     {
         return $this->data[$this->position];
     }

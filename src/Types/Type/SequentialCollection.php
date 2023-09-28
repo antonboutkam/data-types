@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
+use ReturnTypeWillChange;
 use function is_iterable;
 
 class SequentialCollection extends AbstractCollectionDataType
@@ -26,7 +27,7 @@ class SequentialCollection extends AbstractCollectionDataType
         parent::__construct($sValue);
     }
 
-    public function current(): KeyValue
+    #[ReturnTypeWillChange] public function current(): KeyValue
     {
         return $this->array[$this->position];
     }
@@ -60,16 +61,11 @@ class SequentialCollection extends AbstractCollectionDataType
 
 
         $sKey = array_shift($fieldOrMethod);
-        echo $sKey;
         $out = [];
         foreach ($this as $item)
         {
-            var_dump($item);
-            echo "Aaaaaaaaaa $sKey a";
-            print_r($item);
             if(isset($item[$sKey]))
             {
-                echo "yay $sKey";
                 $mValue = $item[$sKey];
             }
             elseif(is_object($item) && method_exists($item, $sKey))
@@ -83,7 +79,6 @@ class SequentialCollection extends AbstractCollectionDataType
             }
 
         }
-        exit();
         return new self($out ?? []);
 
     }

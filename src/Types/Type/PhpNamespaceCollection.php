@@ -10,6 +10,7 @@ use ReflectionClass;
 use LogicException;
 use Hurah\Types\Exception\ClassNotFoundException;
 use ReflectionException;
+use ReturnTypeWillChange;
 
 class PhpNamespaceCollection extends AbstractCollectionDataType
 {
@@ -34,7 +35,7 @@ class PhpNamespaceCollection extends AbstractCollectionDataType
     {
         $this->add(new PhpNamespace($sPhpNamespace));
     }
-    public function current():PhpNamespace
+    #[ReturnTypeWillChange] public function current():PhpNamespace
     {
         return $this->array[$this->position];
     }

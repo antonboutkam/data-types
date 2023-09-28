@@ -4,6 +4,7 @@ namespace Hurah\Types\Type;
 
 use Hurah\Types\Type\Http\Response;
 use InvalidArgumentException;
+use ReturnTypeWillChange;
 
 class UrlCollection extends AbstractCollectionDataType
 {
@@ -12,7 +13,7 @@ class UrlCollection extends AbstractCollectionDataType
         $this->array[] = $oUrl;
     }
 
-    public function current(): Url
+    #[ReturnTypeWillChange] public function current(): Url
     {
         return $this->array[$this->position];
     }
