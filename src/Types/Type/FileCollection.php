@@ -3,7 +3,7 @@
 namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
-use ReturnTypeWillChange;
+
 
 class FileCollection extends AbstractCollectionDataType implements IGenericDataType
 {
@@ -201,7 +201,7 @@ class FileCollection extends AbstractCollectionDataType implements IGenericDataT
         return join(',', $aOut);
     }
 
-    #[ReturnTypeWillChange] public function current(): File
+     public function current(): File
     {
         return $this->array[$this->position];
     }

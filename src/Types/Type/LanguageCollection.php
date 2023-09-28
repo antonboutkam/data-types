@@ -3,7 +3,7 @@
 namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
-use ReturnTypeWillChange;
+
 use Symfony\Component\Finder\Finder;
 use function is_array;
 use function is_string;
@@ -47,7 +47,6 @@ class LanguageCollection extends AbstractCollectionDataType implements IGenericD
      * PathCollection constructor.
      *
      * @param null $mValues - An array of strings[] or DnsName[], internally will all be converted to DnsName.
-     * @throws InvalidArgumentException
      */
     public function __construct($mValues = null) {
 
@@ -77,11 +76,11 @@ class LanguageCollection extends AbstractCollectionDataType implements IGenericD
         $this->array[] = $oLanguage;
         return $this;
     }
-    #[ReturnTypeWillChange] public function current():Language
+     public function current():Language
     {
         return $this->array[$this->position];
     }
-    public function contains(Language $oLanguage)
+    public function contains(Language $oLanguage): bool
     {
         foreach($this as $oTestLanguage)
         {

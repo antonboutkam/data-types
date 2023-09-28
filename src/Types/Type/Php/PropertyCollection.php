@@ -5,7 +5,7 @@ namespace Hurah\Types\Type\Php;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\AbstractCollectionDataType;
 use Hurah\Types\Type\IComplexDataType;
-use ReturnTypeWillChange;
+
 
 class PropertyCollection extends AbstractCollectionDataType implements IComplexDataType
 {
@@ -60,7 +60,7 @@ class PropertyCollection extends AbstractCollectionDataType implements IComplexD
         return $this;
     }
 
-    #[ReturnTypeWillChange] public function current(): Property
+     public function current(): Property
     {
         return $this->array[$this->position];
     }

@@ -30,9 +30,6 @@ class LiteralArray extends AbstractDataType implements IComplexDataType, IScalar
     {
         return new SequentialCollection($this->getValue());
     }
-    public function splat(...$fieldOrMethod):LiteralArray
-    {
-        return new LiteralArray($this->toCollection()->splat(...$fieldOrMethod)->toArray());
-    }
+
 
 }

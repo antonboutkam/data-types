@@ -6,7 +6,7 @@ namespace Hurah\Types\Type;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Util\ArrayUtils;
 use Hurah\Types\Util\JsonUtils;
-use ReturnTypeWillChange;
+
 
 /**
  * Manages the lookups (<option>) of a select / dropdown menu.
@@ -86,7 +86,7 @@ class LookupCollection extends AbstractCollectionDataType implements IComplexDat
     {
         $this->array[] = $lookup;
     }
-    #[ReturnTypeWillChange] public function current():Lookup
+     public function current():Lookup
     {
         return $this->array[$this->position];
     }

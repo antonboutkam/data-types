@@ -6,7 +6,7 @@ use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Exception\RuntimeException;
 use ReflectionClass;
 use ReflectionException;
-use ReturnTypeWillChange;
+
 
 class TypeTypeCollection extends AbstractCollectionDataType implements IComplexDataType {
     protected int $position;
@@ -166,7 +166,7 @@ class TypeTypeCollection extends AbstractCollectionDataType implements IComplexD
         return join(',', $aOut);
     }
 
-    #[ReturnTypeWillChange] public function current(): TypeType {
+     public function current(): TypeType {
         return $this->array[$this->position];
     }
 }

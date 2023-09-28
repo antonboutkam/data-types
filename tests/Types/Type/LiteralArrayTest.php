@@ -39,17 +39,7 @@ class LiteralArrayTest extends TestCase
             ]
         ];
     }
-    public function testSplat()
-    {
 
-        $aTestSplatArray = $this->getTestSplatArray();
-
-        $oLiteralArray = new LiteralArray($aTestSplatArray);
-        $oCategoryArray = $oLiteralArray->splat('categories');
-
-        $this->assertEquals([1, 2, 5, 6, 8, 16], $oCategoryArray->toArray());
-
-    }
     public function testToArray()
     {
 

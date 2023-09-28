@@ -3,7 +3,7 @@
 namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
-use ReturnTypeWillChange;
+
 
 /**
  * Represents a regular expression
@@ -11,7 +11,7 @@ use ReturnTypeWillChange;
  */
 class RegexCollection extends AbstractCollectionDataType implements ITestable
 {
-    #[ReturnTypeWillChange] public function current():Regex
+     public function current():Regex
     {
         return $this->array[$this->position];
     }

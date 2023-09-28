@@ -2,7 +2,7 @@
 
 namespace Hurah\Types\Type;
 
-use ReturnTypeWillChange;
+
 
 class TagCollection extends AbstractCollectionDataType implements ITestable
 {
@@ -25,7 +25,7 @@ class TagCollection extends AbstractCollectionDataType implements ITestable
         return $o;
     }
 
-    #[ReturnTypeWillChange] public function current():Tag
+     public function current():Tag
     {
         return $this->array[$this->position];
     }

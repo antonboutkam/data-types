@@ -13,8 +13,24 @@ class DropdownTest extends TestCase
 
     public function test__toString()
     {
+        $oDropDown = new Dropdown();
+        $oDropDown->setName('test');
+        $oDropDown->setValue(2);
+        $oDropDown->setLookups($this->getLookups());
 
+        $this->assertEquals($this->toStringExpected(), (string) $oDropDown, (string) $oDropDown);
     }
+    private function toStringExpected():string
+    {
+        $expected = <<<END
+<select name="test">
+<option selected="selected" value="1">Nederland</option>
+<option value="2">Duitsland</option>
+</select>
+END;
+        return $expected;
+    }
+
     private function getExpectedLookups():array
     {
         $aOut = [];
