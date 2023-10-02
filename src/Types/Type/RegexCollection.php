@@ -16,9 +16,47 @@ class RegexCollection extends AbstractCollectionDataType implements ITestable
         return $this->array[$this->position];
     }
 
+    /**
+     * @param ...$regex Regex
+     * @return self
+     */
+    public static function fromArray($aRegexes):self
+    {
+        $self = new self();
+        foreach($aRegexes as $one)
+        {
+            $self->add($one);
+        }
+        return $self;
+    }
+
+    /**
+     * @param ...$regex Regex
+     * @return self
+     */
+    public static function create(...$regex):self
+    {
+        $self = new self();
+        foreach($regex as $one)
+        {
+            $self->add($one);
+        }
+        return $self;
+    }
+
+    public function addArray(array $oRegexItems)
+    {
+        foreach($oRegexItems as $oRegexItem)
+        {
+            $this->array[] = $oRegexItem;
+        }
+        return $this;
+    }
+
     public function add(Regex $oRegex)
     {
         $this->array[] = $oRegex;
+        return $this;
     }
 
     /**

@@ -181,6 +181,35 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
         }
 
     }
+    public function isAbstract():bool
+    {
+        return $this->askReflector('isAbstract');
+    }
+    public function isFinal():bool
+    {
+        return $this->askReflector('isFinal');
+    }
+    public function getReflector():ReflectionClass
+    {
+        return new ReflectionClass("{$this}");
+
+    }
+
+    private function askReflector(string $sWhat):bool {
+        try {
+            $oReflector = new ReflectionClass("{$this}");
+
+            if($oReflector->{$sWhat}())
+            {
+                return true;
+            }
+            return false;
+        }
+        catch (Exception $e)
+        {
+            return false;
+        }
+    }
 
     public function implementsInterface($mInterfaceName):bool {
         try {

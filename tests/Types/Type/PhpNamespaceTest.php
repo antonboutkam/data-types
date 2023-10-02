@@ -5,7 +5,11 @@ namespace Test\Hurah\Types\Type;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\PhpNamespace;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use ReflectionException;
+use Test\Hurah\Types\Type\Helper\AbstractTest;
+use Test\Hurah\Types\Type\Helper\FinalTest;
+use Test\Hurah\Types\Type\Helper\NormalTest;
 
 class PhpNamespaceTest extends TestCase {
 
@@ -41,8 +45,23 @@ class PhpNamespaceTest extends TestCase {
         $oResult = PhpNamespace::make('This\\Is\A\\Test');
         $this->assertNotEquals($oResult, $oTest);
         $this->assertEquals($oResult, $oTest->removeLeadingSlash());
-
-
+    }
+    public function testGetReflector()
+    {
+        $oNamespace = PhpNamespace::make(FinalTest::class);
+        $this->assertTrue($oNamespace->getReflector() instanceof ReflectionClass);
+        $this->assertTrue($oNamespace->getReflector()->isFinal());
+        $this->assertFalse($oNamespace->getReflector()->isAbstract());
+    }
+    public function testIsFinal()
+    {
+        $this->assertFalse(PhpNamespace::make(NormalTest::class)->isFinal());
+        $this->assertTrue(PhpNamespace::make(FinalTest::class)->isFinal());
+    }
+    public function testIsAbstract()
+    {
+        $this->assertFalse(PhpNamespace::make(NormalTest::class)->isAbstract());
+        $this->assertTrue(PhpNamespace::make(AbstractTest::class)->isAbstract());
     }
     /**
      * @return void

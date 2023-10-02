@@ -5,6 +5,7 @@ namespace Hurah\Types\Type;
 use Exception;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Util\JsonUtils;
+use PhpParser\Node\Scalar\MagicConst\Namespace_;
 use function str_replace;
 
 
@@ -75,6 +76,15 @@ class PlainText extends AbstractDataType implements IGenericDataType
         return (int)"{$this}";
     }
 
+    public function asPhpNamespace():PhpNamespace
+    {
+        return PhpNamespace::make($this->getValue());
+    }
+    public function asPath():Path
+    {
+        return Path::make($this->getValue());
+    }
+
     public function toCameCase(): self
     {
         $string = "{$this}";
@@ -139,10 +149,29 @@ class PlainText extends AbstractDataType implements IGenericDataType
      */
     public function replace(AbstractDataType $oSearch, PlainText $oReplacement): PlainText
     {
-        if ($oSearch instanceof Regex) {
-            return new self(preg_replace("{$oSearch}", "{$oReplacement}", $this->getValue()));
+        if($oSearch instanceof AbstractCollectionDataType)
+        {
+            $mCurrentValue = $this->getValue();
+            $oSearchCollection = $oSearch;
+            foreach($oSearchCollection as $oSearchItem)
+            {
+                if ($oSearchItem instanceof Regex) {
+                    $mCurrentValue = preg_replace("{$oSearchItem}", "{$oReplacement}", $mCurrentValue);
+                }
+                else
+                {
+                    $mCurrentValue = str_replace("{$oSearchItem}", "{$oReplacement}", $mCurrentValue);
+                }
+            }
+            return new self($mCurrentValue);
         }
-        return new self(str_replace("{$oSearch}", "{$oReplacement}", $this->getValue()));
+        else
+        {
+            if ($oSearch instanceof Regex) {
+                return new self(preg_replace("{$oSearch}", "{$oReplacement}", $this->getValue()));
+            }
+            return new self(str_replace("{$oSearch}", "{$oReplacement}", $this->getValue()));
+        }
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Test\Hurah\Types\Type;
 
 use Hurah\Types\Type\PlainText;
 use Hurah\Types\Type\Regex;
+use Hurah\Types\Type\RegexCollection;
 use Hurah\Types\Type\Tag;
 use Hurah\Types\Type\TagCollection;
 use PHPUnit\Framework\TestCase;
@@ -101,5 +102,17 @@ class PlainTextTest extends TestCase
         $oQuantity = $oPlainText->replace($oRegex, new PlainText("kg"));
 
         $this->assertEquals("10kg", "{$oQuantity}");
+
+        $oRegexCollection = RegexCollection::create(
+            new Regex('/mg$/'),
+            new Regex('/geen/'));
+
+
+        $oSubject = new PlainText("20mg is geen 10mg");
+        $oReplaced = $oSubject->replace($oRegexCollection, new PlainText("kg"));
+
+        $oExpected = new PlainText("20mg is kg 10kg");
+        $this->assertEquals($oExpected, $oReplaced, (string)$oReplaced);
+
     }
 }
