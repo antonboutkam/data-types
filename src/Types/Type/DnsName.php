@@ -7,6 +7,11 @@ use Hurah\Types\Exception\InvalidArgumentException;
 class DnsName extends AbstractDataType implements IGenericDataType
 {
 
+    public static function make(...$aParts): self
+    {
+        return new self(join('.', $aParts));
+    }
+
     /**
      * Add a subdomain part to the DNS name
      * @param string $subdomain

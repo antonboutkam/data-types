@@ -28,6 +28,10 @@ class LiteralCallable extends AbstractDataType implements IGenericDataType, ITes
         }
         parent::__construct($sValue);
     }
+    public static function make(Closure $callable): self
+    {
+        return self::create($callable);
+    }
 
     /**
      * Requires a callback function that accepts 1 required value, the subject and returns a boolean true when the

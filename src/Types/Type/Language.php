@@ -391,7 +391,10 @@ class Language extends AbstractDataType implements IGenericDataType
         $this->sLanguageName = $sValue;
         parent::__construct($sValue);
     }
-
+    public static function make(string $sValue):self
+    {
+        return new self($sValue);
+    }
     public static function fromIso(string $sIso2):self
     {
         return new self(self::ISO_LANGUAGE_MAP[$sIso2]);
