@@ -12,4 +12,8 @@ class Email extends AbstractDataType implements IGenericDataType
         }
         return false;
     }
+    public static function make(string $sEmail): self
+    {
+        return new self($sEmail);
+    }
 }

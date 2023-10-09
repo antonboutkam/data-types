@@ -16,6 +16,13 @@ class Iban extends AbstractDataType implements IGenericDataType
     }
 
     /**
+     * @throws InvalidArgumentException
+     */
+    public static function make(string $sIban): self
+    {
+        return self::fromString($sIban);
+    }
+    /**
      * @param string $sIban
      * @return static
      * @throws InvalidArgumentException

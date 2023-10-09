@@ -27,6 +27,10 @@ class File extends AbstractDataType implements IGenericDataType
         }
         parent::__construct('');
     }
+    public static function make(string $sFileName): self
+    {
+        return new self($sFileName);
+    }
 
     public static function fromSplFileInfo(SplFileInfo $oFile): self
     {
