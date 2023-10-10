@@ -31,6 +31,10 @@ class LookupCollection extends AbstractCollectionDataType implements IComplexDat
             {
                 $oSelf->add(Lookup::createMixed($item));
             }
+            elseif(is_array($item) && count($item) == 2 && isset($item[0]) && isset($item[1]) && is_string($item[0]) && is_string($item[1]))
+            {
+                $oSelf->add(Lookup::create($item[1], false,$item[0]));
+            }
             elseif(is_array($item) && ArrayUtils::isSequential($item))
             {
                 foreach ($item as $child)
@@ -41,6 +45,7 @@ class LookupCollection extends AbstractCollectionDataType implements IComplexDat
             }
             elseif($item instanceof KeyValueCollection)
             {
+                echo "4444444444" . PHP_EOL;
                 foreach($item as $oKeyValue)
                 {
                     $oSelf->add(Lookup::createMixed($oKeyValue));
