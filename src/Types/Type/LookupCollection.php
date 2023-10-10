@@ -95,6 +95,24 @@ class LookupCollection extends AbstractCollectionDataType implements IComplexDat
     {
         return $this->array[$this->position];
     }
+    public function asLookupArray(string $sValueFieldName = 'id', string $sLabelFieldName = 'label', array $aOptions = []):array
+    {
+        $aOut = [];
+        foreach($this as $item)
+        {
+            $selected = '';
+            if($item->bIsSelected)
+            {
+                $selected = ' selected="selected"';
+            }
+            $aOut[] = [
+                $sValueFieldName => $item->getValue(),
+                $sLabelFieldName => $item->getLabel(),
+                'selected' => $selected
+            ];
+        }
+        return $aOut;
+    }
     public function __toString():string
     {
         $aOut = [];

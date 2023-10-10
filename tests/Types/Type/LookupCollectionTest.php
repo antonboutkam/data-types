@@ -69,6 +69,16 @@ OUT;
 
     }
 
+    public function testAsLookupArray()
+    {
+        $aArray = $this->getCountryLookups()->asLookupArray();
+        $this->assertEquals('Frankrijk', $aArray[0]['label']);
+        $this->assertEquals(1, $aArray[0]['id']);
+
+        $aArray = $this->getCountryLookups()->asLookupArray('x','y');
+        $this->assertEquals('Frankrijk', $aArray[0]['y']);
+        $this->assertEquals(1, $aArray[0]['x']);
+    }
     public function testMerge()
     {
         $oLookupCollection = $this->getCountryLookups();
@@ -86,8 +96,8 @@ OUT;
         {
             $this->assertInstanceOf(Lookup::class, $oLookup);
         }
-
     }
+
 
 
     private function getCountryLookupExpected():array
