@@ -23,10 +23,6 @@ class FullNameTest extends TestCase
 
 		$expected1 = 'Anton Boutkam';
 		$this->assertEquals($expected1, "{$me}");
-
-	//	$me->setMiddleName(new MiddleName('van de'));
-	// $expected2 = 'Anton van de Boutkam';
-	//	$this->assertEquals($expected2, "{$me}");
 	}
 
 
