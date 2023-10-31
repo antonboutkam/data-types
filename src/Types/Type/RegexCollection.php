@@ -63,11 +63,11 @@ class RegexCollection extends AbstractCollectionDataType implements ITestable
      *
      * @return bool
      */
-    public function hasMatch(PlainText $oString):bool
+    public function hasMatch(AbstractDataType $oString):bool
     {
         foreach($this as $oRegex)
         {
-            if($oRegex->test($oString))
+            if($oRegex->test((string) $oString))
             {
                 return true;
             }
