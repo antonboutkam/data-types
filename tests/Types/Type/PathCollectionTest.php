@@ -81,6 +81,22 @@ class PathCollectionTest extends TestCase {
 
     }
 
+	public function testFromFinder()
+	{
+		$oSymfonyFinder = Path::make(__DIR__)->getFinder();
+		$oPathCollection = PathCollection::fromFinder($oSymfonyFinder);
+
+		$this->assertGreaterThan(20, $oPathCollection->length());
+
+		foreach($oPathCollection as $oPath)
+		{
+			if($oPath->hasExtension('php'))
+			{
+				$this->assertTrue(true);
+			}
+		}
+	}
+
     /**
      * @throws InvalidArgumentException
      */

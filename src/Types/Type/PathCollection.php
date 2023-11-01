@@ -4,6 +4,7 @@ namespace Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
 
+use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 
 class PathCollection extends AbstractCollectionDataType implements IGenericDataType {
@@ -67,6 +68,23 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
         }
         return $this;
     }
+
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public static function fromFinder(Finder $finder):self
+	{
+		$oNewPathCollection = new self();
+		foreach($finder as $file)
+		{
+			if($file instanceof SplFileInfo)
+			{
+				$oNewPathCollection->add($file);
+			}
+		}
+		return $oNewPathCollection;
+	}
+
     public static function fromPaths(Path ...$paths):self
     {
         $oNewPathCollection = new self();
@@ -161,17 +179,26 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
     public function add($mValue): void {
         if (is_string($mValue)) {
             $objectItem = new Path($mValue);
-        } else {
-            if ($mValue instanceof Path) {
-                $objectItem = $mValue;
-            } else {
-                throw new InvalidArgumentException("Argument must be of type string or " . DnsName::class);
-            }
+        }
+		elseif ($mValue instanceof Path)
+		{
+			$objectItem = $mValue;
+		}
+		elseif ($mValue instanceof IGenericDataType)
+		{
+			$objectItem = Path::make((string) $mValue);
+		}
+		elseif ($mValue instanceof SplFileInfo)
+		{
+			$objectItem = Path::make((string) $mValue);
+		}
+		else
+		{
+			throw new InvalidArgumentException("Argument must be of type string or " . Path::class);
         }
 
         $this->array[] = $objectItem;
     }
-
 
     /**
      * @return Path[]
@@ -188,7 +215,7 @@ class PathCollection extends AbstractCollectionDataType implements IGenericDataT
         return join(',', $aOut);
     }
 
-    
+
     public function current(): Path {
         return $this->array[$this->position];
     }
