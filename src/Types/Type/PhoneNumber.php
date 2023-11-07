@@ -3,11 +3,16 @@ namespace Hurah\Types\Type;
 
 class PhoneNumber extends AbstractDataType implements IGenericDataType
 {
-    function __construct($sPathName = null)
+    function __construct($phoneNumber = null)
     {
 
-        $sPathName = str_replace('-', '', $sPathName);
-        $sPathName = preg_replace('/\s+/', '', $sPathName);
-        parent::__construct($sPathName);
+        $phoneNumber = str_replace('-', '', $phoneNumber);
+        $phoneNumber = preg_replace('/\s+/', '', $phoneNumber);
+        parent::__construct($phoneNumber);
     }
+
+	public static function make(string $phoneNumber = null):self
+	{
+		return new self($phoneNumber);
+	}
 }
