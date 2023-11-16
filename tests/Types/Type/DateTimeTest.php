@@ -31,6 +31,19 @@ class DateTimeTest extends TestCase {
         $oDateTime = new DateTime(time());
         $this->assertInstanceOf(DateTime::class, $oDateTime);
     }
+
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function testToTimestamp()
+	{
+		$iTime = time();
+		$oDateTime = new DateTime(time());
+		$this->assertEquals($iTime, $oDateTime->toTimestamp(), '.');
+
+	}
+
+
     public function testGetMinute()
     {
         $oDateTime = new DateTime();

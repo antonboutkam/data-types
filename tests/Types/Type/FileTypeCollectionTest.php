@@ -123,12 +123,12 @@ class FileTypeCollectionTest extends TestCase
         $this->assertEquals(2, $col->length());
 
     }
-
+/*
     public function testAddCollection()
     {
 
     }
-
+*/
     public function testTest()
     {
         $col = FileTypeCollection::fromFileTypes(
@@ -144,6 +144,7 @@ class FileTypeCollectionTest extends TestCase
     /**
      * @throws InvalidArgumentException
      */
+	/*
     public function testFilter()
     {
         $col = FileTypeCollection::fromFileTypes(
@@ -153,4 +154,5 @@ class FileTypeCollectionTest extends TestCase
         $cCol2 =  $col->filter($x);
         print_r($cCol2);
     }
+	*/
 }

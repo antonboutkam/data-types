@@ -8,26 +8,43 @@ use Hurah\Types\Exception\InvalidArgumentException;
 class DateTime extends AbstractDataType implements IGenericDataType
 {
 
-    public function __construct($sValue = null)
+	private ?PhpNativeDateTime $innerValue;
+
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function setValue($sValue)
+	{
+		if($sValue instanceof \DateTime)
+		{
+			$this->innerValue = $sValue;
+		}
+		else if(is_int($sValue))
+		{
+			$oValue = new PhpNativeDateTime();
+			$oValue->setTimestamp($sValue);
+			$this->innerValue = $oValue;
+		}
+		else if($sValue === null)
+		{
+			$this->innerValue = null;
+		}
+		else
+		{
+			throw new InvalidArgumentException("Class DateTime expects a unix timestamp, a php DateTime object or null");
+		}
+
+
+		parent::setValue($sValue);
+	}
+
+	public function getValue(): ?PhpNativeDateTime
+	{
+		return $this->innerValue;
+	}
+	public function __construct($sValue = null)
     {
-        if($sValue instanceof \DateTime)
-        {
-            $this->setValue($sValue);
-        }
-        else if(is_int($sValue))
-        {
-            $oValue = new \DateTime();
-            $oValue->setTimestamp($sValue);
-            $this->setValue($oValue);
-        }
-        else if($sValue === null)
-        {
-            $this->setValue(null);
-        }
-        else
-        {
-            throw new InvalidArgumentException("Class DateTime expects a unix timestamp, a php DateTime object or null");
-        }
+     	$this->setValue($sValue);
         parent::__construct($sValue);
     }
     public function getHour24():int
@@ -44,6 +61,10 @@ class DateTime extends AbstractDataType implements IGenericDataType
         $this->toDateTime()->setTimestamp($iTimestamp);
         return $this;
     }
+	public function toTimestamp():int
+	{
+		return $this->toDateTime()->getTimestamp();
+	}
 
     /**
      * @throws InvalidArgumentException
