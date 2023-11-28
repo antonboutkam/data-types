@@ -13,6 +13,21 @@ use Test\Hurah\Types\Type\Helper\NormalTest;
 
 class PhpNamespaceTest extends TestCase {
 
+	public function testIsPartOf()
+	{
+		$oNamespace = PhpNamespace::make('Hurah', 'Seo', 'Classes', 'Tagging');
+		$oChildNamespace1 = $oNamespace->extend('Google');
+		$oChildNamespace2 = $oNamespace->extend('Google', 'Images');
+
+		$this->assertTrue($oChildNamespace1->isPartOf($oNamespace));
+		$this->assertTrue($oChildNamespace2->isPartOf($oNamespace));
+		$this->assertFalse($oNamespace->isPartOf($oChildNamespace1));
+
+		$oNamespace3 = PhpNamespace::make('\\Hurah\\Seo\\Classes');
+		$this->assertTrue($oChildNamespace1->isPartOf($oNamespace3));
+		$this->assertTrue($oChildNamespace2->isPartOf($oNamespace3));
+
+	}
     /**
      * @throws InvalidArgumentException
      * @throws ReflectionException

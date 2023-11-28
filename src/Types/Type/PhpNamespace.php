@@ -211,6 +211,15 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
         }
     }
 
+	public function isPartOf(PhpNamespace $oPhpNamespace):bool
+	{
+		$sHayStack = (string) $this->getValue();
+		$sNeedle = (string) $oPhpNamespace;
+		$sHayStack = preg_replace('/^\\\/', '', $sHayStack);
+		$sNeedle = preg_replace('/^\\\/', '', $sNeedle);
+		return strpos($sHayStack,$sNeedle) === 0;
+	}
+
     public function implementsInterface($mInterfaceName):bool {
         try {
             $oReflector = new ReflectionClass("{$this}");
