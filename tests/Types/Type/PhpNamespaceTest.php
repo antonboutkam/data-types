@@ -27,6 +27,11 @@ class PhpNamespaceTest extends TestCase {
 		$this->assertTrue($oChildNamespace1->isPartOf($oNamespace3));
 		$this->assertTrue($oChildNamespace2->isPartOf($oNamespace3));
 
+		$oNamespace4 = PhpNamespace::make('\\Crud\\Sale_order_item');
+		$oNamespace5 = PhpNamespace::make('\\Crud\\Sale_order_item_product');
+
+		$this->assertFalse($oNamespace5->isPartOf($oNamespace4));
+
 	}
     /**
      * @throws InvalidArgumentException

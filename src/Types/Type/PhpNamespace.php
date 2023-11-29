@@ -217,7 +217,11 @@ class PhpNamespace extends AbstractDataType implements IGenericDataType
 		$sNeedle = (string) $oPhpNamespace;
 		$sHayStack = preg_replace('/^\\\/', '', $sHayStack);
 		$sNeedle = preg_replace('/^\\\/', '', $sNeedle);
-		return strpos($sHayStack,$sNeedle) === 0;
+		if($sHayStack === $sNeedle)
+		{
+			return true;
+		}
+		return strpos($sHayStack,$sNeedle . '\\') === 0;
 	}
 
     public function implementsInterface($mInterfaceName):bool {
