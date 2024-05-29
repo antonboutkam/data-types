@@ -20,6 +20,13 @@ class MenuItem extends AbstractDataType implements IElementizable {
     }
 
     /**
+     * @throws InvalidArgumentException
+     */
+    public static function manual(string $label, string $url, string $icon): MenuItem {
+        return self::create(new PlainText($label), new Url($url), new Icon($icon));
+    }
+
+    /**
      * @param mixed ...$params
      * @return MenuItem
      * @throws InvalidArgumentException
