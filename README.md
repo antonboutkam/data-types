@@ -1,12 +1,8 @@
 
 <p align="center"><a href="https://packagist.org/packages/hurah/data-types" target="_blank">
-    <img src="https://nuicart.nl/img/logo.png" alt="Hurah Data Types logo">
+    <img src="https://raw.githubusercontent.com/antonboutkam/data-types/main/assets/logo.webp" alt="Hurah Data Types logo">
 </a>
 </p>
-
-# Data types
-
-
 A growing set of general purpose data types and corresponding collections. This project is not 
 intended as a one size fits all standards based library. It is meant to promote interoperability between 
 some of the projects that i work on. Many types come with useful utilities for 
