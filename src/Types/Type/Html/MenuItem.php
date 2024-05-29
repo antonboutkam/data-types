@@ -29,7 +29,6 @@ class MenuItem extends AbstractDataType implements IElementizable {
     /**
      * @param mixed ...$params
      * @return MenuItem
-     * @throws InvalidArgumentException
      */
     public static function create(...$params): MenuItem {
         $oMenuItem = new MenuItem();
