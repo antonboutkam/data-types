@@ -50,6 +50,11 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
     }
 
 
+	/**
+	 * @param LiteralCallable $oCallback
+	 *
+	 * @return void
+	 */
     public function doForeach(LiteralCallable $oCallback): void
     {
         $oForeach = ControlForeach::fromCollection($this);
