@@ -19,6 +19,9 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
 
      abstract public function current(): IGenericDataType;
 
+	 /**
+	  * Reset the internal pointer
+	  */
     public function rewind():void
     {
         $this->position = 0;
