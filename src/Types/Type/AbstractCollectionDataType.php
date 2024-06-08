@@ -17,7 +17,7 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
     protected int $position = 0;
     protected array $array = [];
 
-     abstract public function current();
+     abstract public function current(): mixed;
 
     public function rewind():void
     {

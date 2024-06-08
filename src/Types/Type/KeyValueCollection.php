@@ -13,20 +13,19 @@ class KeyValueCollection extends AbstractCollectionDataType
     public static function fromArray(array $items): self
     {
         $oCollection = new self();
-        if (is_iterable($items))
-        {
-            foreach ($items as $itemIndex => $item)
-            {
-                if ($item instanceof KeyValue)
-                {
-                    $oCollection->add($item);
-                }
-                else
-                {
-                    $oCollection->addKeyValue($itemIndex, $item);
-                }
-            }
-        }
+
+		foreach ($items as $itemIndex => $item)
+		{
+			if ($item instanceof KeyValue)
+			{
+				$oCollection->add($item);
+			}
+			else
+			{
+				$oCollection->addKeyValue($itemIndex, $item);
+			}
+		}
+
         return $oCollection;
     }
 
