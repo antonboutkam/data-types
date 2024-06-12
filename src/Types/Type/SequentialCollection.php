@@ -2,63 +2,94 @@
 
 namespace Hurah\Types\Type;
 
-use function is_iterable;
+use Hurah\Types\Exception\RuntimeException;
 
 class SequentialCollection extends AbstractCollectionDataType
 {
-    /**
-     * @param mixed $sValue expects null, an array, an instance of LiteralArray or an instance of  AbstractCollectionDataType
-     */
-    public function __construct($sValue = null)
-    {
-        if(is_array($sValue))
-        {
-            $this->addArray($sValue);
-        }
-        elseif($sValue instanceof LiteralArray)
-        {
-            $this->addArray($sValue->toArray());
-        }
-        elseif($sValue instanceof AbstractCollectionDataType)
-        {
-            $this->addArray($sValue->toArray());
-        }
-        parent::__construct($sValue);
-    }
+	/**
+	 * @param mixed $sValue expects null, an array, an instance of LiteralArray or an instance of  AbstractCollectionDataType
+	 */
+	public function __construct($sValue = null)
+	{
+		if (is_array($sValue)) {
+			$this->addArray($sValue);
+		}
+		elseif ($sValue instanceof LiteralArray) {
+			$this->addArray($sValue->toArray());
+		}
+		elseif ($sValue instanceof AbstractCollectionDataType) {
+			$this->addArray($sValue->toArray());
+		}
+		parent::__construct($sValue);
+	}
 
-     public function current()
-    {
-        return $this->array[$this->position];
-    }
-    public function addArray(array $aItems):self
-    {
-        $oSelf = clone($this);
-        foreach($aItems as $mItem)
-        {
-            $oSelf->add($mItem);
-        }
-        return $oSelf;
+	public function toArray():array
+	{
+		return $this->array;
+	}
+	/**
+	 * @throws RuntimeException
+	 */
+	public function current(): IGenericDataType
+	{
+		$item =  $this->array[$this->position];
 
-    }
-    public function add($item)
-    {
-        $this->array[] = $item;
+		if ($item instanceof IGenericDataType) {
+			$this->array[] = new PlainText($item);
+		}
+		elseif (is_string($item)) {
+			$result = new PlainText($item);
+		}
+		elseif (is_float($item)) {
+			$result = new LiteralFloat($item);
+		}
+		elseif (is_array($item)) {
+			$result = new LiteralArray($item);
+		}
+		elseif (is_float($item)) {
+			$result = new LiteralFloat($item);
+		}
+		elseif (is_int($item)) {
+			$result = new LiteralInteger($item);
+		}
+		else
+		{
+			throw new RuntimeException("Unable to cast SequentialCollection item to IGenericDataType");
+		}
+
+		return $result;
+	}
+
+	public function addArray(array $aItems): self
+	{
+		$oSelf = clone($this);
+		foreach ($aItems as $mItem) {
+			$oSelf->addAny($mItem);
+		}
+
+		return $oSelf;
+
+	}
+
+	public function addAny($item): void
+	{
+		$this->array[] = $item;
+	}
+
+    public function add(IGenericDataType $item): void
+	{
+        $this->addAny($item);
     }
 
     public function getUnique(): self
     {
         $aItems = array_unique($this->array);
 
-        $oSelf = (new self())->addArray($aItems);;
-
-
-        return $oSelf;
+		return (new self())->addArray($aItems);
     }
 
     public function splat(...$fieldOrMethod):self
     {
-
-
         $sKey = array_shift($fieldOrMethod);
         $out = [];
         foreach ($this as $item)
@@ -72,13 +103,16 @@ class SequentialCollection extends AbstractCollectionDataType
                 $mValue = $item->$sKey();
             }
 
-            if($mValue)
+            if(isset($mValue))
             {
                 $out[] = $mValue;
             }
-
         }
         return new self($out ?? []);
-
     }
+
+	public function __toString(): string
+	{
+		return (string) json_encode($this->getValue());
+	}
 }

@@ -9,8 +9,8 @@ namespace Hurah\Types\Type;
  */
 class TestableCollection extends AbstractCollectionDataType implements ITestable
 {
-     public function current():ITestable
-    {
+     public function current(): IGenericDataType
+	 {
         return $this->array[$this->position];
     }
 
@@ -57,10 +57,12 @@ class TestableCollection extends AbstractCollectionDataType implements ITestable
         return $this;
     }
 
-    /**
-     *
-     * @return bool
-     */
+	/**
+	 *
+	 * @param ITestable $oSubject
+	 *
+	 * @return bool
+	 */
     public function hasMatch(ITestable $oSubject):bool
     {
         foreach($this as $oTest)

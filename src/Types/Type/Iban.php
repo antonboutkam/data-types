@@ -58,7 +58,7 @@ class Iban extends AbstractDataType implements IGenericDataType
                 $NewString .= $MovedCharArray[$key];
             }
 
-            if(bcmod($NewString, '97') == 1)
+            if(\bcmod($NewString, '97') == 1)
             {
                 return true;
             }

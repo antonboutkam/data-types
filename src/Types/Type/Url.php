@@ -21,17 +21,17 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
     }
     public function get($aOptions = ['USER_AGENT' => 'Hurah', 'CONNECT_TIMEOUT' => 2]):Response
     {
-        $curl_handle = curl_init();
-        curl_setopt($curl_handle, CURLOPT_URL, "{$this}");
-        curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, $aOptions['CONNECT_TIMEOUT']);
-        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl_handle, CURLOPT_HEADER, 1);
-        curl_setopt($curl_handle, CURLOPT_USERAGENT, $aOptions['USER_AGENT']);
+        $curl_handle = \curl_init();
+		\curl_setopt($curl_handle, CURLOPT_URL, "{$this}");
+		\curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, $aOptions['CONNECT_TIMEOUT']);
+		\curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+		\curl_setopt($curl_handle, CURLOPT_HEADER, 1);
+		\curl_setopt($curl_handle, CURLOPT_USERAGENT, $aOptions['USER_AGENT']);
 
 
         $headers = [];
         // this function is called by curl for each header received
-        curl_setopt($curl_handle, CURLOPT_HEADERFUNCTION,
+		\curl_setopt($curl_handle, CURLOPT_HEADERFUNCTION,
             function($curl, $header) use (&$headers)
             {
                 $len = strlen($header);

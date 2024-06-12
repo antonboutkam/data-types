@@ -20,8 +20,8 @@ class Icon extends AbstractDataType implements IGenericDataType, IElementizable
     }
     public function __toString(): string
     {
-		$element = $this->toElement();
-        return (string) $element;
+
+        return (string) $this->getValue();
     }
 
 
