@@ -48,18 +48,17 @@ class SequentialCollectionTest extends TestCase
     public function testGetUnique()
     {
         $oInitialCollection = $this->getCollection();
-
         $this->assertEquals($this->expectedArray(), $oInitialCollection->toArray());
 
         $oAddedCollection = $oInitialCollection->addArray(['een' => 'associatieve']);
 
 
-        // $aFirstExpected = $this->expectedArray();
-        // $aFirstExpected[] = 'associatieve';
-        // $this->assertEquals($aFirstExpected, $oAddedCollection->toArray());
+        $aFirstExpected = $this->expectedArray();
+        $aFirstExpected[] = 'associatieve';
+        $this->assertEquals($aFirstExpected, $oAddedCollection->toArray());
 
 
-        // $this->assertEquals($this->expectedArray(), $oAddedCollection->getUnique()->toArray());
+        $this->assertEquals($this->expectedArray(), $oAddedCollection->getUnique()->toArray());
     }
 
     public function testCurrent()
