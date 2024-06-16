@@ -9,7 +9,7 @@ namespace Hurah\Types\Type;
  */
 class TestableCollection extends AbstractCollectionDataType implements ITestable
 {
-     public function current(): IGenericDataType
+     public function current(): AbstractDataType
 	 {
         return $this->array[$this->position];
     }

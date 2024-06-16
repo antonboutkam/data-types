@@ -30,12 +30,12 @@ class SequentialCollection extends AbstractCollectionDataType
 	/**
 	 * @throws RuntimeException
 	 */
-	public function current(): IGenericDataType
+	public function current(): AbstractDataType
 	{
 		$item =  $this->array[$this->position];
 
-		if ($item instanceof IGenericDataType) {
-			$this->array[] = new PlainText($item);
+		if ($item instanceof AbstractDataType) {
+			$this->array[] = $item;
 		}
 		elseif (is_string($item)) {
 			$result = new PlainText($item);

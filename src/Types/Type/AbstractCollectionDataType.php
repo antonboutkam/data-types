@@ -17,7 +17,7 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
     protected int $position = 0;
     protected array $array = [];
 
-     abstract public function current(): IGenericDataType;
+     abstract public function current(): AbstractDataType;
 
 	 /**
 	  * Reset the internal pointer
@@ -125,7 +125,7 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
         unset($this->array[$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset):mixed
     {
         return $this->array[$offset] ?? null;
     }
