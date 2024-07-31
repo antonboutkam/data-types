@@ -4,13 +4,14 @@ namespace Hurah\Types\Type;
 
 use Hurah\Types\Type\Http\Response;
 use InvalidArgumentException;
+use function curl_setopt;
 
 class Url extends AbstractDataType implements IGenericDataType, IUri
 {
 
     public function __construct($sValue = null)
     {
-        if ($aParts = parse_url($sValue))
+        if ($sValue && $aParts = parse_url($sValue))
         {
             parent::__construct($aParts);
         }
@@ -22,16 +23,16 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
     public function get($aOptions = ['USER_AGENT' => 'Hurah', 'CONNECT_TIMEOUT' => 2]):Response
     {
         $curl_handle = \curl_init();
-		\curl_setopt($curl_handle, CURLOPT_URL, "{$this}");
-		\curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, $aOptions['CONNECT_TIMEOUT']);
-		\curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($curl_handle, CURLOPT_HEADER, 1);
-		\curl_setopt($curl_handle, CURLOPT_USERAGENT, $aOptions['USER_AGENT']);
+		curl_setopt($curl_handle, CURLOPT_URL, "{$this}");
+		curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, $aOptions['CONNECT_TIMEOUT']);
+		curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl_handle, CURLOPT_HEADER, 1);
+		curl_setopt($curl_handle, CURLOPT_USERAGENT, $aOptions['USER_AGENT']);
 
 
         $headers = [];
         // this function is called by curl for each header received
-		\curl_setopt($curl_handle, CURLOPT_HEADERFUNCTION,
+		curl_setopt($curl_handle, CURLOPT_HEADERFUNCTION,
             function($curl, $header) use (&$headers)
             {
                 $len = strlen($header);
@@ -80,11 +81,10 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
 
 
     }
-    /**
-     * @param mixed $mPattern
-     *
-     * @return bool
-     */
+
+	/**
+	 * @return PlainText
+	 */
     public function toPlainText(): PlainText
     {
         return new PlainText($this);
@@ -94,7 +94,7 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
      *
      * @return bool
      */
-    public function matches($mPattern): bool
+    public function matches(mixed $mPattern): bool
     {
         if ($mPattern instanceof self)
         {
