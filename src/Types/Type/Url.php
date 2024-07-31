@@ -9,6 +9,9 @@ use function curl_setopt;
 class Url extends AbstractDataType implements IGenericDataType, IUri
 {
 
+	/**
+	 * @param $sValue
+	 */
     public function __construct($sValue = null)
     {
         if ($sValue && $aParts = parse_url($sValue))
