@@ -10,6 +10,7 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
 {
 
 	/**
+	 * Not sure why but packagist is not updating this.
 	 * @param $sValue
 	 */
     public function __construct($sValue = null)
