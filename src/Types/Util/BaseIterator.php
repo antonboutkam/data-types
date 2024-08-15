@@ -14,21 +14,22 @@ abstract class BaseIterator implements PhpIterator {
     protected int $position;
     protected array $array;
 
-    abstract public function current();
+    abstract public function current(): mixed;
 
-    public function rewind() {
+    public function rewind() :void {
         $this->position = 0;
     }
 
-    public function key() {
+    public function key() : int
+	{
         return $this->position;
     }
 
-    public function next() {
+    public function next() :void {
         ++$this->position;
     }
 
-    public function valid() {
+    public function valid() :bool {
         return isset($this->array[$this->position]);
     }
 }
