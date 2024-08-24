@@ -28,7 +28,7 @@ class Iban extends AbstractDataType implements IGenericDataType
      * @throws InvalidArgumentException
      * @deprecated use Iban::make()
      */
-    static function fromString(string $sIban) : self {
+    public static function fromString(string $sIban) : self {
 
         $oIban = new self($sIban);
         if(!$oIban->isValid())
@@ -38,7 +38,7 @@ class Iban extends AbstractDataType implements IGenericDataType
         return $oIban;
     }
 
-    function isValid():bool
+    public function isValid():bool
     {
         $iban = $this->getValue();
         $iban = strtolower(str_replace(' ','',$iban));
