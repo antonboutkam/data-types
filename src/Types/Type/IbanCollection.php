@@ -214,6 +214,22 @@ class IbanCollection extends AbstractCollectionDataType implements IGenericDataT
         return $this->array;
     }
 
+	/**
+	 * Converts the elements of the collection to a comma-separated string representation
+	 *
+	 * @param string $encapsulation (optional) The encapsulation character to be used for each element (default is double quotes)
+	 *
+	 * @return string The comma-separated string representation of the collection
+	 */
+	public function toCommaSeparated(string $encapsulation = '"'): string
+	{
+		$aOut = [];
+		foreach($this as $iban)
+		{
+			$aOut[] =  "{$encapsulation}" . $iban . "{$encapsulation}";
+		}
+		return join(',', $aOut);
+	}
     public function __toString(): string
     {
         $aOut = [];

@@ -125,5 +125,28 @@ class IbanCollectionTest extends TestCase
 		$this->assertEquals('FR1420041010050500013M02606', (string)$reversedCollection->current());
 	}
 
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function testToCommaSeparatedWithDefaultEncapsulation()
+	{
+		// Assuming 'MyCollection' is the class with the 'toCommaSeparated' method
+		$collection = IbanCollection::fromArray(['GB82WEST12345698765432', 'FR1420041010050500013M02606', 'FR1420041010050500013M02606']);
+
+		$expected = '"GB82WEST12345698765432","FR1420041010050500013M02606","FR1420041010050500013M02606"';
+
+		$this->assertEquals($expected, $collection->toCommaSeparated());
+
+	}
+
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function testToCommaSeparatedWithCustomEncapsulation()
+	{
+		$collection = IbanCollection::fromArray(['GB82WEST12345698765432', 'FR1420041010050500013M02606', 'FR1420041010050500013M02606']);
+		$expected = "'GB82WEST12345698765432','FR1420041010050500013M02606','FR1420041010050500013M02606'";
+		$this->assertEquals($expected, $collection->toCommaSeparated("'"));
+	}
 	// Add more tests as necessary to cover all methods and edge cases
 }
