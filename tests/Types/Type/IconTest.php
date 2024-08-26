@@ -12,4 +12,10 @@ class IconTest extends TestCase {
         $oIcon = new Icon('edit');
         $this->assertEquals('<span class="fa fa-regular fa-edit"></span>', "{$oIcon->toElement()}");
     }
+    public function testToString() {
+
+        $oIcon = new Icon('edit');
+
+        $this->assertEquals('<span class="fa fa-regular fa-edit"></span>', "{$oIcon->toElement()}");
+    }
 }
