@@ -24,14 +24,10 @@ class Icon extends AbstractDataType implements IGenericDataType, IElementizable
         return $oElement;
     }
 
-	/**
-	 * @throws InvalidArgumentException
-	 */
+
 	public function __toString(): string
     {
-        $element = clone $this->toElement();
-        $mValue = $element->getValue();
-        return (string)$mValue;
+        return (string)$this->getValue();
     }
 
 
