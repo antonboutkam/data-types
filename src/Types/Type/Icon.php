@@ -2,6 +2,7 @@
 
 namespace Hurah\Types\Type;
 
+use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\Html\Element;
 use Hurah\Types\Type\Html\IElementizable;
 
@@ -12,13 +13,21 @@ class Icon extends AbstractDataType implements IGenericDataType, IElementizable
     {
         parent::__construct($sValue);
     }
-    public function toElement():Element
+
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function toElement():Element
     {
         $oElement = Element::create('span');
         $oElement->addAttribute('class', "fa fa-regular fa-" . $this->getValue());
         return $oElement;
     }
-    public function __toString(): string
+
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function __toString(): string
     {
         $element = clone $this->toElement();
         $mValue = $element->getValue();
