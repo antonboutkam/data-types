@@ -41,4 +41,10 @@ class CheckboxTest extends TestCase
 	}
 
 
+	public function testMakeCheckedArray()
+	{
+		$aChecked =  Checkbox::makeCheckedArray([1,2,7]);
+		$this->assertEquals(' checked="checked"', $aChecked[1]);
+		$this->assertNull($aChecked[3] ?? null);
+	}
 }

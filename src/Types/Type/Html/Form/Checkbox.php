@@ -43,6 +43,24 @@ class Checkbox extends AbstractDataType implements IElementizable
 		$this->sFieldValue = $sFieldValue;
 		return $this;
 	}
+
+	/**
+	 * Returns an array with checked="checked" for all the ids in $ids
+	 *
+	 * @param array $ids
+	 *
+	 * @return array
+	 */
+	public static function makeCheckedArray(array $ids): array
+	{
+		$aOut = [];
+		foreach($ids as $id)
+		{
+			$aOut[$id] = ' checked="checked"';
+		}
+		return $aOut;
+	}
+
 	public function getFieldValue():self
 	{
 		return $this->sFieldValue;

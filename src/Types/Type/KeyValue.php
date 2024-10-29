@@ -32,6 +32,8 @@ class KeyValue extends AbstractDataType
         $this->sValue = $sValue;
 		return $this;
     }
+
+
     public function addValue($sValue):void
     {
         if(isset($this->sValue) && is_array($this->sValue))
