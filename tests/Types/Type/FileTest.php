@@ -2,6 +2,7 @@
 
 namespace Test\Hurah\Types\Type;
 
+use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Util\DirectoryStructure;
 use PHPUnit\Framework\TestCase;
@@ -16,12 +17,18 @@ class FileTest extends TestCase {
         $this->getTestPath()->dirname()->makeDir();
     }
 
-    protected function tearDown(): void {
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	protected function tearDown(): void {
         $this->getTestPath()->unlink();
         $this->getTestPath()->dirname()->unlink();
     }
 
-    public function testGetContents() {
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function testGetContents() {
         $oTestPath = $this->getTestPath();
 
         $oTestPath->dirname()->makeDir();

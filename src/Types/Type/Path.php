@@ -20,9 +20,7 @@ use function preg_replace;
 use function rmdir;
 use function str_replace;
 use function unlink;
-use function var_dump;
 use const DIRECTORY_SEPARATOR;
-use const PHP_EOL;
 
 /**
  * Points to a file or directory, may be local or remote (http, https, ftp etc)
@@ -45,7 +43,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
         $aUseParts = [];
         foreach ($aParts as $mPart)
         {
-            if (is_null($mPart) || empty($mPart))
+            if (empty($mPart))
             {
                 continue;
             }
@@ -157,17 +155,28 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
     {
         return !$this->isAbsolute();
     }
-    public function removeExtension():Path
+
+	/**
+	 * @throws NullPointerException
+	 */
+	public function removeExtension():Path
     {
         $sPattern = new Regex('/.' . $this->getExtension() . '$/');
         return $this->remove($sPattern);
     }
-    public function getExtension():string
+
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function getExtension():string
     {
         return $this->getFile()->getExtension();
     }
 
-    public function isAbsolute(): bool
+	/**
+	 * @throws NullPointerException
+	 */
+	public function isAbsolute(): bool
     {
         $sPath = $this->getValue();
         if (!$sPath)
@@ -190,11 +199,13 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
     }
 
 
-    /**
-     * Checks if the text contains the text passed as the argument.
-     * @param ITestable $oRegex
-     * @return bool
-     */
+	/**
+	 * Checks if the text contains the text passed as the argument.
+	 *
+	 * @param ITestable $oTestable
+	 *
+	 * @return bool
+	 */
     public function matches(ITestable $oTestable): bool
     {
         return $oTestable->test($this);
@@ -224,8 +235,8 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      *
      * @param mixed ...$aParts
      */
-    public function append(...$aParts)
-    {
+    public function append(...$aParts): void
+	{
         $this->setValue($this->extend($aParts));
     }
 
@@ -249,11 +260,12 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
         return new DirectoryIterator($this);
     }
 
-    /**
-     * Returns a path collection with each item one level  up in the tree
-     *
-     * @return PathCollection
-     */
+	/**
+	 * Returns a path collection with each item one level  up in the tree
+	 *
+	 * @return PathCollection
+	 * @throws InvalidArgumentException
+	 */
     public function treeUp(): PathCollection
     {
         $oCurrent = clone $this;
@@ -459,14 +471,15 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
         return false;
     }
 
-    /**
-     * Renames the file or directory (if it exists) and sets the internal path to the new destination. Returns the path
-     * of the destination also for method chaining.
-     *
-     * @param Path $oDestination
-     *
-     * @return $this
-     */
+	/**
+	 * Renames the file or directory (if it exists) and sets the internal path to the new destination. Returns the path
+	 * of the destination also for method chaining.
+	 *
+	 * @param Path $oDestination
+	 *
+	 * @return $this
+	 * @throws InvalidArgumentException
+	 */
     public function move(Path $oDestination): Path
     {
         if ($oDestination->isDir())
@@ -480,8 +493,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
 
     /**
      * @return PlainText
-     * @throws InvalidArgumentException
-     */
+	 */
     public function contents(): PlainText
     {
         return new PlainText(file_get_contents($this));
@@ -513,8 +525,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      * @param string $sSuffix = ''
      *
      * @return Path
-     * @throws InvalidArgumentException
-     */
+	 */
     public function basename(string $sSuffix = ''): Path
     {
         return new Path(basename($this, $sSuffix));
