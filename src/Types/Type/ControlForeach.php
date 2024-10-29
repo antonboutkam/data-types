@@ -49,14 +49,19 @@ class ControlForeach extends AbstractDataType implements IGenericDataType
             $closure($item, $oLoop->next());
         }
     }
-    public function __toString(): string
+
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function __toString(): string
     {
         return JsonUtils::encode($this->mValue);
     }
 
-    public function setValue($sValue)
-    {
+    public function setValue($sValue): AbstractDataType
+	{
         $this->mValue = $sValue;
+		return $this;
     }
 
     public function getValue()

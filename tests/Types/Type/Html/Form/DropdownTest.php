@@ -44,9 +44,14 @@ END;
         $sReadOnly ='';
         if($bReadOnly)
         {
-            $sReadOnly = 'readonly="readonly" ';
+            $sReadOnly = 'readonly="readonly"';
         }
-        $aOut[] = '<select ' . $sReadOnly . 'name="' . $sName . '">';
+		$sNameAttribute='';
+		if($sName)
+		{
+			$sNameAttribute=  ' name="' . $sName . '"';
+		}
+        $aOut[] = '<select ' . $sReadOnly . $sNameAttribute .'>';
         foreach($this->getExpectedLookups() as $lookup)
         {
             $aOut[] = $lookup;

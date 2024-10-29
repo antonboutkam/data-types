@@ -23,13 +23,14 @@ class KeyValue extends AbstractDataType
         return new KeyValue(['key' => $sKey, 'value' => $sValue]);
     }
 
-    public function setKey(string $sKey)
-    {
+    public function setKey(string $sKey): void
+	{
         $this->sKey = $sKey;
     }
-    public function setValue($sValue)
-    {
+    public function setValue($sValue): AbstractDataType
+	{
         $this->sValue = $sValue;
+		return $this;
     }
     public function addValue($sValue):void
     {

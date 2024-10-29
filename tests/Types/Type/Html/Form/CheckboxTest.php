@@ -36,6 +36,8 @@ class CheckboxTest extends TestCase
 		$sExpected = '<input name="data[halloween]" type="checkbox" value="22" />';
 		$this->assertEquals($sExpected, (string) $oCheckbox);
 
+
+		// $this->assertEquals($this->toStringExpected(), (string) $oDropDown, (string) $oDropDown);
 	}
 
 

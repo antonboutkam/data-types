@@ -13,7 +13,7 @@ class DateTime extends AbstractDataType implements IGenericDataType
 	/**
 	 * @throws InvalidArgumentException
 	 */
-	public function setValue($sValue)
+	public function setValue($sValue): AbstractDataType
 	{
 		if($sValue instanceof \DateTime)
 		{
@@ -33,15 +33,18 @@ class DateTime extends AbstractDataType implements IGenericDataType
 		{
 			throw new InvalidArgumentException("Class DateTime expects a unix timestamp, a php DateTime object or null");
 		}
-
-
 		parent::setValue($sValue);
+		return $this;
 	}
 
 	public function getValue(): ?PhpNativeDateTime
 	{
 		return $this->innerValue;
 	}
+
+	/**
+	 * @throws InvalidArgumentException
+	 */
 	public function __construct($sValue = null)
     {
      	$this->setValue($sValue);

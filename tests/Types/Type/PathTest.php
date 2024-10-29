@@ -45,7 +45,8 @@ class PathTest extends TestCase
             'a',
             'test'
         ];
-        $oPath1 = Path::make('\\this\\is\\a\\test');
+
+        $oPath1 = Path::make('this','is', 'a', 'test');
         $this->assertEquals($aExpectedInBothCases, $oPath1->explode());
 
         $oPath2 = Path::make(DIRECTORY_SEPARATOR . 'this' . DIRECTORY_SEPARATOR . 'is' . DIRECTORY_SEPARATOR . 'a' . DIRECTORY_SEPARATOR . 'test');

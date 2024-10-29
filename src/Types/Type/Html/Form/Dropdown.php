@@ -22,7 +22,7 @@ class Dropdown extends AbstractDataType implements IElementizable
      *
      * @return self
      */
-    public static function create($mName, LookupCollection $data, array $aOptions = []):self
+    public static function create(mixed $mName, LookupCollection $data, array $aOptions = []):self
     {
         $oSelf = new self();
         $oSelf->setName(...$mName);
@@ -92,11 +92,14 @@ class Dropdown extends AbstractDataType implements IElementizable
         {
 			$aAttributes->add('readonly', 'readonly');
         }
+
 		if($this->sName)
 		{
 			$aAttributes->add('name', $this->sName);
 		}
-		$aOut[] = "<select {$aAttributes}>";
+		$sAttributes = trim((string)$aAttributes);
+
+		$aOut[] = "<select {$sAttributes}>";
         $aOut[] = (string) $this->data;
         $aOut[] = "</select>";
 
