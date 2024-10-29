@@ -41,6 +41,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      */
     public static function make(...$aParts): self
     {
+
         $aUseParts = [];
         foreach ($aParts as $mPart)
         {
@@ -52,6 +53,11 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
             {
                 $aUseParts[] = self::make(...$mPart);
                 continue;
+            }
+
+            if(DIRECTORY_SEPARATOR === '\\')
+            {
+                $mPart = str_replace('/', '\\', $mPart);
             }
             $aUseParts[] = $mPart;
         }

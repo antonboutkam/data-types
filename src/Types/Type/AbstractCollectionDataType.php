@@ -72,8 +72,6 @@ abstract class AbstractCollectionDataType extends AbstractDataType implements IG
     }
     public function toArray():array
     {
-		echo __METHOD__ . PHP_EOL;
-		print_r($this->array);
         return $this->array;
     }
 

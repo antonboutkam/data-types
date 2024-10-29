@@ -17,5 +17,6 @@ class EmailTest extends TestCase {
 
         $oEmail = new Email('@nui-blabla.com-');
         $this->assertFalse($oEmail->isValid());
+
     }
 }
