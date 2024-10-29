@@ -78,7 +78,7 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
         return new Response([
             'body' => join(PHP_EOL, $aBody),
             'statusCode' => $iStatusCode,
-            'headers' => $headers
+            'headers' => $headers,
 
 
         ]);
@@ -295,5 +295,6 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
             (isset($parts['query']) ? "?{$parts['query']}" : '') .
             (isset($parts['fragment']) ? "#{$parts['fragment']}" : '');
     }
+
 
 }

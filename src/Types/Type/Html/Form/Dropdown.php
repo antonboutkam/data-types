@@ -2,7 +2,9 @@
 
 namespace Hurah\Types\Type\Html\Form;
 
+use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\AbstractDataType;
+use Hurah\Types\Type\Html\AttributeCollection;
 use Hurah\Types\Type\Html\Element;
 use Hurah\Types\Type\Html\IElementizable;
 use Hurah\Types\Type\LookupCollection;
@@ -76,15 +78,25 @@ class Dropdown extends AbstractDataType implements IElementizable
     {
         return new Element((string) $this);
     }
-    public function __toString():string
+
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function __toString():string
     {
+		$aAttributes = new AttributeCollection();
+
         $aOut = [];
-        $sReadonly = '';
+
         if($this->bReadOnly)
         {
-            $sReadonly = 'readonly="readonly" ';
+			$aAttributes->add('readonly', 'readonly');
         }
-        $aOut[] = "<select {$sReadonly}name=\"$this->sName\">";
+		if($this->sName)
+		{
+			$aAttributes->add('name', $this->sName);
+		}
+		$aOut[] = "<select {$aAttributes}>";
         $aOut[] = (string) $this->data;
         $aOut[] = "</select>";
 

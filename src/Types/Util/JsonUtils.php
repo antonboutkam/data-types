@@ -27,13 +27,9 @@ final class JsonUtils
      * @throws InvalidArgumentException if the JSON cannot be decoded.
      * @link http://www.php.net/manual/en/function.json-decode.php
      */
-    public static function decode(string $json, bool $assoc = true, $depth = 512, $options = 0)
-    {
-        if ($json === null)
-        {
-            return null;
-        }
-        $data = json_decode($json, $assoc, $depth, $options);
+    public static function decode(string $json, bool $assoc = true, $depth = 512, $options = 0): mixed
+	{
+		$data = json_decode($json, $assoc, $depth, $options);
         if (JSON_ERROR_NONE !== json_last_error())
         {
             throw new InvalidArgumentException('json_decode error: ' . json_last_error_msg());
@@ -53,8 +49,8 @@ final class JsonUtils
      * @throws InvalidArgumentException if the JSON cannot be encoded.
      * @link http://www.php.net/manual/en/function.json-encode.php
      */
-    public static function encode($value, int $options = 0, $depth = 512)
-    {
+    public static function encode(mixed $value, int $options = 0, int $depth = 512): Json|string
+	{
         $json = json_encode($value, $options, $depth);
         if (JSON_ERROR_NONE !== json_last_error())
         {
@@ -64,9 +60,13 @@ final class JsonUtils
         return new Json($json);
     }
 
+	/**
+	 * @param $string
+	 *
+	 * @return bool
+	 */
     public static function isValidJson($string): bool
     {
         return is_string($string) && (is_object(json_decode($string)) || is_array(json_decode($string)));
     }
-
 }

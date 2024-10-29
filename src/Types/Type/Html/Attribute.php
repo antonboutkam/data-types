@@ -11,7 +11,10 @@ class Attribute extends AbstractDataType {
     private PlainText $sAttributeType;
     private PlainText $sAttributeValue;
 
-    public function __construct($mValue = null)
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function __construct($mValue = null)
     {
         if(!isset($mValue['type']))
         {
@@ -25,7 +28,20 @@ class Attribute extends AbstractDataType {
         }
         parent::__construct($mValue);
     }
-    public static function create(string $sType, string $sValue):self
+
+	public function getType(): string
+	{
+		return (string) $this->sAttributeType;
+
+	}
+	public function getValue():string
+	{
+		return (string) $this->sAttributeValue;
+	}
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public static function create(string $sType, string $sValue):self
     {
         return new self(['type' => $sType, 'value' => $sValue]);
     }

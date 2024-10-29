@@ -5,6 +5,7 @@ namespace Hurah\Types\Type\Html;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\AbstractCollectionDataType;
 use Hurah\Types\Type\IComplexDataType;
+use Hurah\Types\Util\ArrayUtils;
 
 
 class AttributeCollection extends AbstractCollectionDataType implements IComplexDataType
@@ -31,6 +32,39 @@ class AttributeCollection extends AbstractCollectionDataType implements IComplex
             }
         }
     }
+	public function toAssociativeArray():array
+	{
+		$aOut = [];
+		foreach ($this as $oAttribute)
+		{
+			$aOut[$oAttribute->getType()] = $oAttribute->getValue();
+		}
+		return $aOut;
+	}
+	public function sort(array $aSorting = ['name', 'href', 'type', 'title', 'value']):self
+	{
+		$aKeyValue = $this->toAssociativeArray();
+		$aData = ArrayUtils::sortArrayByKeys($aKeyValue,$aSorting);
+		return self::fromArray($aData);
+	}
+	public function addArray(array $data): self
+	{
+		foreach($data as $type => $attribute)
+		{
+			$this->addAttribute(Attribute::create($type, $attribute));
+		}
+		return $this;
+	}
+
+	public static function fromArray(array $data): self
+	{
+		$collection = new self();
+		foreach($data as $type => $attribute)
+		{
+			$collection->addAttribute(Attribute::create($type, $attribute));
+		}
+		return $collection;
+	}
 
     public function addCollection(AttributeCollection $oAttributeCollection) : void
     {
@@ -42,7 +76,7 @@ class AttributeCollection extends AbstractCollectionDataType implements IComplex
 
     public function addAttribute(Attribute $oAttribute) : void
     {
-        array_push($this->array, $oAttribute);
+        $this->array[] = $oAttribute;
     }
 
     /**

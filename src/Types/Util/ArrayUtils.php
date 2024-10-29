@@ -5,6 +5,30 @@ namespace Hurah\Types\Util;
 class ArrayUtils
 {
 
+	/**
+	 * Sorts the array based on the specified keys. All remaining elements are
+	 * just appended.
+	 *
+	 * @param array $array The array to be sorted.
+	 * @param array $keys The keys in the desired order.
+	 * @return array The sorted array.
+	 */
+	public static function sortArrayByKeys(array $array, array $keys): array
+	{
+		$sortedArray = [];
+
+		// Add elements according to the specified keys
+		foreach ($keys as $key) {
+			if (array_key_exists($key, $array)) {
+				$sortedArray[$key] = $array[$key];
+				unset($array[$key]);
+			}
+		}
+
+		// Add the remaining elements
+		return $sortedArray + $array;
+	}
+
 
     public static function isAssociative(array $arrayToTest):bool
     {

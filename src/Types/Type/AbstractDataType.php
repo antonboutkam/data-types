@@ -12,9 +12,10 @@ abstract class AbstractDataType implements IGenericDataType
         $this->sValue = $sValue;
     }
 
-    public function setValue($sValue)
+    public function setValue($sValue):self
     {
         $this->sValue = $sValue;
+		return $this;
     }
 
     public function __toString(): string
