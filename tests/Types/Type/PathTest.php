@@ -316,8 +316,8 @@ class PathTest extends TestCase
         $oPath2 = FileSystem::makePath('this', 'is', 'a', 'test');
         $this->assertTrue((string)$oPath2 === (string)$oPath3, "(string){$oPath2} === (string) {$oPath3}");
 
-        $sPath3 = $oPath3->extend('/');
-        $this->assertTrue("{$oPath2}/" === (string) $sPath3, "(string){$oPath2} === (string) {$oPath3}");
+        $sPath3 = $oPath3->extend(DIRECTORY_SEPARATOR);
+        $this->assertTrue("{$oPath2}/" === (string) $sPath3, " === (string) {$oPath3}");
     }
 
     public function testDirname()

@@ -25,9 +25,15 @@ class Link extends AbstractDataType implements IElementizable {
     public function __construct($mValue = null) {
         parent::__construct($mValue);
 
-        if (isset($mValue['html'])) {
+        if (isset($mValue['html']) && is_string($mValue['html']))
+        {
+            $this->sHtml = new PlainText($mValue['html']);
+        }
+        elseif(isset($mValue['html']))
+        {
             $this->sHtml = $mValue['html'];
         }
+
         $this->oAttributes = new AttributeCollection();
 
         $aPossibleAttributes = [
