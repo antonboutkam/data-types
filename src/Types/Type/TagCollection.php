@@ -15,6 +15,21 @@ class TagCollection extends AbstractCollectionDataType implements ITestable
         }
         return $o;
     }
+
+	/**
+	 * Extracts hashtags from a PlainText object and creates a collection based
+	 * on the results.
+	 * @param PlainText $oPlainText
+	 *
+	 * @return TagCollection
+	 */
+	public static function fromPlainText(PlainText $oPlainText): TagCollection
+	{
+		$matches = [];
+		preg_match_all('/#(\w+)/', (string)$oPlainText, $matches);
+		return self::fromArray($matches[1] ?? []);
+	}
+
     public static function fromTags(Tag ...$tags):self
     {
         $o = new self();
@@ -30,13 +45,15 @@ class TagCollection extends AbstractCollectionDataType implements ITestable
         return $this->array[$this->position];
     }
 
-    public function addString(string $sTag)
+    public function addString(string $sTag):self
     {
         $this->add(new Tag($sTag));
+		return $this;
     }
-    public function add(Tag $oTag)
+    public function add(Tag $oTag):self
     {
         $this->array[] = $oTag;
+		return $this;
     }
 
     /**
