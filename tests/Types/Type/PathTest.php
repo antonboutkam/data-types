@@ -5,6 +5,7 @@ namespace Test\Hurah\Types\Type;
 use DirectoryIterator;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Exception\NullPointerException;
+use Hurah\Types\Type\FileExtension;
 use Hurah\Types\Type\LiteralCallable;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Type\PlainText;
@@ -365,6 +366,15 @@ class PathTest extends TestCase
 
         $this->expectException(UnexpectedValueException::class);
         $oCreatedDir->getDirectoryIterator();
+    }
+    public function testReplaceExtension()
+    {
+        $oInput = FileSystem::makePath($this->oTestFile->dirname()->extend('image1.png'));
+        $oExpected = FileSystem::makePath($this->oTestFile->dirname()->extend('image1.jpg'));
+        $oOutput = $oInput->replaceExtension(FileExtension::fromString('jpg'));
+        static::assertEquals($oExpected, $oOutput);
+
+
     }
 
     public function testIsDir()

@@ -3,6 +3,7 @@
 namespace Test\Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
+use Hurah\Types\Type\FileExtension;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Util\DirectoryStructure;
 use PHPUnit\Framework\TestCase;
@@ -11,6 +12,9 @@ class FileTest extends TestCase {
 
     private function getTestPath(): Path {
         return DirectoryStructure::getTmpDir()->extend('tests', 'file-test.txt');
+    }
+    private function getTestImagePath(): Path {
+        return DirectoryStructure::getTmpDir()->extend('tests', 'file-test.png');
     }
 
     protected function setUp(): void {
@@ -42,4 +46,13 @@ class FileTest extends TestCase {
         $oTestPath->write($sExpected2 = 'test2');
         $this->assertTrue("{$oTestPath->getFile()->contents()}" === "{$sExpected2}", 'Writing to file failed');
     }
+    public function testFileType()
+    {
+        $oTestPath = $this->getTestPath();
+        $oTestFile = $oTestPath->getFile();
+        static::assertInstanceOf(FileExtension::class, $oTestFile->getExtensionType());
+        static::assertInstanceOf(FileExtension::class, $oTestFile->replaceExtension(FileExtension::fromString('png')));
+
+    }
+
 }

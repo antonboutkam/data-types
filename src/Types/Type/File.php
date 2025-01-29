@@ -134,6 +134,16 @@ class File extends AbstractDataType implements IGenericDataType
     {
         return $this->oFile->getBasename('.' . $this->oFile->getExtension());
     }
+    public function replaceExtension(FileExtension $newExtension):self
+    {
+        $sBaseName = $this->oFile->getBasename('.' . $this->oFile->getExtension());
+        $sNewName = $sBaseName . '.' . (string) $newExtension;
+        return File::make($this->oFile->getPathname() . DIRECTORY_SEPARATOR . $sNewName);
+    }
+    public function getExtensionType():FileExtension
+    {
+        return FileExtension::fromString($this->oFile->getExtension());
+    }
     public function getExtension():string
     {
         return $this->oFile->getExtension();

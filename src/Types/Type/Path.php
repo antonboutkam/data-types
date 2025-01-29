@@ -164,6 +164,14 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
         $sPattern = new Regex('/.' . $this->getExtension() . '$/');
         return $this->remove($sPattern);
     }
+    /**
+     * @throws NullPointerException
+     */
+    public function replaceExtension(FileExtension $new):Path
+    {
+        $sPattern = new Regex('#\.' . $this->getExtension() . '$#');
+        return $this->replace($sPattern, $new);
+    }
 
 	/**
 	 * @throws InvalidArgumentException
@@ -172,7 +180,13 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
     {
         return $this->getFile()->getExtension();
     }
-
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function getFileExtension():?FileExtension
+    {
+        return FileExtension::fromString($this->getFile()->getExtension());
+    }
 	/**
 	 * @throws NullPointerException
 	 */
@@ -317,7 +331,9 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
     {
         if($oSearch instanceof Regex)
         {
-            return Path::make(preg_replace($this->getValue(), "{$oSearch}", "{$oReplace}"));
+            $sSearch = (string) $oSearch;
+            $sResult =  preg_replace("{$sSearch}", "{$oReplace}", $this->getValue());
+            return Path::make($sResult);
         }
         $sResult = str_replace("{$oSearch}", "{$oReplace}", $this->getValue());
 
