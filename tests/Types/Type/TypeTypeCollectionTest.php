@@ -7,6 +7,8 @@ use Hurah\Types\Exception\RuntimeException;
 use Hurah\Types\Type\IGenericDataType;
 use Hurah\Types\Type\PhpNamespace;
 use Hurah\Types\Type\PlainText;
+use Hurah\Types\Type\Tag;
+use Hurah\Types\Type\TagCollection;
 use Hurah\Types\Type\TypeType;
 use Hurah\Types\Type\TypeTypeCollection;
 use PHPUnit\Framework\TestCase;
@@ -29,6 +31,13 @@ class TypeTypeCollectionTest extends TestCase {
         $oTypeTypeCollection->addObject(new PlainText());
         $this->assertInstanceOf(TypeType::class, $oTypeTypeCollection->current(), get_class($oTypeTypeCollection->current()));
     }
+
+	public function testFromPlainText() {
+		$oPlainText = new PlainText('Lieve #vera dit was met #boaz');
+		$oTagCollection = TagCollection::fromPlainText($oPlainText);
+		$this->assertInstanceOf(TagCollection::class, $oTagCollection);
+		$this->assertEquals([new Tag('vera'), new Tag('boaz')], $oTagCollection->toArray());
+	}
 
     /**
      * @depends test__construct
