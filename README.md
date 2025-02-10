@@ -3,7 +3,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/hurah/data-types/v/unstable)](https://packagist.org/packages/hurah/data-types) 
 [![License](https://poser.pugx.org/hurah/data-types/license)](https://packagist.org/packages/hurah/data-types) 
 [![PHP Version Require](https://poser.pugx.org/hurah/data-types/require/php)](https://packagist.org/packages/hurah/data-types)
-[![CircleCI Build](http://poser.pugx.org/hurah/data-types/circleci)](https://packagist.org/packages/hurah/data-types)
+[![CircleCI Build](https://poser.pugx.org/hurah/data-types/circleci)](https://packagist.org/packages/hurah/data-types)
 
 <p align="center"><a href="https://packagist.org/packages/hurah/data-types" target="_blank">
     <img src="https://raw.githubusercontent.com/antonboutkam/data-types/main/assets/logo.webp" alt="Hurah Data Types logo">
