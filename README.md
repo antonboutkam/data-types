@@ -22,4 +22,4 @@ Many of the data-types come with a Collection version of the type, for instance 
 the ```Collections``` are implementing an ```Iterator``` and allow strongly typed loops. 
 
 
-[![antonboutkam](https://circleci.com/gh/antonboutkam/data-types.svg?style=svg)](https://antonboutkam.nl)
+[![Hurah data types](https://circleci.com/gh/antonboutkam/data-types.svg?style=svg)](https://github.com/antonboutkam/data-types)
