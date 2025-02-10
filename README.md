@@ -1,8 +1,16 @@
-[![Latest Stable Version](http://poser.pugx.org/hurah/canvas-api/v)](https://packagist.org/packages/hurah/canvas-api) 
-[![Total Downloads](http://poser.pugx.org/hurah/canvas-api/downloads)](https://packagist.org/packages/hurah/canvas-api) 
-[![Latest Unstable Version](http://poser.pugx.org/hurah/canvas-api/v/unstable)](https://packagist.org/packages/hurah/canvas-api) 
-[![License](http://poser.pugx.org/hurah/canvas-api/license)](https://packagist.org/packages/hurah/canvas-api) 
-[![PHP Version Require](http://poser.pugx.org/hurah/canvas-api/require/php)](https://packagist.org/packages/hurah/canvas-api)
+[![Latest Stable Version](https://poser.pugx.org/hurah/canvas-api/v)](https://packagist.org/packages/hurah/canvas-api) 
+[![Total Downloads](https://poser.pugx.org/hurah/canvas-api/downloads)](https://packagist.org/packages/hurah/canvas-api) 
+[![Latest Unstable Version](https://poser.pugx.org/hurah/canvas-api/v/unstable)](https://packagist.org/packages/hurah/canvas-api) 
+[![License](https://poser.pugx.org/hurah/canvas-api/license)](https://packagist.org/packages/hurah/canvas-api) 
+[![PHP Version Require](https://poser.pugx.org/hurah/canvas-api/require/php)](https://packagist.org/packages/hurah/canvas-api)
+
+
+<img src="http://poser.pugx.org/hurah/canvas-api/v" alt="Stable version">
+<img src="https://poser.pugx.org/hurah/canvas-api/downloads" alt="Downloads">
+<img src="https://poser.pugx.org/hurah/canvas-api/v/unstable" alt="Unstable version">
+<img src="https://poser.pugx.org/hurah/canvas-api/license" alt="License">
+<img src="https://poser.pugx.org/hurah/canvas-api/require/php" alt="PHP version">
+
 
 <p align="center"><a href="https://packagist.org/packages/hurah/data-types" target="_blank">
     <img src="https://raw.githubusercontent.com/antonboutkam/data-types/main/assets/logo.webp" alt="Hurah Data Types logo">
