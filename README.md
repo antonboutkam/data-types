@@ -1,5 +1,9 @@
-[![Latest Stable Version](http://poser.pugx.org/hurah/data-types/v)](https://packagist.org/packages/hurah/data-types) [![Total Downloads](http://poser.pugx.org/hurah/data-types/downloads)](https://packagist.org/packages/hurah/data-types) [![Latest Unstable Version](http://poser.pugx.org/hurah/data-types/v/unstable)](https://packagist.org/packages/hurah/data-types) [![License](http://poser.pugx.org/hurah/data-types/license)](https://packagist.org/packages/hurah/data-types) [![PHP Version Require](http://poser.pugx.org/hurah/data-types/require/php)](https://packagist.org/packages/hurah/data-types)
-[![CircleCI Build](http://poser.pugx.org/hurah/data-types/circleci)](https://packagist.org/packages/hurah/data-types)
+[![Latest Stable Version](http://poser.pugx.org/hurah/canvas-api/v)](https://packagist.org/packages/hurah/canvas-api) 
+[![Total Downloads](http://poser.pugx.org/hurah/canvas-api/downloads)](https://packagist.org/packages/hurah/canvas-api) 
+[![Latest Unstable Version](http://poser.pugx.org/hurah/canvas-api/v/unstable)](https://packagist.org/packages/hurah/canvas-api) 
+[![License](http://poser.pugx.org/hurah/canvas-api/license)](https://packagist.org/packages/hurah/canvas-api) 
+[![PHP Version Require](http://poser.pugx.org/hurah/canvas-api/require/php)](https://packagist.org/packages/hurah/canvas-api)
+
 <p align="center"><a href="https://packagist.org/packages/hurah/data-types" target="_blank">
     <img src="https://raw.githubusercontent.com/antonboutkam/data-types/main/assets/logo.webp" alt="Hurah Data Types logo">
 </a>
