@@ -5,13 +5,6 @@
 [![PHP Version Require](https://poser.pugx.org/hurah/canvas-api/require/php)](https://packagist.org/packages/hurah/canvas-api)
 
 
-<img src="http://poser.pugx.org/hurah/canvas-api/v" alt="Stable version">
-<img src="https://poser.pugx.org/hurah/canvas-api/downloads" alt="Downloads">
-<img src="https://poser.pugx.org/hurah/canvas-api/v/unstable" alt="Unstable version">
-<img src="https://poser.pugx.org/hurah/canvas-api/license" alt="License">
-<img src="https://poser.pugx.org/hurah/canvas-api/require/php" alt="PHP version">
-
-
 <p align="center"><a href="https://packagist.org/packages/hurah/data-types" target="_blank">
     <img src="https://raw.githubusercontent.com/antonboutkam/data-types/main/assets/logo.webp" alt="Hurah Data Types logo">
 </a>
