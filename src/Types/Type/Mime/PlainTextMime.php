@@ -2,10 +2,11 @@
 
 namespace Hurah\Types\Type\Mime;
 
+
 /**
- * Generic type: Unknown
+ * Generic type: Text
  */
-class FileMime extends AbstractMime implements Mime
+class PlainTextMime extends AbstractMime implements Mime
 {
 
 	/**
@@ -13,11 +14,13 @@ class FileMime extends AbstractMime implements Mime
 	 */
 	final public function getCode(): string
     {
-        return 'file';
+        return 'txt';
     }
 
 	public function getContentTypes(): array
 	{
-		return [];
+		return [
+		  'text/plain'
+		];
 	}
 }

@@ -2,29 +2,26 @@
 
 namespace Hurah\Types\Type\Mime;
 
-/**
- * Class doc comment
- */
 
 /**
- * Class doc comment
+ * Generic type: Document
  */
-class PdfMime implements Mime, IContentType
+class PdfMime extends AbstractMime
 {
-
-	/**
-	 * @return string
-	 */
-	final public function getContentType(): string
-    {
-        return 'application/pdf"';
-    }
-
-	/**
-	 * @return string
-	 */
 	final public function getCode(): string
+	{
+		return 'pdf';
+	}
+	/**
+	 * @return string
+	 */
+	final public function getContentTypes(): array
     {
-        return 'pdf';
+        return ['application/pdf'];
     }
+
+	/**
+	 * @return string
+	 */
+
 }

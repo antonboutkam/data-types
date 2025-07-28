@@ -5,6 +5,7 @@ namespace Hurah\Types\Type;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Exception\NullPointerException;
 use Hurah\Types\Exception\RuntimeException;
+use Hurah\Types\Type\Mime\VoidMime;
 use Hurah\Types\Util\FileSystem;
 use ReflectionException;
 use Symfony\Component\Finder\Finder;
@@ -254,6 +255,16 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
         $this->setValue($this->extend($aParts));
     }
 
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function getMimeType():Mime\Mime{
+		 if(!$this->exists())
+		 {
+			 return new VoidMime();
+		 }
+		 return $this->getFile()->getMimeType();
+	}
     /**
      * Creates a new path based on this path with $aParts stitched to it.
      *

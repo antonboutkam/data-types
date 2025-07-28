@@ -5,7 +5,7 @@ namespace Hurah\Types\Type\Mime;
 /**
  * Generic type: Unknown
  */
-class FileMime extends AbstractMime implements Mime
+class XltxMime extends AbstractMime
 {
 
 	/**
@@ -13,11 +13,14 @@ class FileMime extends AbstractMime implements Mime
 	 */
 	final public function getCode(): string
     {
-        return 'file';
+        return 'xltx';
     }
 
 	public function getContentTypes(): array
 	{
-		return [];
+		return [
+			// Moderne Excel formaten
+		  'application/vnd.openxmlformats-officedocument.spreadsheetml.template'
+		];
 	}
 }

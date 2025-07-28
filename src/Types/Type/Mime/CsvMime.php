@@ -3,9 +3,9 @@
 namespace Hurah\Types\Type\Mime;
 
 /**
- * Generic type: Unknown
+ * Generic type: Dataset
  */
-class FileMime extends AbstractMime implements Mime
+class CsvMime extends AbstractMime
 {
 
 	/**
@@ -13,11 +13,13 @@ class FileMime extends AbstractMime implements Mime
 	 */
 	final public function getCode(): string
     {
-        return 'file';
+        return 'csv';
     }
 
 	public function getContentTypes(): array
 	{
-		return [];
+		return [
+		  'text/csv'
+		];
 	}
 }

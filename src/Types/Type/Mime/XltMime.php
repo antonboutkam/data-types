@@ -5,7 +5,7 @@ namespace Hurah\Types\Type\Mime;
 /**
  * Generic type: Unknown
  */
-class FileMime extends AbstractMime implements Mime
+class XltMime extends AbstractMime implements Mime
 {
 
 	/**
@@ -13,11 +13,13 @@ class FileMime extends AbstractMime implements Mime
 	 */
 	final public function getCode(): string
     {
-        return 'file';
+        return 'xlt';
     }
 
 	public function getContentTypes(): array
 	{
-		return [];
+		return [
+		  'application/vnd.ms-excel'
+		];
 	}
 }

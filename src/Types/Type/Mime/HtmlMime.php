@@ -2,14 +2,11 @@
 
 namespace Hurah\Types\Type\Mime;
 
-/**
- * Class doc comment
- */
 
 /**
- * Class doc comment
+ * Generic type: Markup
  */
-class HtmlMime implements Mime
+class HtmlMime extends AbstractMime
 {
 
 	/**
@@ -19,4 +16,11 @@ class HtmlMime implements Mime
     {
         return 'html';
     }
+
+	public function getContentTypes(): array
+	{
+		return [
+		  'text/html'
+		];
+	}
 }

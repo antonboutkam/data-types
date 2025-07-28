@@ -3,9 +3,9 @@
 namespace Hurah\Types\Type\Mime;
 
 /**
- * Class doc comment
+ * Generic type: Image
  */
-class WebpMime implements Mime, IContentType
+class WebpMime extends AbstractMime
 {
 
 	/**
@@ -19,8 +19,8 @@ class WebpMime implements Mime, IContentType
     /**
      * @return string
      */
-    final public function getContentType(): string
+    final public function getContentTypes(): array
     {
-        return 'image/webp';
+        return ['image/webp'];
     }
 }

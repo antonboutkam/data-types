@@ -3,9 +3,9 @@
 namespace Hurah\Types\Type\Mime;
 
 /**
- * Generic type: Archive
+ * Generic type: Spreadsheet
  */
-class ZipDirMime extends AbstractMime implements Mime
+class XlsXMime extends AbstractMime implements Mime
 {
 
 	/**
@@ -13,13 +13,13 @@ class ZipDirMime extends AbstractMime implements Mime
 	 */
 	final public function getCode(): string
     {
-        return 'zip';
+        return 'xlsx';
     }
 
 	public function getContentTypes(): array
 	{
 		return [
-		  'application/zip'
+		  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 		];
 	}
 }

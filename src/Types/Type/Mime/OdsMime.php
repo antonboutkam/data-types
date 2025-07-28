@@ -3,9 +3,9 @@
 namespace Hurah\Types\Type\Mime;
 
 /**
- * Generic type: Unknown
+ * Generic type: Spreadsheet
  */
-class FileMime extends AbstractMime implements Mime
+class OdsMime extends AbstractMime
 {
 
 	/**
@@ -13,11 +13,14 @@ class FileMime extends AbstractMime implements Mime
 	 */
 	final public function getCode(): string
     {
-        return 'file';
+        return 'ods';
     }
 
 	public function getContentTypes(): array
 	{
-		return [];
+		return [
+			// Moderne Excel formaten
+		  'application/vnd.oasis.opendocument.spreadsheet'
+		];
 	}
 }

@@ -3,9 +3,9 @@
 namespace Hurah\Types\Type\Mime;
 
 /**
- * Generic type: Unknown
+ * Generic type: Archive
  */
-class FileMime extends AbstractMime implements Mime
+class RarMime extends AbstractMime implements Mime
 {
 
 	/**
@@ -13,11 +13,13 @@ class FileMime extends AbstractMime implements Mime
 	 */
 	final public function getCode(): string
     {
-        return 'file';
+        return 'rar';
     }
 
 	public function getContentTypes(): array
 	{
-		return [];
+		return [
+		  'application/vnd.rar',
+		];
 	}
 }

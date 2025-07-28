@@ -2,14 +2,11 @@
 
 namespace Hurah\Types\Type\Mime;
 
-/**
- * Class doc comment
- */
 
 /**
- * Class doc comment
+ * Generic type: Image
  */
-class JpgMime implements Mime, IContentType
+class JpgMime extends AbstractMime implements Mime
 {
 
 	/**
@@ -17,14 +14,14 @@ class JpgMime implements Mime, IContentType
 	 */
 	final public function getCode(): string
 	{
-		return 'image';
+		return 'jpg';
 	}
 
 	/**
 	 * @return string
 	 */
-	final public function getContentType(): string
+	final public function getContentTypes(): array
 	{
-		return 'image/jpeg';
+		return ['image/jpeg'];
 	}
 }

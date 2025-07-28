@@ -2,14 +2,11 @@
 
 namespace Hurah\Types\Type\Mime;
 
-/**
- * Class doc comment
- */
 
 /**
- * Class doc comment
+ * Generic type: Markup
  */
-class XmlMime implements Mime, IContentType
+class XmlMime extends AbstractMime implements Mime
 {
 
 	/**
@@ -23,8 +20,8 @@ class XmlMime implements Mime, IContentType
     /**
      * @return string
      */
-    final public function getContentType(): string
+    final public function getContentTypes(): array
     {
-        return 'text/xml';
+        return ['text/xml'];
     }
 }

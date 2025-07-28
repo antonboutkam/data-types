@@ -2,10 +2,12 @@
 
 namespace Hurah\Types\Type\Mime;
 
+use Hurah\Types\Type\ITestable;
+
 /**
- * Generic type: Unknown
+ * Generic type: Archive
  */
-class FileMime extends AbstractMime implements Mime
+class GzipMime extends AbstractMime
 {
 
 	/**
@@ -13,11 +15,13 @@ class FileMime extends AbstractMime implements Mime
 	 */
 	final public function getCode(): string
     {
-        return 'file';
+        return 'gz';
     }
 
 	public function getContentTypes(): array
 	{
-		return [];
+		return [
+		  'application/gzip'
+		];
 	}
 }

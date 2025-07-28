@@ -13,5 +13,5 @@ interface IContentType
 	/**
 	 * @return string
 	 */
-	public function getContentType():string;
+	public function getContentTypes():array;
 }

@@ -3,6 +3,9 @@
 namespace Hurah\Types\Type;
 
 
+use Hurah\Types\Exception\ImplementationException;
+use Hurah\Types\Type\Mime\VoidMime;
+use Hurah\Types\Util\MimeTypeFactory;
 use SplFileInfo;
 use function chmod;
 use function clearstatcache;
@@ -31,6 +34,24 @@ class File extends AbstractDataType implements IGenericDataType
     {
         return new self($sFileName);
     }
+
+	 public function getMimeType():Mime\Mime
+	 {
+		 if(!$this->exists())
+		 {
+				return new VoidMime();
+		 }
+		 $oAllMimes = MimeTypeFactory::getAll();
+		 foreach($oAllMimes as $oMime)
+		 {
+			 if($oMime->test((string)$this))
+			 {
+				 return $oMime;
+			 }
+
+		 }
+		 return new ImplementationException("Could not detect Mime type of File {$this}");
+	 }
 
     public static function fromSplFileInfo(SplFileInfo $oFile): self
     {
