@@ -5,6 +5,7 @@ namespace Hurah\Types\Type\Mime;
 
 /**
  * Generic type: SourceCode
+ * Represents a json file
  */
 class JsonMime extends AbstractMime
 {
