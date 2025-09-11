@@ -2,29 +2,27 @@
 
 namespace Hurah\Types\Type\Mime;
 
-/**
- * Class doc comment
- */
 
 /**
- * Class doc comment
+ * Generic type: Unknown
  */
-class JavascriptMime implements Mime, IContentType
+class JavascriptMime extends AbstractMime
 {
-
-	/**
-	 * @return string
-	 */
-	final public function getContentType(): string
-    {
-        return 'application/javascript';
-    }
-
 	/**
 	 * @return string
 	 */
 	final public function getCode(): string
+	{
+		return 'js';
+	}
+
+	/**
+	 * @return array
+	 */
+	final public function getContentTypes(): array
     {
-        return 'js';
+        return ['application/javascript'];
     }
+
+
 }

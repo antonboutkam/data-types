@@ -2,22 +2,19 @@
 
 namespace Hurah\Types\Type\Mime;
 
-/**
- * Class doc comment
- */
 
 /**
- * Class doc comment
+ * Generic type: Unknown
  */
-class PlainTextMine implements Mime, IContentType
+class PlainTextMine extends AbstractMime implements Mime
 {
 
 	/**
 	 * @return string
 	 */
-	public function getContentType(): string
+	public function getContentTypes(): array
     {
-        return 'text/plain';
+        return ['text/plain'];
 
     }
 

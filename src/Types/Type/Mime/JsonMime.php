@@ -2,29 +2,27 @@
 
 namespace Hurah\Types\Type\Mime;
 
-/**
- * Class doc comment
- */
 
 /**
- * Class doc comment
+ * Generic type: SourceCode
+ * Represents a json file
  */
-class JsonMime implements Mime, IContentType
+class JsonMime extends AbstractMime
 {
-
-	/**
-	 * @return string
-	 */
-	final public function getContentType(): string
-    {
-        return 'application/json';
-    }
-
 	/**
 	 * @return string
 	 */
 	final public function getCode(): string
+	{
+		return 'json';
+	}
+
+	/**
+	 * @return string
+	 */
+	final public function getContentTypes(): array
     {
-        return 'json';
+        return ['application/json'];
     }
+
 }

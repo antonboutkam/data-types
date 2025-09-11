@@ -3,6 +3,7 @@
 namespace Test\Hurah\Types\Type;
 
 use Hurah\Types\Exception\InvalidArgumentException;
+use Hurah\Types\Type\File;
 use Hurah\Types\Type\FileExtension;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Util\DirectoryStructure;
@@ -51,7 +52,7 @@ class FileTest extends TestCase {
         $oTestPath = $this->getTestPath();
         $oTestFile = $oTestPath->getFile();
         static::assertInstanceOf(FileExtension::class, $oTestFile->getExtensionType());
-        static::assertInstanceOf(FileExtension::class, $oTestFile->replaceExtension(FileExtension::fromString('png')));
+        static::assertInstanceOf(File::class, $oTestFile->replaceExtension(FileExtension::fromString('png')));
 
     }
 

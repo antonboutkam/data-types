@@ -3,13 +3,9 @@
 namespace Hurah\Types\Type\Mime;
 
 /**
- * Class doc comment
+ * Generic type: Unknown
  */
-
-/**
- * Class doc comment
- */
-class FileMime implements Mime
+class FileMime extends AbstractMime implements Mime
 {
 
 	/**
@@ -19,4 +15,9 @@ class FileMime implements Mime
     {
         return 'file';
     }
+
+	public function getContentTypes(): array
+	{
+		return [];
+	}
 }

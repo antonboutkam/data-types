@@ -7,6 +7,7 @@ use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Exception\NullPointerException;
 use Hurah\Types\Type\FileExtension;
 use Hurah\Types\Type\LiteralCallable;
+use Hurah\Types\Type\Mime\Mime;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Type\PlainText;
 use Hurah\Types\Type\Regex;
@@ -44,7 +45,7 @@ class PathTest extends TestCase
             'this',
             'is',
             'a',
-            'test'
+            'test',
         ];
 
         $oPath1 = Path::make('this','is', 'a', 'test');
@@ -172,6 +173,20 @@ class PathTest extends TestCase
     }
 
 
+	 public function testDetectMimeTypes():void
+	 {
+		 $oCurrentDir = Path::make(__DIR__)->dirname(2)->extend('_files', 'Mime');
+		 $finder = $oCurrentDir->getFinder()->depth(0);
+
+		 foreach($finder as $file)
+		 {
+			 $oMimeType = Path::make($file)->getMimeType();
+			 $this->assertEquals($file->getExtension(), $oMimeType->getCode());
+			 $this->assertInstanceOf(Mime::class, $oMimeType);
+
+		 }
+
+	 }
 
     public function testIsRelative()
     {
@@ -191,45 +206,45 @@ class PathTest extends TestCase
                     'home',
                     'anton',
                     'Documents',
-                    'file.twig'
+                    'file.twig',
                 ],
-                'expected' => true
+                'expected' => true,
             ],
             [
                 'ext' => 'twig',
                 'path' => ['/home/anton/Documents/file.twig'],
-                'expected' => true
+                'expected' => true,
             ],
             [
                 'ext' => 'twig',
                 'path' => ['file.twig'],
-                'expected' => true
+                'expected' => true,
             ],
             [
                 'ext' => 'twig',
                 'path' => ['valid/template/path.twig'],
-                'expected' => true
+                'expected' => true,
             ],
             [
                 'ext' => 'twig',
                 'path' => ['/home/anton/Documents/file/twig'],
-                'expected' => false
+                'expected' => false,
             ],
             [
                 'ext' => 'twig',
                 'path' => [
                     '/home/anton/Documents/file',
-                    'twig'
+                    'twig',
                 ],
-                'expected' => false
+                'expected' => false,
             ],
             [
                 'ext' => 'twig',
                 'path' => [
                     '/home/anton/Documents/file',
-                    '.twig'
+                    '.twig',
                 ],
-                'expected' => false
+                'expected' => false,
             ],
         ];
         foreach ($aTestPaths as $aTestPath)

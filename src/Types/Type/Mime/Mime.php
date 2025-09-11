@@ -2,6 +2,8 @@
 
 namespace Hurah\Types\Type\Mime;
 
+use Hurah\Types\Type\ITestable;
+
 /**
  *
  */
@@ -9,7 +11,7 @@ namespace Hurah\Types\Type\Mime;
 /**
  *
  */
-interface Mime
+interface Mime extends ITestable, IContentType
 {
 
 	/**

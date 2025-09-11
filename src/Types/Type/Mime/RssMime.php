@@ -3,23 +3,10 @@
 namespace Hurah\Types\Type\Mime;
 
 /**
- * Class doc comment
+ * Generic type: Markup
  */
-
-/**
- * Class doc comment
- */
-class RssMime implements Mime, IContentType
+class RssMime extends AbstractMime implements Mime
 {
-
-	/**
-	 * @return string
-	 */
-	final public function getContentType(): string
-    {
-        return 'application/rss+xml';
-    }
-
 	/**
 	 * @return string
 	 */
@@ -27,4 +14,12 @@ class RssMime implements Mime, IContentType
     {
         return 'rss';
     }
+
+	/**
+	 * @return string
+	 */
+	final public function getContentTypes(): array
+	{
+		return ['application/rss+xml'];
+	}
 }

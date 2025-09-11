@@ -3,13 +3,9 @@
 namespace Hurah\Types\Type\Mime;
 
 /**
- * Class doc comment
+ * Generic type: Archive
  */
-
-/**
- * Class doc comment
- */
-class ZipDirMime implements Mime
+class ZipDirMime extends AbstractMime implements Mime
 {
 
 	/**
@@ -17,6 +13,13 @@ class ZipDirMime implements Mime
 	 */
 	final public function getCode(): string
     {
-        return 'xls';
+        return 'zip';
     }
+
+	public function getContentTypes(): array
+	{
+		return [
+		  'application/zip'
+		];
+	}
 }

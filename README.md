@@ -1,3 +1,9 @@
+[![Latest Stable Version](https://poser.pugx.org/hurah/data-types/v)](https://packagist.org/packages/hurah/data-types) 
+[![Total Downloads](https://poser.pugx.org/hurah/data-types/downloads)](https://packagist.org/packages/hurah/data-types) 
+[![Latest Unstable Version](https://poser.pugx.org/hurah/data-types/v/unstable)](https://packagist.org/packages/hurah/data-types) 
+[![License](https://poser.pugx.org/hurah/data-types/license)](https://packagist.org/packages/hurah/data-types) 
+[![PHP Version Require](https://poser.pugx.org/hurah/data-types/require/php)](https://packagist.org/packages/hurah/data-types)
+[![CircleCI Build](https://poser.pugx.org/hurah/data-types/circleci)](https://packagist.org/packages/hurah/data-types)
 
 <p align="center"><a href="https://packagist.org/packages/hurah/data-types" target="_blank">
     <img src="https://raw.githubusercontent.com/antonboutkam/data-types/main/assets/logo.webp" alt="Hurah Data Types logo">
@@ -22,4 +28,4 @@ Many of the data-types come with a Collection version of the type, for instance 
 the ```Collections``` are implementing an ```Iterator``` and allow strongly typed loops. 
 
 
-[![antonboutkam](https://circleci.com/gh/antonboutkam/data-types.svg?style=svg)](https://antonboutkam.nl)
+[![Hurah data types](https://circleci.com/gh/antonboutkam/data-types.svg?style=svg)](https://github.com/antonboutkam/data-types)

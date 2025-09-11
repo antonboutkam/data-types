@@ -2,14 +2,11 @@
 
 namespace Hurah\Types\Type\Mime;
 
-/**
- * Class doc comment
- */
 
 /**
- * Class doc comment
+ * Generic type: Void
  */
-class VoidMime implements Mime
+class VoidMime extends AbstractMime implements Mime
 {
 
 	/**
@@ -19,4 +16,9 @@ class VoidMime implements Mime
     {
         return 'void';
     }
+
+	public function getContentTypes(): array
+	{
+		return [];
+	}
 }
