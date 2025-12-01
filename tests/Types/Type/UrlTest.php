@@ -3,6 +3,7 @@
 namespace Test\Hurah\Types\Type;
 
 use Hurah\Types\Type\Http\Response;
+use Hurah\Types\Type\Path;
 use Hurah\Types\Type\Url;
 use PHPUnit\Framework\TestCase;
 
@@ -29,6 +30,14 @@ class UrlTest extends TestCase
 
         $this->assertTrue(strpos("{$oResponse->getBody()}", '<!DOCTYPE html>') === 0, "{$oResponse->getBody()}");
 
+    }
+    public function testBaseName()
+    {
+        $oUrl = new Url('https://video.devroc.nl/mijn-eerste-git-project.s2.vtt');
+        $this->assertEquals(Path::make('mijn-eerste-git-project.s2.vtt'), $oUrl->basename());
+
+        $oUrl = new Url('https://video.devroc.nl/');
+        $this->assertEquals(Path::make(''), $oUrl->basename());
     }
 
     function testAddPath()

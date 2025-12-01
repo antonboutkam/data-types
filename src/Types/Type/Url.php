@@ -86,6 +86,15 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
 
     }
 
+    public function basename():Path
+    {
+        $url = (string) $this;
+
+        $path = parse_url($url, PHP_URL_PATH);
+        $filename = basename($path);
+        return Path::make($filename);
+    }
+
 	/**
 	 * @return PlainText
 	 */
