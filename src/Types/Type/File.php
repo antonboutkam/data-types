@@ -37,9 +37,9 @@ class File extends AbstractDataType implements IGenericDataType
 
 	 public function getMimeType():Mime\Mime
 	 {
-		 if(!$this->exists())
+		 if(!$this->exists() || !$this->oFile->isFile())
 		 {
-				return new VoidMime();
+			 return new VoidMime();
 		 }
 		 $oAllMimes = MimeTypeFactory::getAll();
 		 foreach($oAllMimes as $oMime)
@@ -50,7 +50,7 @@ class File extends AbstractDataType implements IGenericDataType
 			 }
 
 		 }
-		 return new ImplementationException("Could not detect Mime type of File {$this}");
+		 throw new ImplementationException("Could not detect Mime type of File {$this}");
 	 }
 
     public static function fromSplFileInfo(SplFileInfo $oFile): self

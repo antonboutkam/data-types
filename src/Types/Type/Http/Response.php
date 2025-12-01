@@ -53,6 +53,11 @@ class Response extends AbstractDataType implements ResponseInterface
             }
         }
 
+        // Guarantee typed properties are initialised even when parts of the response are missing.
+        $this->body = $this->body ?? new PlainText('');
+        $this->statusCode = $this->statusCode ?? new LiteralInteger(0);
+        $this->reason = $this->reason ?? new PlainText('');
+
         parent::__construct($sValue);
     }
 

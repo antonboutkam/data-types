@@ -180,6 +180,10 @@ class PathTest extends TestCase
 
 		 foreach($finder as $file)
 		 {
+			 if($file->isDir())
+			 {
+				 continue;
+			 }
 			 $oMimeType = Path::make($file)->getMimeType();
 			 $this->assertEquals($file->getExtension(), $oMimeType->getCode());
 			 $this->assertInstanceOf(Mime::class, $oMimeType);
