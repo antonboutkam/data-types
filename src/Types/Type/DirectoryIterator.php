@@ -20,7 +20,7 @@ class DirectoryIterator extends \DirectoryIterator implements IGenericDataType
         return $this->getPathname();
     }
 
-    public function toPathCollection(int $iType = null, ITestable $oTestable = null): PathCollection
+    public function toPathCollection(?int $iType = null, ?ITestable $oTestable = null): PathCollection
     {
         $oPathCollection = new PathCollection();
 

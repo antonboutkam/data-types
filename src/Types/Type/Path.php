@@ -108,7 +108,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      * @return Path
      * @throws InvalidArgumentException
      */
-    public function slice(int $iOffset, int $iLength = null): Path
+    public function slice(int $iOffset, ?int $iLength = null): Path
     {
         $aParts = $this->explode();
         if($iOffset < 0)
@@ -408,7 +408,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      * @throws InvalidArgumentException
      * @throws ReflectionException
      */
-    public function toPsr4(PhpNamespace $prepend = null, Path $oSubtract = null): PhpNamespace
+    public function toPsr4(?PhpNamespace $prepend = null, ?Path $oSubtract = null): PhpNamespace
     {
 
         $sWorkPath = "{$this}";
@@ -533,7 +533,7 @@ class Path extends AbstractDataType implements IGenericDataType, IUri
      *
      * @return $this
      */
-    public function touch(int $time = null, int $atime = null): Path
+    public function touch(?int $time = null, ?int $atime = null): Path
     {
         if ($time === null)
         {

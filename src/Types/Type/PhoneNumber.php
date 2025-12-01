@@ -11,7 +11,7 @@ class PhoneNumber extends AbstractDataType implements IGenericDataType
         parent::__construct($phoneNumber);
     }
 
-	public static function make(string $phoneNumber = null):self
+	public static function make(?string $phoneNumber = null):self
 	{
 		return new self($phoneNumber);
 	}

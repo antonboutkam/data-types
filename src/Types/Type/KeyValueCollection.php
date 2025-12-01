@@ -33,7 +33,7 @@ class KeyValueCollection extends AbstractCollectionDataType
     {
         return $this->array[$this->position];
     }
-    public function getOrCreate(string $sKey, string $sValue = null):?KeyValue
+    public function getOrCreate(string $sKey, ?string $sValue = null):?KeyValue
     {
         if(!$oKeyValue = $this->getByKey($sKey))
         {

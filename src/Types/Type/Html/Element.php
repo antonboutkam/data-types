@@ -34,7 +34,7 @@ class Element extends AbstractDataType implements IElementizable
 		parent::__construct($mValue);
 	}
 
-	public static function create(string $sType = null, AttributeCollection $attributes = null): Element
+	public static function create(?string $sType = null, ?AttributeCollection $attributes = null): Element
 	{
 		$oElement = new Element();
 		if ($sType) {

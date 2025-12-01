@@ -197,7 +197,7 @@ class Url extends AbstractDataType implements IGenericDataType, IUri
         return $this;
     }
 
-    public function setQuery(string $sQuery = null): self
+    public function setQuery(?string $sQuery = null): self
     {
         $aComponents = $this->getValue();
         if ($sQuery === null)

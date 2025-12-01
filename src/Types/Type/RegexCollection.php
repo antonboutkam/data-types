@@ -93,7 +93,7 @@ class RegexCollection extends AbstractCollectionDataType implements ITestable
         return false;
     }
 
-    public function replaceAll(PlainText $oSubject, PlainText $oReplacement = null):PlainText
+    public function replaceAll(PlainText $oSubject, ?PlainText $oReplacement = null):PlainText
     {
         if($oReplacement === null)
         {

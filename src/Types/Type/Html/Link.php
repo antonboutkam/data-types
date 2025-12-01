@@ -75,7 +75,7 @@ class Link extends AbstractDataType implements IElementizable {
      * @return Link
      * @throws InvalidArgumentException
      */
-    public static function create(Url $oUrl = null, AbstractDataType $sHtml = null, string $sTitle = null, string $sTarget = null): Link {
+    public static function create(?Url $oUrl = null, ?AbstractDataType $sHtml = null, ?string $sTitle = null, ?string $sTarget = null): Link {
 
         $aConstructorArguments = [];
 

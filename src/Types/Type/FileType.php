@@ -31,7 +31,7 @@ class FileType extends AbstractDataType implements IGenericDataType, ITestable
     {
         return $this->getValue();
     }
-    public static function make(string $sFileTypeName, ITestable $mFileNamePatterns = null): self
+    public static function make(string $sFileTypeName, ?ITestable $mFileNamePatterns = null): self
     {
         $result = new self($sFileTypeName);
 
