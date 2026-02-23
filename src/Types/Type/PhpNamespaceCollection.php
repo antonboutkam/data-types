@@ -64,13 +64,15 @@ class PhpNamespaceCollection extends AbstractCollectionDataType
      */
     public function getFirstExisting():PhpNamespace
     {
+		 $aTried = [];
         foreach($this as $phpNamespace)
         {
             if($phpNamespace->exists())
             {
                 return $phpNamespace;
             }
+	        $aTried[] = (string) $phpNamespace;
         }
-        throw new ClassNotFoundException("None of the PhpNamespaces in the collection exists");
+        throw new ClassNotFoundException('None of the PhpNamespaces in the collection exists . ' . join(',', $aTried));
     }
 }
