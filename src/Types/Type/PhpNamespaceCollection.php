@@ -73,6 +73,6 @@ class PhpNamespaceCollection extends AbstractCollectionDataType
             }
 	        $aTried[] = (string) $phpNamespace;
         }
-        throw new ClassNotFoundException('None of the PhpNamespaces in the collection exists . ' . join(',', $aTried));
+        throw new ClassNotFoundException('None of the PhpNamespaces in the collection exists, tried: ' . join(',', $aTried));
     }
 }
