@@ -29,3 +29,5 @@ the ```Collections``` are implementing an ```Iterator``` and allow strongly type
 
 
 [![Hurah data types](https://circleci.com/gh/antonboutkam/data-types.svg?style=svg)](https://github.com/antonboutkam/data-types)
+
+-
