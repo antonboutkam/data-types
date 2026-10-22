@@ -1,8 +1,11 @@
-version: 2
+version: 2.1
 jobs:
   build:
+    parameters:
+      php-version:
+        type: string
     docker:
-      - image:  cimg/php:8.3.8
+      - image: cimg/php:<< parameters.php-version >>
     steps:
       - checkout
       - run: sudo apt update #  sudo apt install zlib1g-dev libsqlite3-dev
@@ -29,3 +32,11 @@ jobs:
             - ./vendor
 
       - run: ./vendor/bin/phpunit
+
+workflows:
+  compatibility:
+    jobs:
+      - build:
+          matrix:
+            parameters:
+              php-version: ["8.3", "8.4"]
